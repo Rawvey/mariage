@@ -86,6 +86,8 @@ nav a:hover{color:var(--gold3);background:rgba(200,162,72,.1)}
 .ph:hover{color:var(--gold3)}
 .warning{font-size:12px;color:rgba(200,162,72,.6);font-style:italic;margin-top:4px}
 .rates-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.rates-grid>div{display:flex;flex-direction:column}
+.rates-grid>div>p:first-child{min-height:40px}
 #brunchFormWrap{display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--bord)}
 .fgroup{margin-bottom:13px}
 .btn{font-family:'Cinzel',serif;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;border-radius:2px;cursor:pointer;border:1px solid;padding:9px 20px;display:inline-flex;align-items:center;gap:6px;transition:all .25s;background:transparent}
@@ -126,11 +128,17 @@ textarea.fc-full{resize:vertical;min-height:125px}
 #gameCanvas{border:1.5px solid var(--gold);border-radius:4px;display:block;margin:0 auto;max-width:100%}
 .game-ctrl{display:flex;gap:12px;justify-content:center;margin:14px 0}
 .game-hint{font-size:12px;color:rgba(200,162,72,.4);font-style:italic;margin-top:3px}
-.dpad{display:none;grid-template-columns:repeat(3,52px);grid-template-rows:repeat(2,52px);gap:5px;justify-content:center;margin:12px auto}
+.game-tabs{display:flex;gap:8px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
+.game-tab{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:2px;text-transform:uppercase;background:transparent;border:1px solid var(--bord);color:var(--gold2);padding:9px 22px;border-radius:2px;cursor:pointer;transition:all .25s}
+.game-tab.active,.game-tab:hover{background:rgba(200,162,72,.15);border-color:var(--gold);color:var(--gold3)}
+.jump-btn{display:none;width:100%;padding:20px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:2.5px;text-transform:uppercase;background:rgba(58,84,68,.6);border:1.5px solid var(--bord);color:var(--gold2);border-radius:4px;cursor:pointer;touch-action:manipulation;margin:10px 0;transition:all .2s}
+.jump-btn:active{background:rgba(200,162,72,.28);border-color:var(--gold)}
+@media(max-width:680px){.jump-btn{display:block}}
+.dpad{display:none;grid-template-columns:repeat(3,68px);grid-template-rows:repeat(3,68px);gap:6px;justify-content:center;margin:14px auto}
 @media(max-width:680px){.dpad{display:grid}.game-hint{display:none}}
-.dpad-btn{background:rgba(58,84,68,.5);border:1px solid var(--bord);color:var(--gold);font-size:22px;border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;user-select:none;-webkit-user-select:none;touch-action:manipulation}
-.dpad-btn:active{background:rgba(200,162,72,.2)}
-.dp-u{grid-column:2;grid-row:1}.dp-l{grid-column:1;grid-row:2}.dp-d{grid-column:2;grid-row:2}.dp-r{grid-column:3;grid-row:2}
+.dpad-btn{background:rgba(58,84,68,.55);border:1.5px solid var(--bord);color:var(--gold);font-size:28px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;user-select:none;-webkit-user-select:none;touch-action:manipulation;transition:background .1s}
+.dpad-btn:active{background:rgba(200,162,72,.3);border-color:var(--gold)}
+.dp-u{grid-column:2;grid-row:1}.dp-l{grid-column:1;grid-row:2}.dp-d{grid-column:2;grid-row:3}.dp-r{grid-column:3;grid-row:2}
 footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,162,72,.13)}
 .f-names{font-family:'Great Vibes',cursive;font-size:3.3rem;color:var(--gold2)}
 .f-date{font-family:'Cinzel',serif;font-size:10.5px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-top:8px}
@@ -160,7 +168,7 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
   <a href="#infos">Infos pratiques</a><span class="nav-sep" aria-hidden="true">♥</span>
   <a href="#menu">Choix du menu</a><span class="nav-sep" aria-hidden="true">♥</span>
   <a href="#contact">Contact</a><span class="nav-sep" aria-hidden="true">♥</span>
-  <a href="#arcade">Mini-jeu</a>
+  <a href="#arcade">Mini-jeux</a>
 </nav>
 
 <!-- ═══ HERO ════════ -->
@@ -364,22 +372,47 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
 <!-- ═══ ARCADE ════════ -->
 <div id="arcade">
   <div class="sec-wrap">
-    <div class="sec-head reveal"><div class="sec-eye">Pour patienter jusqu'au grand jour</div><div class="sec-title">Mini-jeu</div><div class="sec-div"><span>◆</span></div></div>
+    <div class="sec-head reveal"><div class="sec-eye">Pour patienter jusqu'au grand jour</div><div class="sec-title">Mini-jeux</div><div class="sec-div"><span>◆</span></div></div>
     <div class="arcade-wrap reveal">
-      <p class="arcade-desc">Le marié doit rattraper la mariée avant la fin du chrono ! 🤵💨👰<br>Attention au caniche noir qui cherche à lui bloquer le passage… 🐩<br>Flèches ou WASD pour déplacer le marié.</p>
-      <div class="game-stat">
-        <span>Chrono : <strong id="gTimer">25s</strong></span>
-        <span>Meilleur : <strong id="gBest">—</strong></span>
+
+      <!-- Onglets -->
+      <div class="game-tabs">
+        <button class="game-tab active" data-g="chase" onclick="switchGame('chase')">🤵 La Chasse à la Mariée</button>
+        <button class="game-tab" data-g="run" onclick="switchGame('run')">🏃 La Course vers l'Hôtel</button>
       </div>
-      <canvas id="gameCanvas" width="440" height="352" role="img" aria-label="Mini-jeu : le marié court après la mariée sur un terrain en grille. Un caniche noir tente de lui bloquer le passage."></canvas>
-      <div class="dpad" role="group" aria-label="Commandes directionnelles">
-        <button class="dpad-btn dp-u" aria-label="Déplacer vers le haut" onpointerdown="dpOn(0,-1)" onpointerup="dpOff()" onpointerleave="dpOff()">↑</button>
-        <button class="dpad-btn dp-l" aria-label="Déplacer vers la gauche" onpointerdown="dpOn(-1,0)" onpointerup="dpOff()" onpointerleave="dpOff()">←</button>
-        <button class="dpad-btn dp-d" aria-label="Déplacer vers le bas" onpointerdown="dpOn(0,1)"  onpointerup="dpOff()" onpointerleave="dpOff()">↓</button>
-        <button class="dpad-btn dp-r" aria-label="Déplacer vers la droite" onpointerdown="dpOn(1,0)"  onpointerup="dpOff()" onpointerleave="dpOff()">→</button>
+
+      <!-- JEU 1 -->
+      <div id="gameChase">
+        <p class="arcade-desc">Le marié doit rattraper la mariée avant la fin du chrono ! 🤵💨👰<br>Attention au caniche noir qui tente de lui bloquer le passage… 🐩<br>Flèches ou WASD pour déplacer le marié.</p>
+        <div class="game-stat">
+          <span>Chrono : <strong id="gTimer">40s</strong></span>
+          <span>Meilleur : <strong id="gBest">—</strong></span>
+        </div>
+        <canvas id="gameCanvas" width="440" height="352" role="img" aria-label="Mini-jeu : le marié court après la mariée sur un terrain en grille. Un caniche noir tente de lui bloquer le passage."></canvas>
+        <div class="dpad" role="group" aria-label="Commandes directionnelles">
+          <div></div>
+          <button class="dpad-btn dp-u" aria-label="Déplacer vers le haut" onpointerdown="dpOn(0,-1)" onpointerup="dpOff()" onpointerleave="dpOff()">↑</button>
+          <div></div>
+          <button class="dpad-btn dp-l" aria-label="Déplacer vers la gauche" onpointerdown="dpOn(-1,0)" onpointerup="dpOff()" onpointerleave="dpOff()">←</button>
+          <div></div>
+          <button class="dpad-btn dp-r" aria-label="Déplacer vers la droite" onpointerdown="dpOn(1,0)"  onpointerup="dpOff()" onpointerleave="dpOff()">→</button>
+          <div></div>
+          <button class="dpad-btn dp-d" aria-label="Déplacer vers le bas" onpointerdown="dpOn(0,1)"  onpointerup="dpOff()" onpointerleave="dpOff()">↓</button>
+          <div></div>
+        </div>
+        <div class="game-ctrl"><button class="btn btn-gold" onclick="startGame()">Nouvelle partie</button></div>
+        <p class="game-hint">Appuyez sur une touche directionnelle pour commencer</p>
       </div>
-      <div class="game-ctrl"><button class="btn btn-gold" onclick="startGame()">Nouvelle partie</button></div>
-      <p class="game-hint">Appuyez sur une touche directionnelle pour commencer</p>
+
+      <!-- JEU 2 -->
+      <div id="gameRun" style="display:none">
+        <p class="arcade-desc">Le marié doit rejoindre la mariée à l'hôtel avant la cérémonie ! 🏃🤵🏨<br>Saute par-dessus les obstacles sur le chemin. La mariée attend avec la bague 💍<br>Espace pour sauter · Double saut permis !</p>
+        <canvas id="plCanvas" width="440" height="352" role="img" aria-label="Jeu de plateformes : le marié court vers l'hôtel de mariage en sautant par-dessus des obstacles."></canvas>
+        <button class="jump-btn" onpointerdown="p2jump()">SAUTER 🚀</button>
+        <div class="game-ctrl"><button class="btn btn-gold" onclick="p2start()">Nouvelle partie</button></div>
+        <p class="game-hint">Espace ou toucher l'écran pour sauter · Double saut permis</p>
+      </div>
+
     </div>
   </div>
 </div>
@@ -532,7 +565,7 @@ document.getElementById('menuForm').addEventListener('submit', function(e) {
 const cv=document.getElementById('gameCanvas');
 const cx=cv.getContext('2d');
 const W=cv.width, H=cv.height;
-const GRID=22, GSPD=3.5, BSPD=3.3, CATCH_R=26, TSEC=25;
+const GRID=22, GSPD=3.5, BSPD=2.2, CATCH_R=34, TSEC=40;
 
 if(!cx.roundRect){
   CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r=0){
@@ -552,7 +585,7 @@ let gmStunned=false, gmStunFrames=0;
 let gmPrevX=0, gmPrevY=0;                       // pour prédire la trajectoire du marié
 let brDashFrames=0, brDashCD=0, brDashVx=0, brDashVy=0; // dash d'esquive de la mariée
 let pdChargeFrames=0;                            // charges agressives occasionnelles
-const STUN_DUR=40;                       // ~1.6s at 40ms
+const STUN_DUR=20;                       // ~0.8s at 40ms
 let hearts=[], keys={}, dpX=0, dpY=0;
 let gState='idle', tLeft=TSEC, lastScore=null, bestScore=0;
 let gLoop, tTick, frame=0;
@@ -594,11 +627,11 @@ function step(){
   // Track groom velocity to predict where he'll be
   const gmVx=gm.x-gmPrevX, gmVy=gm.y-gmPrevY;
   gmPrevX=gm.x; gmPrevY=gm.y;
-  const predX=gm.x+gmVx*10, predY=gm.y+gmVy*10;     // position du marié dans 10 frames
+  const predX=gm.x+gmVx*5, predY=gm.y+gmVy*5;     // position du marié dans 5 frames
   const realDist=Math.hypot(br.x-gm.x,br.y-gm.y)||1; // distance réelle pour catch + cœurs
   const pdx=br.x-predX, pdy=br.y-predY;
   const pdist=Math.hypot(pdx,pdy)||1;
-  const spd=realDist<170?BSPD*(1+(170-realDist)/120):BSPD*.65;
+  const spd=realDist<170?BSPD*(1+(170-realDist)/200):BSPD*.6;
   let fx=pdx/pdist, fy=pdy/pdist;
   // Anti-coin : si coincée dans un coin, pousser vers le centre
   const cornX=br.x<70?1:(br.x>W-70?-1:0);
@@ -618,11 +651,11 @@ function step(){
     const s=dot>=0?1:-1;
     const dl=Math.hypot(perpX,perpY)||1;
     brDashVx=s*perpX/dl; brDashVy=s*perpY/dl;
-    brDashFrames=12; brDashCD=38;
+    brDashFrames=7; brDashCD=22;
   }
   if(brDashCD>0) brDashCD--;
   // Bruit léger (au lieu de .44)
-  fx+=(Math.random()-.5)*.15;fy+=(Math.random()-.5)*.15;
+  fx+=(Math.random()-.5)*.35;fy+=(Math.random()-.5)*.35;
   br.vx=br.vx*.78+fx*spd*.22;br.vy=br.vy*.78+fy*spd*.22;
   // Appliquer la poussée du dash
   if(brDashFrames>0){
@@ -653,7 +686,7 @@ function step(){
     if(Math.random()<.009) pdChargeFrames=22;
   }
   const pspd=Math.hypot(pd.vx,pd.vy)||1;
-  const ptgt=2.8;
+  const ptgt=1.9;
   if(pspd>ptgt){pd.vx=pd.vx/pspd*ptgt; pd.vy=pd.vy/pspd*ptgt;}
   pd.x+=pd.vx; pd.y+=pd.vy;
   if(pd.x<26){pd.vx=Math.abs(pd.vx);pd.x=26;}
@@ -912,6 +945,304 @@ document.addEventListener('keyup',e=>{keys[e.key]=false;});
 // Initial idle screen
 document.getElementById('gTimer').textContent=TSEC+'s';
 initGame();drawScene();
+
+/* ══════════════════════════════════════════════════════════
+   🏃 JEU 2 — LA COURSE VERS L'HÔTEL
+   ══════════════════════════════════════════════════════════ */
+const cv2=document.getElementById('plCanvas');
+const cx2=cv2.getContext('2d');
+const PW=440,PH=352,PGR=PH-58,PTOTAL=5000;
+const PJUMP=-13,PGRAV=0.56,MAXJ=2,PB_SCR=2.8;
+
+if(!cx2.roundRect){
+  CanvasRenderingContext2D.prototype.roundRect=CanvasRenderingContext2D.prototype.roundRect||function(x,y,w,h,r){r=Math.min(r,Math.abs(w)/2,Math.abs(h)/2);this.beginPath();this.moveTo(x+r,y);this.lineTo(x+w-r,y);this.arcTo(x+w,y,x+w,y+r,r);this.lineTo(x+w,y+h-r);this.arcTo(x+w,y+h,x+w-r,y+h,r);this.lineTo(x+r,y+h);this.arcTo(x,y+h,x,y+h-r,r);this.lineTo(x,y+r);this.arcTo(x,y,x+r,y,r);this.closePath();return this;};
+}
+
+/* ── Arrière-plan pré-généré ── */
+const p2Trees=[];
+(function(){const cols=['#c4622d','#d4821a','#8b3c22','#c8a248','#a85028','#b8501e','#6b8c3a'];
+for(let wx=180;wx<PTOTAL;wx+=55+Math.random()*70){p2Trees.push({wx,h:44+Math.random()*58,w:17+Math.random()*20,c:cols[Math.floor(Math.random()*cols.length)],near:Math.random()>.5});}})();
+const p2Mtns=[];
+(function(){for(let wx=0;wx<PTOTAL*.25;wx+=90+Math.random()*70){p2Mtns.push({wx,h:32+Math.random()*52,w:65+Math.random()*60});}})();
+
+/* ── État du jeu ── */
+let p2gr={x:82,y:PGR,vy:0,onGr:true,jumps:0,w:24,h:46,inv:0,fr:0};
+let p2sx=0,p2state='idle',p2lives=3,p2fr=0,p2loop=null;
+let p2obs=[],p2parts=[];
+
+function p2init(){
+  p2gr={x:82,y:PGR,vy:0,onGr:true,jumps:0,w:24,h:46,inv:0,fr:0};
+  p2sx=0;p2lives=3;p2fr=0;p2obs=p2makeObs();p2parts=[];
+}
+
+function p2makeObs(){
+  const obs=[],T=[
+    {t:'pot',w:24,h:35},{t:'bottle',w:18,h:54},
+    {t:'fence',w:42,h:44},{t:'cake',w:32,h:60}
+  ];
+  let wx=620;
+  while(wx<PTOTAL-420){obs.push({...T[Math.floor(Math.random()*T.length)],wx});wx+=185+Math.random()*210;}
+  return obs;
+}
+
+function p2jump(){
+  if(p2state!=='playing'){p2start();return;}
+  if(p2gr.jumps<MAXJ){
+    p2gr.vy=PJUMP*(p2gr.jumps===0?1:.82);
+    p2gr.onGr=false;p2gr.jumps++;
+    for(let i=0;i<6;i++) p2parts.push({x:p2gr.x+(Math.random()-.5)*14,y:PGR-4,vx:(Math.random()-.5)*2.5,vy:-Math.random()*2.8,life:1});
+  }
+}
+window.p2jump=p2jump;
+
+function p2start(){
+  clearInterval(p2loop);
+  if(gState==='playing'){gState='idle';clearInterval(gLoop);clearInterval(tTick);}
+  p2init();p2state='playing';p2draw();
+  p2loop=setInterval(p2step,40);
+}
+window.p2start=p2start;
+
+function p2step(){
+  if(p2state!=='playing') return;
+  p2fr++;
+  const spd=PB_SCR+p2sx/PTOTAL*1.5;
+  p2sx=Math.min(p2sx+spd,PTOTAL);
+  if(p2sx>=PTOTAL){p2state='win';clearInterval(p2loop);p2draw();return;}
+  // Physics
+  p2gr.vy+=PGRAV;
+  p2gr.y+=p2gr.vy;
+  if(p2gr.y>=PGR){p2gr.y=PGR;p2gr.vy=0;p2gr.onGr=true;p2gr.jumps=0;}
+  if(p2gr.inv>0) p2gr.inv--;
+  if(p2gr.onGr) p2gr.fr++;
+  // Collisions
+  if(p2gr.inv===0){
+    for(const ob of p2obs){
+      const osx=ob.wx-p2sx+82;
+      if(osx<-ob.w-5||osx>PW+5) continue;
+      const gL=82-9,gR=82+9,gT=p2gr.y-p2gr.h+10,gB=p2gr.y-6;
+      const oL=osx+2,oR=osx+ob.w-2,oT=PGR-ob.h+4,oB=PGR;
+      if(gL<oR&&gR>oL&&gT<oB&&gB>oT){
+        p2lives--;p2gr.inv=85;
+        if(p2lives<=0){p2state='lose';clearInterval(p2loop);}
+      }
+    }
+  }
+  // Particles
+  p2parts=p2parts.filter(p=>p.life>0);
+  p2parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.12;p.life-=.055;});
+  p2draw();
+}
+
+function p2draw(){
+  cx2.clearRect(0,0,PW,PH);
+  // Ciel
+  const sk=cx2.createLinearGradient(0,0,0,PGR);
+  sk.addColorStop(0,'#12202a');sk.addColorStop(.5,'#1e2e22');sk.addColorStop(1,'#2e4232');
+  cx2.fillStyle=sk;cx2.fillRect(0,0,PW,PH);
+  // Grille (même que jeu 1)
+  cx2.strokeStyle='rgba(58,84,68,.22)';cx2.lineWidth=.5;
+  for(let i=0;i*22<=PW;i++){cx2.beginPath();cx2.moveTo(i*22,0);cx2.lineTo(i*22,PH);cx2.stroke();}
+  for(let i=0;i*22<=PH;i++){cx2.beginPath();cx2.moveTo(0,i*22);cx2.lineTo(PW,i*22);cx2.stroke();}
+  const prog=Math.min(p2sx/PTOTAL,1);
+  // Montagnes (parallaxe 0.15)
+  cx2.fillStyle='rgba(32,50,36,.68)';
+  for(const m of p2Mtns){const sx=m.wx-p2sx*.15;if(sx<-m.w||sx>PW+5)continue;cx2.beginPath();cx2.moveTo(sx,PGR-6);cx2.lineTo(sx+m.w/2,PGR-6-m.h);cx2.lineTo(sx+m.w,PGR-6);cx2.closePath();cx2.fill();}
+  // Arbres (parallaxe 0.42)
+  for(const tr of p2Trees){
+    const sx=tr.wx-p2sx*.42;if(sx<-tr.w-12||sx>PW+22)continue;
+    cx2.fillStyle='#3a2218';cx2.fillRect(sx+tr.w*.4,PGR-tr.h*.38,tr.w*.22,tr.h*.38);
+    cx2.globalAlpha=tr.near?.58:.32;cx2.fillStyle=tr.c;
+    cx2.beginPath();cx2.ellipse(sx+tr.w/2,PGR-tr.h*.52,tr.w*.68,tr.h*.52,0,0,Math.PI*2);cx2.fill();
+    cx2.globalAlpha=1;
+  }
+  // Hôtel (apparaît depuis la droite)
+  const htlWx=PTOTAL-220,htlSx=htlWx-p2sx+82;
+  if(htlSx<PW+180&&htlSx>-100) p2drawHotel(htlSx,PGR);
+  // Sol
+  cx2.fillStyle='#1a2814';cx2.fillRect(0,PGR,PW,PH-PGR);
+  cx2.fillStyle='rgba(200,162,72,.13)';cx2.fillRect(0,PGR,PW,3);
+  // Herbe animée
+  cx2.fillStyle='rgba(88,124,68,.42)';
+  for(let i=0;i<24;i++){const gx=((i*41+Math.floor(p2sx*.9))%520)%(PW+20)-10;cx2.fillRect(gx,PGR-3,3,6);cx2.fillRect(gx+8,PGR-5,2,6);}
+  // Obstacles
+  for(const ob of p2obs){const osx=ob.wx-p2sx+82;if(osx<-ob.w-5||osx>PW+8)continue;p2drawOb(ob.t,osx,PGR,ob.w,ob.h);}
+  // Particules
+  p2parts.forEach(p=>{cx2.globalAlpha=p.life*.75;cx2.fillStyle='#c8a248';cx2.beginPath();cx2.arc(p.x,p.y,2.8,0,Math.PI*2);cx2.fill();});cx2.globalAlpha=1;
+  // Mariée à l'hôtel
+  if(p2sx>PTOTAL-680){const brX=htlSx+42;if(brX<PW+55&&brX>-55) p2drawBride(brX,PGR,-1,p2fr);}
+  // Marié (clignote si invincible)
+  if(p2gr.inv===0||Math.floor(p2gr.inv/5)%2===0) p2drawGroom(82,p2gr.y,1,p2gr.fr);
+  // HUD — vies
+  cx2.globalAlpha=1;cx2.font='16px serif';cx2.textAlign='left';cx2.textBaseline='top';
+  for(let i=0;i<3;i++){cx2.globalAlpha=i<p2lives?1:.2;cx2.fillStyle='#ddb96a';cx2.fillText('♥',10+i*22,8);}cx2.globalAlpha=1;
+  // Barre de progression
+  cx2.fillStyle='rgba(200,162,72,.18)';cx2.fillRect(PW/2-72,12,144,5);
+  cx2.fillStyle='#c8a248';cx2.fillRect(PW/2-72,12,144*prog,5);
+  cx2.font='9px "Cinzel",serif';cx2.fillStyle='rgba(200,162,72,.65)';cx2.textAlign='center';cx2.textBaseline='top';
+  cx2.fillText('🏨 '+Math.round(prog*100)+'%',PW/2,20);
+  // Overlays
+  if(p2state==='idle'||p2state==='playing'&&p2fr<2){
+    if(p2state==='idle'){p2ov();cx2.font='14px "Cinzel",serif';cx2.fillStyle='#ddb96a';cx2.fillText('La Course vers l\'Hôtel',PW/2,PH/2-28);cx2.font='13px "Cormorant Garamond",serif';cx2.fillStyle='rgba(200,162,72,.72)';cx2.fillText('Rejoins la mariée à l\'hôtel avant la cérémonie !',PW/2,PH/2+1);cx2.font='11px "Cormorant Garamond",serif';cx2.fillStyle='rgba(200,162,72,.45)';cx2.fillText('Espace · bouton · toucher l\'écran pour sauter',PW/2,PH/2+24);}
+  }
+  if(p2state==='win'){p2ov();cx2.font='bold 17px "Cinzel",serif';cx2.fillStyle='#f0d99a';cx2.fillText('Arrivé à l\'hôtel ! 💍',PW/2,PH/2-28);cx2.font='14px "Cormorant Garamond",serif';cx2.fillStyle='#ddb96a';cx2.fillText('La mariée vous attendait avec la bague !',PW/2,PH/2+4);cx2.font='11px "Cormorant Garamond",serif';cx2.fillStyle='rgba(200,162,72,.5)';cx2.fillText('Cliquez « Nouvelle partie » pour rejouer',PW/2,PH/2+30);}
+  if(p2state==='lose'){p2ov();cx2.font='bold 16px "Cinzel",serif';cx2.fillStyle='#e8906a';cx2.fillText('Trop d\'obstacles… 😅',PW/2,PH/2-24);cx2.font='13px "Cormorant Garamond",serif';cx2.fillStyle='rgba(200,162,72,.6)';cx2.fillText('La mariée attend toujours au bout du chemin…',PW/2,PH/2+8);cx2.font='11px "Cormorant Garamond",serif';cx2.fillStyle='rgba(200,162,72,.4)';cx2.fillText('Cliquez « Nouvelle partie » pour réessayer',PW/2,PH/2+32);}
+}
+function p2ov(){cx2.fillStyle='rgba(20,34,26,.84)';cx2.fillRect(0,0,PW,PH);cx2.textAlign='center';cx2.textBaseline='middle';}
+
+function p2drawHotel(sx,gy){
+  // Corps principal
+  cx2.fillStyle='#253626';cx2.fillRect(sx,gy-130,90,130);
+  // Texture de pierre
+  cx2.strokeStyle='rgba(200,162,72,.07)';cx2.lineWidth=.8;
+  for(let r=0;r<6;r++) for(let c=0;c<4;c++){const bx=sx+c*23-(c%2?0:11),by=gy-128+r*23;if(by>gy-128&&by<gy)cx2.strokeRect(bx,by,22,22);}
+  // Toit pointu
+  cx2.fillStyle='#1a2a1e';cx2.beginPath();cx2.moveTo(sx-14,gy-130);cx2.lineTo(sx+45,gy-175);cx2.lineTo(sx+104,gy-130);cx2.closePath();cx2.fill();
+  // Arête du toit
+  cx2.strokeStyle='rgba(200,162,72,.42)';cx2.lineWidth=1.5;cx2.beginPath();cx2.moveTo(sx-14,gy-130);cx2.lineTo(sx+45,gy-175);cx2.lineTo(sx+104,gy-130);cx2.stroke();
+  // Entrée arrondie
+  cx2.fillStyle='#141e14';cx2.fillRect(sx+29,gy-58,32,58);
+  cx2.beginPath();cx2.arc(sx+45,gy-58,16,Math.PI,0);cx2.fill();
+  cx2.strokeStyle='rgba(200,162,72,.5)';cx2.lineWidth=1.5;cx2.beginPath();cx2.arc(sx+45,gy-58,16,Math.PI,0);cx2.stroke();cx2.strokeRect(sx+29,gy-58,32,58);
+  // Fenêtres illuminées
+  [[sx+6,gy-110],[sx+6,gy-82],[sx+64,gy-110],[sx+64,gy-82]].forEach(([wx,wy])=>{
+    cx2.fillStyle='rgba(255,210,100,.28)';cx2.fillRect(wx,wy,19,15);
+    cx2.strokeStyle='rgba(200,162,72,.6)';cx2.lineWidth=1;cx2.strokeRect(wx,wy,19,15);
+    cx2.beginPath();cx2.moveTo(wx+9.5,wy);cx2.lineTo(wx+9.5,wy+15);cx2.stroke();
+    cx2.beginPath();cx2.moveTo(wx,wy+7.5);cx2.lineTo(wx+19,wy+7.5);cx2.stroke();
+  });
+  // Enseigne
+  cx2.fillStyle='rgba(200,162,72,.22)';cx2.fillRect(sx+12,gy-154,66,16);
+  cx2.strokeStyle='rgba(200,162,72,.52)';cx2.lineWidth=1;cx2.strokeRect(sx+12,gy-154,66,16);
+  cx2.font='bold 8px "Cinzel",serif';cx2.fillStyle='#c8a248';cx2.textAlign='center';cx2.textBaseline='middle';
+  cx2.fillText('MANOIR',sx+45,gy-146);
+  // Bordure décorative
+  cx2.strokeStyle='rgba(200,162,72,.32)';cx2.lineWidth=1.5;cx2.strokeRect(sx,gy-130,90,130);
+}
+
+function p2drawOb(type,sx,gy,w,h){
+  cx2.fillStyle='rgba(0,0,0,.2)';cx2.beginPath();cx2.ellipse(sx+w/2,gy,w*.55,3.5,0,0,Math.PI*2);cx2.fill();
+  switch(type){
+    case 'pot':
+      cx2.fillStyle='#8b3c22';cx2.beginPath();cx2.moveTo(sx+5,gy-h);cx2.lineTo(sx,gy);cx2.lineTo(sx+w,gy);cx2.lineTo(sx+w-5,gy-h);cx2.closePath();cx2.fill();
+      cx2.fillStyle='#6b2c12';cx2.fillRect(sx+3,gy-h,w-6,5);
+      cx2.fillStyle='#4a7a5a';cx2.fillRect(sx+w/2-1.5,gy-h-10,3,10);
+      cx2.fillStyle='#c4622d';cx2.beginPath();cx2.arc(sx+w/2,gy-h-12,7,0,Math.PI*2);cx2.fill();
+      cx2.fillStyle='#d4821a';cx2.beginPath();cx2.arc(sx+w/2-4,gy-h-15,4.5,0,Math.PI*2);cx2.fill();
+      cx2.fillStyle='#f5ead8';cx2.beginPath();cx2.arc(sx+w/2,gy-h-12,3,0,Math.PI*2);cx2.fill();
+      cx2.fillStyle='#c8a248';cx2.beginPath();cx2.arc(sx+w/2,gy-h-12,1.5,0,Math.PI*2);cx2.fill();
+      break;
+    case 'bottle':
+      cx2.fillStyle='#2e4436';cx2.beginPath();cx2.roundRect(sx+w*.18,gy-h*.78,w*.64,h*.78,4);cx2.fill();
+      cx2.fillStyle='#1e2e25';cx2.fillRect(sx+w*.3,gy-h,w*.4,h*.26);
+      cx2.fillStyle='#c8a248';cx2.fillRect(sx+w*.24,gy-h,w*.52,8);
+      cx2.fillStyle='rgba(245,234,216,.14)';cx2.fillRect(sx+w*.18,gy-h*.52,w*.64,h*.22);
+      cx2.strokeStyle='rgba(200,162,72,.22)';cx2.lineWidth=1;cx2.beginPath();cx2.roundRect(sx+w*.18,gy-h*.78,w*.64,h*.78,4);cx2.stroke();
+      break;
+    case 'fence':
+      cx2.fillStyle='#7a5030';cx2.fillRect(sx,gy-h*.32,w,6);cx2.fillRect(sx,gy-h*.64,w,5);
+      cx2.fillStyle='#5a3a18';
+      for(let i=0;i<3;i++){const px=sx+i*(w/3)+3;cx2.beginPath();cx2.moveTo(px+w/6,gy-h);cx2.lineTo(px,gy);cx2.lineTo(px+w/3-5,gy);cx2.closePath();cx2.fill();}
+      cx2.strokeStyle='rgba(200,162,72,.12)';cx2.lineWidth=.8;cx2.strokeRect(sx,gy-h,w,h);
+      break;
+    case 'cake':
+      cx2.fillStyle='#f5ead8';cx2.fillRect(sx,gy-h*.38,w,h*.38);
+      cx2.fillStyle='#ede0cc';cx2.fillRect(sx+5,gy-h*.72,w-10,h*.34);
+      cx2.fillStyle='#e8d5bc';cx2.fillRect(sx+10,gy-h,w-20,h*.28);
+      cx2.fillStyle='#c8a248';cx2.fillRect(sx,gy-h*.38,w,2.5);cx2.fillRect(sx+5,gy-h*.72,w-10,2);cx2.fillRect(sx+10,gy-h,w-20,2);
+      cx2.font='10px serif';cx2.textAlign='center';cx2.textBaseline='middle';cx2.fillText('💕',sx+w/2,gy-h-6);
+      break;
+  }
+}
+
+function p2drawGroom(x,y,f,fr){
+  cx2.save();cx2.translate(x,y);cx2.scale(f,1);
+  const onGr=p2gr.onGr;
+  const l=onGr?Math.sin(fr*.28)*6:0, a=onGr?Math.sin(fr*.28)*5:0;
+  // Shadow
+  cx2.fillStyle='rgba(0,0,0,.24)';cx2.beginPath();cx2.ellipse(0,3,12,3.5,0,0,Math.PI*2);cx2.fill();
+  // Jambes
+  cx2.fillStyle='#1a2030';cx2.fillRect(-9,14,7,15+l);cx2.fillRect(2,14,7,15-l);
+  cx2.fillStyle='#0e1220';cx2.fillRect(-11,28+l,10,5);cx2.fillRect(1,28-l,10,5);
+  // Corps
+  cx2.fillStyle='#1a2030';cx2.beginPath();cx2.roundRect(-11,-10,22,26,3);cx2.fill();
+  cx2.fillStyle='#f5ead8';cx2.fillRect(-5,-9,10,13);
+  cx2.fillStyle='#c8a248';cx2.beginPath();cx2.moveTo(-5,-5);cx2.lineTo(0,-2);cx2.lineTo(5,-5);cx2.lineTo(5,-8);cx2.lineTo(0,-5);cx2.lineTo(-5,-8);cx2.closePath();cx2.fill();
+  cx2.fillStyle='#1a2030';cx2.beginPath();cx2.moveTo(-11,-10);cx2.lineTo(-5,-9);cx2.lineTo(-8,5);cx2.closePath();cx2.fill();
+  cx2.beginPath();cx2.moveTo(11,-10);cx2.lineTo(5,-9);cx2.lineTo(8,5);cx2.closePath();cx2.fill();
+  // Bras (levés en sautant)
+  const armRot=onGr?0:-0.45, armY=onGr?0:5;
+  cx2.fillStyle='#1a2030';
+  cx2.save();cx2.translate(-14,-1+a+armY);cx2.rotate(-0.18+armRot);cx2.fillRect(-4,-3,10,6);cx2.restore();
+  cx2.save();cx2.translate(12,-1-a+armY);cx2.rotate(0.18-armRot);cx2.fillRect(-4,-3,10,6);cx2.restore();
+  cx2.fillStyle='#f5c8a0';cx2.beginPath();cx2.arc(-18,-1+a+armY,4,0,Math.PI*2);cx2.fill();
+  cx2.beginPath();cx2.arc(20,-1-a+armY,4,0,Math.PI*2);cx2.fill();
+  // Tête
+  cx2.fillStyle='#f5c8a0';cx2.beginPath();cx2.arc(0,-22,10,0,Math.PI*2);cx2.fill();
+  cx2.fillStyle='#2c1e10';cx2.beginPath();cx2.arc(0,-22,10,Math.PI,0);cx2.fill();cx2.fillRect(-10,-32,20,11);
+  cx2.fillStyle='#1a1a1a';cx2.beginPath();cx2.arc(-3.5,-23,1.7,0,Math.PI*2);cx2.fill();cx2.beginPath();cx2.arc(3.5,-23,1.7,0,Math.PI*2);cx2.fill();
+  cx2.fillStyle='white';cx2.beginPath();cx2.arc(-2.7,-24,.65,0,Math.PI*2);cx2.fill();cx2.beginPath();cx2.arc(4.3,-24,.65,0,Math.PI*2);cx2.fill();
+  cx2.strokeStyle='#5c3a2a';cx2.lineWidth=1.5;cx2.beginPath();cx2.arc(0,-20,4.2,.12,Math.PI-.12);cx2.stroke();
+  cx2.restore();
+}
+
+function p2drawBride(x,y,f,fr){
+  cx2.save();cx2.translate(x,y);cx2.scale(f,1);
+  const sw=Math.sin(fr*.22)*2.5, a=Math.sin(fr*.22)*2.5;
+  cx2.fillStyle='rgba(0,0,0,.18)';cx2.beginPath();cx2.ellipse(sw*.3,2,12,3.5,0,0,Math.PI*2);cx2.fill();
+  // Robe
+  cx2.fillStyle='#f5ead8';cx2.beginPath();cx2.moveTo(-7,7);cx2.lineTo(-18+sw,30);cx2.lineTo(18+sw,30);cx2.lineTo(7,7);cx2.closePath();cx2.fill();
+  // Corsage
+  cx2.fillStyle='#ede0cc';cx2.beginPath();cx2.roundRect(-7,-11,14,20,2);cx2.fill();
+  cx2.fillStyle='#c8a248';cx2.fillRect(-7,7,14,2.5);
+  // Bras ouverts (geste d'accueil)
+  cx2.fillStyle='#f5c8a0';
+  cx2.save();cx2.translate(-16,-4+a);cx2.rotate(-.55);cx2.fillRect(-4,-2.5,10,5);cx2.restore();
+  cx2.save();cx2.translate(14,-4-a);cx2.rotate(.55);cx2.fillRect(-4,-2.5,10,5);cx2.restore();
+  // Bague à la main droite
+  cx2.save();cx2.translate(22,-7-a);cx2.font='12px serif';cx2.textAlign='center';cx2.textBaseline='middle';cx2.fillText('💍',0,0);cx2.restore();
+  // Tête
+  cx2.fillStyle='#f5c8a0';cx2.beginPath();cx2.arc(0,-22,9.5,0,Math.PI*2);cx2.fill();
+  cx2.fillStyle='#5a3018';cx2.beginPath();cx2.arc(0,-22,9.5,Math.PI,0);cx2.fill();cx2.fillRect(-9.5,-32,19,11);
+  // Voile
+  cx2.strokeStyle='rgba(245,234,216,.55)';cx2.lineWidth=2.2;cx2.beginPath();cx2.moveTo(-1,-31);cx2.quadraticCurveTo(16,-19,17,5);cx2.stroke();
+  cx2.lineWidth=1.3;cx2.beginPath();cx2.moveTo(-1,-31);cx2.quadraticCurveTo(19,-16,20,8);cx2.stroke();
+  // Tiare
+  cx2.fillStyle='#c8a248';cx2.fillRect(-6,-33,12,2.5);
+  cx2.beginPath();cx2.moveTo(-2,-33);cx2.lineTo(0,-37);cx2.lineTo(2,-33);cx2.closePath();cx2.fill();
+  cx2.beginPath();cx2.moveTo(-6,-33);cx2.lineTo(-5,-36);cx2.lineTo(-2,-33);cx2.closePath();cx2.fill();
+  cx2.beginPath();cx2.moveTo(6,-33);cx2.lineTo(5,-36);cx2.lineTo(2,-33);cx2.closePath();cx2.fill();
+  // Yeux
+  cx2.fillStyle='#2d1a0e';cx2.beginPath();cx2.arc(-3,-23,1.5,0,Math.PI*2);cx2.fill();cx2.beginPath();cx2.arc(3,-23,1.5,0,Math.PI*2);cx2.fill();
+  cx2.fillStyle='white';cx2.beginPath();cx2.arc(-2.2,-24,.55,0,Math.PI*2);cx2.fill();cx2.beginPath();cx2.arc(3.8,-24,.55,0,Math.PI*2);cx2.fill();
+  // Sourire
+  cx2.strokeStyle='#8b4a2a';cx2.lineWidth=1.3;cx2.beginPath();cx2.arc(0,-20,3.5,.2,Math.PI-.2);cx2.stroke();
+  cx2.restore();
+}
+
+/* ── Clavier : Espace pour sauter (jeu 2) ── */
+document.addEventListener('keydown',function(e){
+  if((e.code==='Space'||e.key===' ')&&document.getElementById('gameRun').style.display!=='none'){
+    e.preventDefault();p2jump();
+  }
+});
+
+/* ── Touch sur canvas du jeu 2 ── */
+cv2.addEventListener('pointerdown',function(){
+  if(document.getElementById('gameRun').style.display!=='none') p2jump();
+});
+
+/* ── Init jeu 2 ── */
+p2init();p2draw();
+
+/* ── Sélection d'onglets ── */
+function switchGame(g){
+  document.getElementById('gameChase').style.display=g==='chase'?'':'none';
+  document.getElementById('gameRun').style.display=g==='run'?'':'none';
+  document.querySelectorAll('.game-tab').forEach(function(t){t.classList.toggle('active',t.dataset.g===g);});
+  if(g==='run'&&gState==='playing'){gState='idle';clearInterval(gLoop);clearInterval(tTick);}
+  if(g==='chase'&&p2state==='playing'){p2state='idle';clearInterval(p2loop);}
+}
 </script>
 </body>
 </html>
