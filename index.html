@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Andréanne &amp; Étienne — 19 septembre 2026</title>
+<meta name="description" content="Site du mariage d'Andréanne et Étienne — Samedi 19 septembre 2026. Programme de la journée, menu, hébergement et infos pratiques.">
+<meta name="theme-color" content="#1e2e25">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_CA">
+<meta property="og:title" content="Andréanne &amp; Étienne — 19 septembre 2026">
+<meta property="og:description" content="Vous êtes invités à célébrer avec nous. Programme, menu et infos pratiques.">
+<meta property="og:site_name" content="Andréanne &amp; Étienne">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%231e2e25'/><circle cx='40' cy='52' r='20' fill='none' stroke='%23c8a248' stroke-width='6'/><circle cx='62' cy='52' r='20' fill='none' stroke='%23ddb96a' stroke-width='6'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
@@ -148,16 +156,16 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
 <body>
 
 <nav>
-  <a href="#programme">Programme</a><span class="nav-sep">♥</span>
-  <a href="#infos">Infos pratiques</a><span class="nav-sep">♥</span>
-  <a href="#menu">Choix du menu</a><span class="nav-sep">♥</span>
-  <a href="#contact">Contact</a><span class="nav-sep">♥</span>
+  <a href="#programme">Programme</a><span class="nav-sep" aria-hidden="true">♥</span>
+  <a href="#infos">Infos pratiques</a><span class="nav-sep" aria-hidden="true">♥</span>
+  <a href="#menu">Choix du menu</a><span class="nav-sep" aria-hidden="true">♥</span>
+  <a href="#contact">Contact</a><span class="nav-sep" aria-hidden="true">♥</span>
   <a href="#arcade">Mini-jeu</a>
 </nav>
 
 <!-- ═══ HERO ════════ -->
 <div id="hero">
-  <svg class="leaf-l" width="210" height="210" viewBox="0 0 210 210">
+  <svg class="leaf-l" width="210" height="210" viewBox="0 0 210 210" aria-hidden="true">
     <ellipse cx="55" cy="160" rx="38" ry="17" fill="#c4622d" transform="rotate(-34 55 160)"/>
     <ellipse cx="85" cy="184" rx="33" ry="15" fill="#d4821a" transform="rotate(17 85 184)"/>
     <ellipse cx="34" cy="192" rx="28" ry="13" fill="#8b3c22" transform="rotate(-50 34 192)"/>
@@ -169,7 +177,7 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
     <line x1="65" y1="140" x2="74" y2="174" stroke="#4a7a5a" stroke-width="1.8" opacity=".5"/>
     <line x1="79" y1="132" x2="89" y2="170" stroke="#4a7a5a" stroke-width="1.4" opacity=".4"/>
   </svg>
-  <svg class="leaf-r" width="210" height="210" viewBox="0 0 210 210">
+  <svg class="leaf-r" width="210" height="210" viewBox="0 0 210 210" aria-hidden="true">
     <ellipse cx="55" cy="160" rx="38" ry="17" fill="#c4622d" transform="rotate(-34 55 160)"/>
     <ellipse cx="85" cy="184" rx="33" ry="15" fill="#d4821a" transform="rotate(17 85 184)"/>
     <ellipse cx="34" cy="192" rx="28" ry="13" fill="#8b3c22" transform="rotate(-50 34 192)"/>
@@ -358,17 +366,17 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
   <div class="sec-wrap">
     <div class="sec-head reveal"><div class="sec-eye">Pour patienter jusqu'au grand jour</div><div class="sec-title">Mini-jeu</div><div class="sec-div"><span>◆</span></div></div>
     <div class="arcade-wrap reveal">
-      <p class="arcade-desc">Le marié doit rattraper la mariée avant la fin du chrono ! 🤵💨👰<br>Attention au caniche noir qui se met dans le chemin… 🐩<br>Flèches ou WASD pour déplacer le marié.</p>
+      <p class="arcade-desc">Le marié doit rattraper la mariée avant la fin du chrono ! 🤵💨👰<br>Attention au caniche noir qui cherche à lui bloquer le passage… 🐩<br>Flèches ou WASD pour déplacer le marié.</p>
       <div class="game-stat">
-        <span>Chrono : <strong id="gTimer">35s</strong></span>
+        <span>Chrono : <strong id="gTimer">25s</strong></span>
         <span>Meilleur : <strong id="gBest">—</strong></span>
       </div>
-      <canvas id="gameCanvas" width="440" height="352"></canvas>
-      <div class="dpad">
-        <button class="dpad-btn dp-u" onpointerdown="dpOn(0,-1)" onpointerup="dpOff()" onpointerleave="dpOff()">↑</button>
-        <button class="dpad-btn dp-l" onpointerdown="dpOn(-1,0)" onpointerup="dpOff()" onpointerleave="dpOff()">←</button>
-        <button class="dpad-btn dp-d" onpointerdown="dpOn(0,1)"  onpointerup="dpOff()" onpointerleave="dpOff()">↓</button>
-        <button class="dpad-btn dp-r" onpointerdown="dpOn(1,0)"  onpointerup="dpOff()" onpointerleave="dpOff()">→</button>
+      <canvas id="gameCanvas" width="440" height="352" role="img" aria-label="Mini-jeu : le marié court après la mariée sur un terrain en grille. Un caniche noir tente de lui bloquer le passage."></canvas>
+      <div class="dpad" role="group" aria-label="Commandes directionnelles">
+        <button class="dpad-btn dp-u" aria-label="Déplacer vers le haut" onpointerdown="dpOn(0,-1)" onpointerup="dpOff()" onpointerleave="dpOff()">↑</button>
+        <button class="dpad-btn dp-l" aria-label="Déplacer vers la gauche" onpointerdown="dpOn(-1,0)" onpointerup="dpOff()" onpointerleave="dpOff()">←</button>
+        <button class="dpad-btn dp-d" aria-label="Déplacer vers le bas" onpointerdown="dpOn(0,1)"  onpointerup="dpOff()" onpointerleave="dpOff()">↓</button>
+        <button class="dpad-btn dp-r" aria-label="Déplacer vers la droite" onpointerdown="dpOn(1,0)"  onpointerup="dpOff()" onpointerleave="dpOff()">→</button>
       </div>
       <div class="game-ctrl"><button class="btn btn-gold" onclick="startGame()">Nouvelle partie</button></div>
       <p class="game-hint">Appuyez sur une touche directionnelle pour commencer</p>
@@ -411,13 +419,13 @@ function onIframeLoad(callback) {
   const handler = () => {
     subIframe.removeEventListener('load', handler);
     clearTimeout(timer);
-    callback();
+    callback(true);  // vrai succès : l'iframe a reçu la réponse
   };
-  // Fallback : on assume succès après 4 s si l'iframe ne répond pas
+  // Fallback : après 6 s sans réponse on considère que ça a échoué
   const timer = setTimeout(() => {
     subIframe.removeEventListener('load', handler);
-    callback();
-  }, 4000);
+    callback(false);  // timeout : probablement échoué
+  }, 6000);
   subIframe.addEventListener('load', handler);
 }
 
@@ -425,11 +433,11 @@ function onIframeLoad(callback) {
 document.getElementById('brunchForm').addEventListener('submit', function(e) {
   const btn = document.getElementById('brunchBtn');
   btn.textContent = 'Envoi en cours…'; btn.disabled = true;
-  onIframeLoad(() => {
-    document.getElementById('brunchOk').style.display = 'block';
-    document.getElementById('brunchErr').style.display = 'none';
+  onIframeLoad((success) => {
+    document.getElementById('brunchOk').style.display = success ? 'block' : 'none';
+    document.getElementById('brunchErr').style.display = success ? 'none' : 'block';
     btn.textContent = 'Confirmer ♥'; btn.disabled = false;
-    document.getElementById('brunchForm').reset();
+    if(success) document.getElementById('brunchForm').reset();
   });
   // Laisser le formulaire se soumettre normalement (target="submit_iframe")
 });
@@ -438,11 +446,11 @@ document.getElementById('brunchForm').addEventListener('submit', function(e) {
 document.getElementById('contactForm').addEventListener('submit', function(e) {
   const btn = document.getElementById('contactBtn');
   btn.textContent = 'Envoi en cours…'; btn.disabled = true;
-  onIframeLoad(() => {
-    document.getElementById('contactOk').style.display = 'block';
-    document.getElementById('contactErr').style.display = 'none';
+  onIframeLoad((success) => {
+    document.getElementById('contactOk').style.display = success ? 'block' : 'none';
+    document.getElementById('contactErr').style.display = success ? 'none' : 'block';
     btn.textContent = 'Envoyer le message'; btn.disabled = false;
-    document.getElementById('contactForm').reset();
+    if(success) document.getElementById('contactForm').reset();
   });
   // Laisser le formulaire se soumettre normalement
 });
@@ -505,10 +513,12 @@ document.getElementById('menuForm').addEventListener('submit', function(e) {
   });
   document.body.appendChild(tmpForm);
 
-  onIframeLoad(() => {
-    document.getElementById('menuOk').style.display='block';
-    document.getElementById('menuErr').style.display='none';
-    document.getElementById('plist').innerHTML=''; pCount=0; addPerson();
+  onIframeLoad((success) => {
+    document.getElementById('menuOk').style.display = success ? 'block' : 'none';
+    document.getElementById('menuErr').style.display = success ? 'none' : 'block';
+    if(success){
+      document.getElementById('plist').innerHTML=''; pCount=0; addPerson();
+    }
     btn.textContent='Envoyer mes choix ♥'; btn.disabled=false;
     document.body.removeChild(tmpForm);
   });
@@ -522,7 +532,7 @@ document.getElementById('menuForm').addEventListener('submit', function(e) {
 const cv=document.getElementById('gameCanvas');
 const cx=cv.getContext('2d');
 const W=cv.width, H=cv.height;
-const GRID=22, GSPD=3.7, BSPD=2.85, CATCH_R=36, TSEC=35;
+const GRID=22, GSPD=3.5, BSPD=3.3, CATCH_R=26, TSEC=25;
 
 if(!cx.roundRect){
   CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r=0){
@@ -537,9 +547,12 @@ if(!cx.roundRect){
 }
 
 let gm={x:0,y:0,f:1}, br={x:0,y:0,vx:0,vy:0,f:-1};
-let pd={x:0,y:0,vx:2.3,vy:1.7,f:1};   // poodle
+let pd={x:0,y:0,vx:2.3,vy:1.7,f:1};   // caniche intercepteur 🐩
 let gmStunned=false, gmStunFrames=0;
-const STUN_DUR=22;                       // ~0.9s at 40ms
+let gmPrevX=0, gmPrevY=0;                       // pour prédire la trajectoire du marié
+let brDashFrames=0, brDashCD=0, brDashVx=0, brDashVy=0; // dash d'esquive de la mariée
+let pdChargeFrames=0;                            // charges agressives occasionnelles
+const STUN_DUR=40;                       // ~1.6s at 40ms
 let hearts=[], keys={}, dpX=0, dpY=0;
 let gState='idle', tLeft=TSEC, lastScore=null, bestScore=0;
 let gLoop, tTick, frame=0;
@@ -553,7 +566,10 @@ function initGame(){
   br={x:W*.78,y:H*.46,vx:-0.6,vy:0,f:-1};
   pd={x:W*.5,y:H*.25,vx:2.3,vy:1.7,f:1};
   gmStunned=false; gmStunFrames=0;
-  hearts=[];frame=0;tLeft=TSEC;gState='playing';
+  gmPrevX=gm.x; gmPrevY=gm.y;
+  brDashFrames=0; brDashCD=0; brDashVx=0; brDashVy=0;
+  pdChargeFrames=0;
+  hearts=[];frame=0;tLeft=TSEC;
   document.getElementById('gTimer').textContent=tLeft+'s';
 }
 
@@ -574,43 +590,83 @@ function step(){
   }
   // Stun countdown
   if(gmStunned){gmStunFrames--;if(gmStunFrames<=0)gmStunned=false;}
-  // Bride AI
-  const dx=br.x-gm.x,dy=br.y-gm.y;
-  const dist=Math.hypot(dx,dy)||1;
-  const spd=dist<170?BSPD*(1+(170-dist)/120):BSPD*.65;
-  let fx=dx/dist,fy=dy/dist;
-  if(br.x<58)fx+=.7;if(br.x>W-58)fx-=.7;
-  if(br.y<58)fy+=.7;if(br.y>H-58)fy-=.7;
+  // ── Bride AI (predictive flee + panic dash + anti-corner) ──
+  // Track groom velocity to predict where he'll be
+  const gmVx=gm.x-gmPrevX, gmVy=gm.y-gmPrevY;
+  gmPrevX=gm.x; gmPrevY=gm.y;
+  const predX=gm.x+gmVx*10, predY=gm.y+gmVy*10;     // position du marié dans 10 frames
+  const realDist=Math.hypot(br.x-gm.x,br.y-gm.y)||1; // distance réelle pour catch + cœurs
+  const pdx=br.x-predX, pdy=br.y-predY;
+  const pdist=Math.hypot(pdx,pdy)||1;
+  const spd=realDist<170?BSPD*(1+(170-realDist)/120):BSPD*.65;
+  let fx=pdx/pdist, fy=pdy/pdist;
+  // Anti-coin : si coincée dans un coin, pousser vers le centre
+  const cornX=br.x<70?1:(br.x>W-70?-1:0);
+  const cornY=br.y<70?1:(br.y>H-70?-1:0);
+  if(cornX!==0 && cornY!==0){
+    fx+=cornX*.95; fy+=cornY*.95;
+  } else {
+    if(br.x<58)fx+=.55;if(br.x>W-58)fx-=.55;
+    if(br.y<58)fy+=.55;if(br.y>H-58)fy-=.55;
+  }
   const fl=Math.hypot(fx,fy)||1;fx/=fl;fy/=fl;
-  fx+=(Math.random()-.5)*.44;fy+=(Math.random()-.5)*.44;
-  br.vx=br.vx*.8+fx*spd*.2;br.vy=br.vy*.8+fy*spd*.2;
+  // Dash d'esquive : si le marié est très proche et qu'elle n'est pas en cooldown
+  if(realDist<48 && brDashCD===0){
+    // Perpendiculaire à l'approche du marié, côté qui l'éloigne
+    const perpX=-gmVy, perpY=gmVx;
+    const dot=perpX*(br.x-gm.x)+perpY*(br.y-gm.y);
+    const s=dot>=0?1:-1;
+    const dl=Math.hypot(perpX,perpY)||1;
+    brDashVx=s*perpX/dl; brDashVy=s*perpY/dl;
+    brDashFrames=12; brDashCD=38;
+  }
+  if(brDashCD>0) brDashCD--;
+  // Bruit léger (au lieu de .44)
+  fx+=(Math.random()-.5)*.15;fy+=(Math.random()-.5)*.15;
+  br.vx=br.vx*.78+fx*spd*.22;br.vy=br.vy*.78+fy*spd*.22;
+  // Appliquer la poussée du dash
+  if(brDashFrames>0){
+    br.vx+=brDashVx*1.9; br.vy+=brDashVy*1.9;
+    brDashFrames--;
+  }
   const bv=Math.hypot(br.vx,br.vy);
-  if(bv>spd){br.vx=br.vx/bv*spd;br.vy=br.vy/bv*spd;}
+  const maxSpd=spd*(brDashFrames>0?1.7:1);
+  if(bv>maxSpd){br.vx=br.vx/bv*maxSpd;br.vy=br.vy/bv*maxSpd;}
   br.f=br.vx>=0?1:-1;
   br.x=clamp(br.x+br.vx,26,W-26);br.y=clamp(br.y+br.vy,28,H-28);
-  // ── Poodle AI (bounces + sometimes chases groom) ──
-  if(Math.random()<.018){
-    // Steer toward groom
+  const dist=realDist; // alias pour compat avec le code cœurs/catch plus bas
+  // ── Poodle AI (intercepteur + charges agressives) ──
+  if(pdChargeFrames>0){
+    // Mode CHARGE : fonce directement sur le marié
+    pdChargeFrames--;
     const tdx=gm.x-pd.x,tdy=gm.y-pd.y,td=Math.hypot(tdx,tdy)||1;
-    pd.vx=pd.vx*.5+(tdx/td)*2.5*.5;
-    pd.vy=pd.vy*.5+(tdy/td)*2.5*.5;
+    pd.vx=pd.vx*.7+(tdx/td)*3.2*.3;
+    pd.vy=pd.vy*.7+(tdy/td)*3.2*.3;
+  } else {
+    // Mode INTERCEPTEUR : vise un point sur la ligne marié↔mariée, du côté de la mariée
+    const tx=br.x*.58+gm.x*.42;
+    const ty=br.y*.58+gm.y*.42;
+    const tdx=tx-pd.x,tdy=ty-pd.y,td=Math.hypot(tdx,tdy)||1;
+    pd.vx=pd.vx*.82+(tdx/td)*3.0*.18;
+    pd.vy=pd.vy*.82+(tdy/td)*3.0*.18;
+    // Déclencher une charge de temps en temps (environ toutes les ~3s)
+    if(Math.random()<.009) pdChargeFrames=22;
   }
   const pspd=Math.hypot(pd.vx,pd.vy)||1;
-  const ptgt=2.4;
-  pd.vx=pd.vx/pspd*ptgt; pd.vy=pd.vy/pspd*ptgt;
+  const ptgt=2.8;
+  if(pspd>ptgt){pd.vx=pd.vx/pspd*ptgt; pd.vy=pd.vy/pspd*ptgt;}
   pd.x+=pd.vx; pd.y+=pd.vy;
   if(pd.x<26){pd.vx=Math.abs(pd.vx);pd.x=26;}
   if(pd.x>W-26){pd.vx=-Math.abs(pd.vx);pd.x=W-26;}
   if(pd.y<30){pd.vy=Math.abs(pd.vy);pd.y=30;}
   if(pd.y>H-30){pd.vy=-Math.abs(pd.vy);pd.y=H-30;}
   pd.f=pd.vx>=0?1:-1;
-  // Poodle collides with groom → stun
+  // Poodle collides with groom → stun + gros bounce
   if(!gmStunned&&Math.hypot(pd.x-gm.x,pd.y-gm.y)<30){
     gmStunned=true; gmStunFrames=STUN_DUR;
-    // Bounce groom back
     const bx=gm.x-pd.x,by=gm.y-pd.y,bd=Math.hypot(bx,by)||1;
-    gm.x=clamp(gm.x+(bx/bd)*22,26,W-26);
-    gm.y=clamp(gm.y+(by/bd)*22,30,H-30);
+    gm.x=clamp(gm.x+(bx/bd)*34,26,W-26);
+    gm.y=clamp(gm.y+(by/bd)*34,30,H-30);
   }
   // Hearts
   if(dist<120&&frame%7===0) hearts.push({x:(gm.x+br.x)/2+(Math.random()-.5)*38,y:Math.min(gm.y,br.y)-12,vy:-1.4-Math.random()*1.1,life:1,sz:8+Math.random()*8});
@@ -834,7 +890,9 @@ function drawPoodle(x,y,f,fr){
 
 function startGame(){
   clearInterval(gLoop);clearInterval(tTick);
-  initGame();drawScene();
+  initGame();
+  gState='playing';
+  drawScene();
   gLoop=setInterval(step,40);
   tTick=setInterval(()=>{
     if(gState!=='playing')return;
@@ -852,6 +910,7 @@ document.addEventListener('keydown',e=>{
 document.addEventListener('keyup',e=>{keys[e.key]=false;});
 
 // Initial idle screen
+document.getElementById('gTimer').textContent=TSEC+'s';
 initGame();drawScene();
 </script>
 </body>
