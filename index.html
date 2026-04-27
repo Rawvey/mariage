@@ -131,14 +131,26 @@ textarea.fc-full{resize:vertical;min-height:125px}
 .game-tabs{display:flex;gap:8px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
 .game-tab{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:2px;text-transform:uppercase;background:transparent;border:1px solid var(--bord);color:var(--gold2);padding:9px 22px;border-radius:2px;cursor:pointer;transition:all .25s}
 .game-tab.active,.game-tab:hover{background:rgba(200,162,72,.15);border-color:var(--gold);color:var(--gold3)}
+.diff-row{display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:14px;flex-wrap:wrap}
+.diff-row span{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:.75}
+.diff-btn{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;background:transparent;border:1px solid rgba(200,162,72,.25);color:var(--cream2);padding:5px 14px;border-radius:2px;cursor:pointer;transition:all .25s}
+.diff-btn.active{background:rgba(200,162,72,.18);border-color:var(--gold);color:var(--gold3)}
+.diff-btn:hover{color:var(--gold2)}
 .jump-btn{display:none;width:100%;padding:20px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:2.5px;text-transform:uppercase;background:rgba(58,84,68,.6);border:1.5px solid var(--bord);color:var(--gold2);border-radius:4px;cursor:pointer;touch-action:manipulation;margin:10px 0;transition:all .2s}
 .jump-btn:active{background:rgba(200,162,72,.28);border-color:var(--gold)}
 @media(max-width:680px){.jump-btn{display:block}}
 .dpad{display:none;grid-template-columns:repeat(3,68px);grid-template-rows:repeat(3,68px);gap:6px;justify-content:center;margin:14px auto}
-@media(max-width:680px){.dpad{display:grid}.game-hint{display:none}}
 .dpad-btn{background:rgba(58,84,68,.55);border:1.5px solid var(--bord);color:var(--gold);font-size:28px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;user-select:none;-webkit-user-select:none;touch-action:manipulation;transition:background .1s}
 .dpad-btn:active{background:rgba(200,162,72,.3);border-color:var(--gold)}
 .dp-u{grid-column:2;grid-row:1}.dp-l{grid-column:1;grid-row:2}.dp-d{grid-column:2;grid-row:3}.dp-r{grid-column:3;grid-row:2}
+/* Mobile: hide dpad (use canvas touch instead), make canvas wider, hide hint */
+@media(max-width:680px){
+  .dpad{display:none}
+  .game-hint{display:none}
+  #gameCanvas, #plCanvas, #petalsCanvas{width:100% !important; height:auto !important; max-width:440px; touch-action:none}
+}
+.touch-hint{display:none;text-align:center;font-size:11px;font-style:italic;color:rgba(200,162,72,.55);margin-top:6px}
+@media(max-width:680px){.touch-hint{display:block}}
 footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,162,72,.13)}
 .f-names{font-family:'Great Vibes',cursive;font-size:3.3rem;color:var(--gold2)}
 .f-date{font-family:'Cinzel',serif;font-size:10.5px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-top:8px}
@@ -379,13 +391,19 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
       <div class="game-tabs">
         <button class="game-tab active" data-g="chase" onclick="switchGame('chase')">🤵 La Chasse à la Mariée</button>
         <button class="game-tab" data-g="run" onclick="switchGame('run')">🏃 La Course vers l'Hôtel</button>
+        <button class="game-tab" data-g="petals" onclick="switchGame('petals')">👰 La Pluie de Pétales</button>
       </div>
 
       <!-- JEU 1 -->
       <div id="gameChase">
-        <p class="arcade-desc">Le marié doit rattraper la mariée avant la fin du chrono ! 🤵💨👰<br>Attention au caniche noir qui tente de lui bloquer le passage… 🐩<br>Flèches ou WASD pour déplacer le marié.</p>
+        <p class="arcade-desc">Le marié doit rattraper la mariée avant la fin du chrono ! 🤵💨👰<br>Attention au caniche noir qui tente de lui bloquer le passage… 🐩<br>Ramassez le bouquet 💐 pour figer le caniche !</p>
+        <div class="diff-row">
+          <span>Difficulté :</span>
+          <button class="diff-btn active" data-diff="easy" onclick="setDiff('easy')">Facile</button>
+          <button class="diff-btn" data-diff="normal" onclick="setDiff('normal')">Normal</button>
+        </div>
         <div class="game-stat">
-          <span>Chrono : <strong id="gTimer">40s</strong></span>
+          <span>Chrono : <strong id="gTimer">45s</strong></span>
           <span>Meilleur : <strong id="gBest">—</strong></span>
         </div>
         <canvas id="gameCanvas" width="440" height="352" role="img" aria-label="Mini-jeu : le marié court après la mariée sur un terrain en grille. Un caniche noir tente de lui bloquer le passage."></canvas>
@@ -401,16 +419,35 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
           <div></div>
         </div>
         <div class="game-ctrl"><button class="btn btn-gold" onclick="startGame()">Nouvelle partie</button></div>
-        <p class="game-hint">Appuyez sur une touche directionnelle pour commencer</p>
+        <p class="game-hint">Flèches ou WASD · Appuyez pour commencer</p>
+        <p class="touch-hint">📱 Glissez votre doigt sur l'écran pour diriger le marié</p>
       </div>
 
       <!-- JEU 2 -->
       <div id="gameRun" style="display:none">
-        <p class="arcade-desc">Le marié doit rejoindre la mariée à l'hôtel avant la cérémonie ! 🏃🤵🏨<br>Saute par-dessus les obstacles sur le chemin. La mariée attend avec la bague 💍<br>Espace pour sauter · Double saut permis !</p>
+        <p class="arcade-desc">Le marié doit rejoindre la mariée à l'hôtel avant la cérémonie ! 🏃🤵🏨<br>Saute par-dessus les obstacles et ramasse les bagues 💍 — 5 bagues = +1 vie !<br>Espace pour sauter · Maintien = saut plus haut · Double saut permis</p>
+        <div class="game-stat">
+          <span>Bagues : <strong id="p2Rings">0</strong></span>
+          <span>Meilleur : <strong id="p2Best">—</strong></span>
+        </div>
         <canvas id="plCanvas" width="440" height="352" role="img" aria-label="Jeu de plateformes : le marié court vers l'hôtel de mariage en sautant par-dessus des obstacles."></canvas>
-        <button class="jump-btn" onpointerdown="p2jump()">SAUTER 🚀</button>
+        <button class="jump-btn" onpointerdown="p2pressJump()" onpointerup="p2releaseJump()" onpointerleave="p2releaseJump()">SAUTER 🚀</button>
         <div class="game-ctrl"><button class="btn btn-gold" onclick="p2start()">Nouvelle partie</button></div>
-        <p class="game-hint">Espace ou toucher l'écran pour sauter · Double saut permis</p>
+        <p class="game-hint">Espace ou toucher l'écran pour sauter</p>
+      </div>
+
+      <!-- JEU 3 — LA PLUIE DE PÉTALES (mariée) -->
+      <div id="gamePetals" style="display:none">
+        <p class="arcade-desc">La mariée se promène avant la cérémonie ! 👰💐<br>Attrapez les pétales 🌹 (1 pt) et bouquets 💐 (5 pts) qui tombent du ciel,<br>évitez les gouttes de pluie 💧 et la boue 🌫️ qui tâcheraient la robe !</p>
+        <div class="game-stat">
+          <span>Score : <strong id="p3Score">0</strong></span>
+          <span>Chrono : <strong id="p3Timer">60s</strong></span>
+          <span>Meilleur : <strong id="p3Best">—</strong></span>
+        </div>
+        <canvas id="petalsCanvas" width="440" height="352" role="img" aria-label="Jeu d'attrapage : la mariée attrape des pétales et bouquets qui tombent du ciel."></canvas>
+        <div class="game-ctrl"><button class="btn btn-gold" onclick="p3start()">Nouvelle partie</button></div>
+        <p class="game-hint">Flèches gauche/droite · Appuyez pour commencer</p>
+        <p class="touch-hint">📱 Glissez votre doigt pour déplacer la mariée</p>
       </div>
 
     </div>
@@ -559,19 +596,18 @@ document.getElementById('menuForm').addEventListener('submit', function(e) {
   tmpForm.submit();
 });
 
-/* ════════════════════════════════════════════════════
-   🤵💨👰  LE MARIÉ COURT APRÈS LA MARIÉE
-   ════════════════════════════════════════════════════ */
-const cv=document.getElementById('gameCanvas');
-const cx=cv.getContext('2d');
-const W=cv.width, H=cv.height;
-const GRID=22, GSPD=3.5, BSPD=2.2, CATCH_R=34, TSEC=40;
+/* ══════════════════════════════════════════════════════════
+   🎮 SHARED UTILS — localStorage, math, polyfills, confetti
+   ══════════════════════════════════════════════════════════ */
+const lsGet=(k,d)=>{try{const v=localStorage.getItem(k);return v===null?d:parseInt(v,10);}catch(e){return d;}};
+const lsSet=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
+const clamp=(v,a,b)=>v<a?a:(v>b?b:v);
+const lerp=(a,b,t)=>a+(b-a)*t;
 
-if(!cx.roundRect){
-  CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r=0){
-    r=Math.min(r,Math.abs(w)/2,Math.abs(h)/2);
-    this.beginPath();
-    this.moveTo(x+r,y);this.lineTo(x+w-r,y);this.arcTo(x+w,y,x+w,y+r,r);
+if(!CanvasRenderingContext2D.prototype.roundRect){
+  CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r){
+    r=r||0;r=Math.min(r,Math.abs(w)/2,Math.abs(h)/2);
+    this.beginPath();this.moveTo(x+r,y);this.lineTo(x+w-r,y);this.arcTo(x+w,y,x+w,y+r,r);
     this.lineTo(x+w,y+h-r);this.arcTo(x+w,y+h,x+w-r,y+h,r);
     this.lineTo(x+r,y+h);this.arcTo(x,y+h,x,y+h-r,r);
     this.lineTo(x,y+r);this.arcTo(x,y,x+r,y,r);
@@ -579,87 +615,231 @@ if(!cx.roundRect){
   };
 }
 
-let gm={x:0,y:0,f:1}, br={x:0,y:0,vx:0,vy:0,f:-1};
-let pd={x:0,y:0,vx:2.3,vy:1.7,f:1};   // caniche intercepteur 🐩
+// Crisp rendering on retina/mobile
+function setupHD(canvas){
+  const ratio=Math.min(window.devicePixelRatio||1,2);
+  const w=canvas.width, h=canvas.height;
+  canvas.style.width=w+'px';canvas.style.height=h+'px';
+  canvas.width=Math.round(w*ratio);canvas.height=Math.round(h*ratio);
+  const ctx=canvas.getContext('2d');
+  ctx.scale(ratio,ratio);
+  return ctx;
+}
+
+const CONF_COLS=['#c8a248','#ddb96a','#f0d99a','#c4622d','#d4821a','#f5ead8','#ffffff','#b8562a','#e8916a'];
+function mkConf(cw,n,y0){
+  const a=[];y0=y0||0;
+  for(let i=0;i<n;i++)a.push({
+    x:Math.random()*cw,y:y0-20-Math.random()*40,
+    vx:(Math.random()-.5)*3.5,vy:1+Math.random()*2.5,
+    rot:Math.random()*Math.PI*2,rotV:(Math.random()-.5)*.35,
+    c:CONF_COLS[Math.floor(Math.random()*CONF_COLS.length)],
+    w:3+Math.random()*4,h:5+Math.random()*6,life:3+Math.random()*1.5
+  });
+  return a;
+}
+function updConf(a){
+  for(const c of a){c.x+=c.vx;c.y+=c.vy;c.vy+=.08;c.vx*=.998;c.rot+=c.rotV;c.life-=.012;}
+  return a.filter(c=>c.life>0);
+}
+function drwConf(ctx,a){
+  for(const c of a){
+    ctx.save();ctx.translate(c.x,c.y);ctx.rotate(c.rot);
+    ctx.globalAlpha=Math.min(c.life,1);ctx.fillStyle=c.c;
+    ctx.fillRect(-c.w/2,-c.h/2,c.w,c.h);ctx.restore();
+  }
+  ctx.globalAlpha=1;
+}
+
+/* ── Visibility / viewport gating (saves CPU on mobile) ── */
+let pageVisible=!document.hidden;
+let arcadeInView=true;
+document.addEventListener('visibilitychange',()=>{ pageVisible=!document.hidden; });
+const _arcEl=document.getElementById('arcade');
+if(_arcEl&&'IntersectionObserver' in window){
+  new IntersectionObserver(es=>{ arcadeInView=es[0].isIntersecting; },{threshold:.05}).observe(_arcEl);
+}
+const canRun=()=>pageVisible&&arcadeInView;
+
+/* ════════════════════════════════════════════════════
+   🤵💨👰  JEU 1 — LE MARIÉ COURT APRÈS LA MARIÉE
+   Améliorations : difficulté, power-up bouquet,
+   avertissement de dash, clean-up automatique.
+   ════════════════════════════════════════════════════ */
+const cv=document.getElementById('gameCanvas');
+const cx=setupHD(cv);
+const W=parseInt(cv.style.width,10), H=parseInt(cv.style.height,10);
+const GRID=22, GSPD=3.6, CATCH_R=34;
+
+// Difficulty presets
+const DIFFS={
+  easy:   {bspd:1.8, tsec:45, dashCD:30, dashFr:6, predict:4, noise:.45, pdSpd:1.6, stunDur:18, pdCharge:.005},
+  normal: {bspd:2.4, tsec:35, dashCD:20, dashFr:8, predict:6, noise:.25, pdSpd:2.1, stunDur:22, pdCharge:.011}
+};
+let DIFF='easy', D=DIFFS.easy;
+
+let gm,br,pd,bouq=null;          // entities
 let gmStunned=false, gmStunFrames=0;
-let gmPrevX=0, gmPrevY=0;                       // pour prédire la trajectoire du marié
-let brDashFrames=0, brDashCD=0, brDashVx=0, brDashVy=0; // dash d'esquive de la mariée
-let pdChargeFrames=0;                            // charges agressives occasionnelles
-const STUN_DUR=20;                       // ~0.8s at 40ms
+let gmPrevX=0, gmPrevY=0;
+let brDashFrames=0, brDashCD=0, brDashVx=0, brDashVy=0;
+let brWarn=0;                    // bride dash warning flash
+let pdChargeFrames=0, pdFreezeFr=0;
+let bouqTimer=0, bouqCount=0;
 let hearts=[], keys={}, dpX=0, dpY=0;
-let gState='idle', tLeft=TSEC, lastScore=null, bestScore=0;
-let gLoop, tTick, frame=0;
+let gConf=[], gShake=0, gFlashFr=0;
+let winRings=[], winFrame=-1;     // win celebration shockwaves + ongoing wave timer
+let gState='idle', tLeft=45, lastScore=null, bestScore=lsGet('w_best1',0);
+let gRafId=null, tTick=null, frame=0;
+
+function setDiff(d){
+  DIFF=d; D=DIFFS[d];
+  document.querySelectorAll('.diff-btn').forEach(b=>b.classList.toggle('active',b.dataset.diff===d));
+  if(gState!=='playing'){ tLeft=D.tsec; document.getElementById('gTimer').textContent=tLeft+'s'; drawScene(); }
+  // Best score is per-difficulty
+  bestScore=lsGet('w_best1_'+d,0);
+  document.getElementById('gBest').textContent=bestScore>0?bestScore+'s':'—';
+}
+window.setDiff=setDiff;
 
 function dpOn(dx,dy){dpX=dx;dpY=dy;if(gState!=='playing')startGame();}
 function dpOff(){dpX=0;dpY=0;}
-function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+window.dpOn=dpOn; window.dpOff=dpOff;
+
+function spawnBouquet(){
+  // Spawn far from groom and bride, away from edges
+  for(let tries=0;tries<14;tries++){
+    const x=60+Math.random()*(W-120), y=60+Math.random()*(H-120);
+    if(Math.hypot(x-gm.x,y-gm.y)>110 && Math.hypot(x-br.x,y-br.y)>80){
+      bouq={x,y,life:300,bob:Math.random()*Math.PI*2}; return;
+    }
+  }
+}
 
 function initGame(){
   gm={x:W*.18,y:H*.5,f:1};
   br={x:W*.78,y:H*.46,vx:-0.6,vy:0,f:-1};
   pd={x:W*.5,y:H*.25,vx:2.3,vy:1.7,f:1};
+  bouq=null; bouqTimer=180; bouqCount=0; pdFreezeFr=0;
   gmStunned=false; gmStunFrames=0;
   gmPrevX=gm.x; gmPrevY=gm.y;
-  brDashFrames=0; brDashCD=0; brDashVx=0; brDashVy=0;
+  brDashFrames=0; brDashCD=0; brDashVx=0; brDashVy=0; brWarn=0;
   pdChargeFrames=0;
-  hearts=[];frame=0;tLeft=TSEC;
+  hearts=[];frame=0;tLeft=D.tsec; gFlashFr=0;
+  winRings=[]; winFrame=-1;
   document.getElementById('gTimer').textContent=tLeft+'s';
 }
 
 function step(){
-  if(gState!=='playing'){drawScene();return;}
+  gConf=updConf(gConf);
+  if(gShake>0){gShake*=.85;if(gShake<.3)gShake=0;}
+  if(gFlashFr>0)gFlashFr--;
+
+  // Win celebration: hearts keep flowing in waves, rings expand
+  if(gState==='caught' && winFrame>=0){
+    winFrame++;
+    // Update shockwave rings
+    for(const r of winRings){ r.r+=4.2; r.life-=.018; }
+    winRings = winRings.filter(r=>r.life>0);
+    // Update existing hearts so they keep moving
+    hearts=hearts.filter(h=>h.life>0);
+    hearts.forEach(h=>{
+      h.y+=h.vy;
+      if(h.vx) h.x+=h.vx;
+      h.vy+=.045;
+      if(h.vx) h.vx*=.985;
+      if(h.rotV) h.rot+=h.rotV;
+      h.life-=.012;
+    });
+    // Spawn ongoing waves of hearts
+    if(winFrame<160 && winFrame%6===0){
+      const cx0=(gm.x+br.x)/2, cy0=(gm.y+br.y)/2;
+      for(let i=0;i<4;i++){
+        const a=Math.random()*Math.PI*2, sp=2+Math.random()*4;
+        hearts.push({
+          x:cx0+(Math.random()-.5)*30, y:cy0+(Math.random()-.5)*20,
+          vx:Math.cos(a)*sp, vy:Math.sin(a)*sp-1.2,
+          life:1.8+Math.random(), sz:10+Math.random()*14,
+          col: Math.random()<.5?'#e85a7a':(Math.random()<.5?'#f0a8b8':'#ddb96a'),
+          rot:0, rotV:(Math.random()-.5)*.2
+        });
+      }
+    }
+    // New shockwave ring every 25 frames for the first second
+    if(winFrame===20||winFrame===45||winFrame===70){
+      const cx0=(gm.x+br.x)/2, cy0=(gm.y+br.y)/2;
+      winRings.push({x:cx0,y:cy0,r:10,life:1});
+    }
+    // Falling rain of hearts from top during whole celebration
+    if(winFrame<240 && winFrame%4===0){
+      hearts.push({
+        x:Math.random()*W, y:-15,
+        vx:(Math.random()-.5)*.6, vy:1+Math.random()*1.5,
+        life:3, sz:9+Math.random()*8,
+        col: Math.random()<.4?'#e85a7a':'#ddb96a',
+        rot:0, rotV:(Math.random()-.5)*.15
+      });
+    }
+  }
+
+  if(gState!=='playing')return;
   frame++;
-  // Groom movement (blocked if stunned)
+
+  // Groom movement
   let mx=dpX,my=dpY;
+  // Touch drag (mobile): groom moves toward finger
+  if(g1TouchActive && !gmStunned){
+    const ddx=g1TouchTX-gm.x, ddy=g1TouchTY-gm.y;
+    const dd=Math.hypot(ddx,ddy);
+    if(dd>4){
+      mx=ddx/dd;
+      my=ddy/dd;
+    } else { mx=0; my=0; }
+  }
   if(!gmStunned){
     if(keys['ArrowLeft']||keys['a']||keys['A'])mx=-1;
     else if(keys['ArrowRight']||keys['d']||keys['D'])mx=1;
     if(keys['ArrowUp']||keys['w']||keys['W'])my=-1;
     else if(keys['ArrowDown']||keys['s']||keys['S'])my=1;
-    if(mx&&my){mx*=.707;my*=.707;}
+    if(mx&&my && Math.abs(mx)===1 && Math.abs(my)===1){mx*=.707;my*=.707;}
     if(mx!==0)gm.f=mx>0?1:-1;
     gm.x=clamp(gm.x+mx*GSPD,26,W-26);
     gm.y=clamp(gm.y+my*GSPD,30,H-30);
   }
-  // Stun countdown
   if(gmStunned){gmStunFrames--;if(gmStunFrames<=0)gmStunned=false;}
-  // ── Bride AI (predictive flee + panic dash + anti-corner) ──
-  // Track groom velocity to predict where he'll be
+
+  // Bride AI
   const gmVx=gm.x-gmPrevX, gmVy=gm.y-gmPrevY;
   gmPrevX=gm.x; gmPrevY=gm.y;
-  const predX=gm.x+gmVx*5, predY=gm.y+gmVy*5;     // position du marié dans 5 frames
-  const realDist=Math.hypot(br.x-gm.x,br.y-gm.y)||1; // distance réelle pour catch + cœurs
+  const predX=gm.x+gmVx*D.predict, predY=gm.y+gmVy*D.predict;
+  const realDist=Math.hypot(br.x-gm.x,br.y-gm.y)||1;
   const pdx=br.x-predX, pdy=br.y-predY;
   const pdist=Math.hypot(pdx,pdy)||1;
-  const spd=realDist<170?BSPD*(1+(170-realDist)/200):BSPD*.6;
+  const spd=realDist<170?D.bspd*(1+(170-realDist)/220):D.bspd*.55;
   let fx=pdx/pdist, fy=pdy/pdist;
-  // Anti-coin : si coincée dans un coin, pousser vers le centre
+  // Anti-corner
   const cornX=br.x<70?1:(br.x>W-70?-1:0);
   const cornY=br.y<70?1:(br.y>H-70?-1:0);
-  if(cornX!==0 && cornY!==0){
-    fx+=cornX*.95; fy+=cornY*.95;
-  } else {
-    if(br.x<58)fx+=.55;if(br.x>W-58)fx-=.55;
-    if(br.y<58)fy+=.55;if(br.y>H-58)fy-=.55;
-  }
+  if(cornX&&cornY){ fx+=cornX*.95; fy+=cornY*.95; }
+  else { if(br.x<58)fx+=.55;if(br.x>W-58)fx-=.55;if(br.y<58)fy+=.55;if(br.y>H-58)fy-=.55; }
   const fl=Math.hypot(fx,fy)||1;fx/=fl;fy/=fl;
-  // Dash d'esquive : si le marié est très proche et qu'elle n'est pas en cooldown
-  if(realDist<48 && brDashCD===0){
-    // Perpendiculaire à l'approche du marié, côté qui l'éloigne
+  // Warning before dash
+  if(brWarn>0)brWarn--;
+  if(realDist<70 && brDashCD===0 && brWarn===0){
+    brWarn=10; // visible warning frames before the dash
+  }
+  if(brWarn===1 && realDist<60){
     const perpX=-gmVy, perpY=gmVx;
     const dot=perpX*(br.x-gm.x)+perpY*(br.y-gm.y);
     const s=dot>=0?1:-1;
     const dl=Math.hypot(perpX,perpY)||1;
     brDashVx=s*perpX/dl; brDashVy=s*perpY/dl;
-    brDashFrames=7; brDashCD=22;
+    brDashFrames=D.dashFr; brDashCD=D.dashCD;
   }
   if(brDashCD>0) brDashCD--;
-  // Bruit léger (au lieu de .44)
-  fx+=(Math.random()-.5)*.35;fy+=(Math.random()-.5)*.35;
+  fx+=(Math.random()-.5)*D.noise;fy+=(Math.random()-.5)*D.noise;
   br.vx=br.vx*.78+fx*spd*.22;br.vy=br.vy*.78+fy*spd*.22;
-  // Appliquer la poussée du dash
   if(brDashFrames>0){
-    br.vx+=brDashVx*1.9; br.vy+=brDashVy*1.9;
+    br.vx+=brDashVx*1.7; br.vy+=brDashVy*1.7;
     brDashFrames--;
   }
   const bv=Math.hypot(br.vx,br.vy);
@@ -667,94 +847,231 @@ function step(){
   if(bv>maxSpd){br.vx=br.vx/bv*maxSpd;br.vy=br.vy/bv*maxSpd;}
   br.f=br.vx>=0?1:-1;
   br.x=clamp(br.x+br.vx,26,W-26);br.y=clamp(br.y+br.vy,28,H-28);
-  const dist=realDist; // alias pour compat avec le code cœurs/catch plus bas
-  // ── Poodle AI (intercepteur + charges agressives) ──
-  if(pdChargeFrames>0){
-    // Mode CHARGE : fonce directement sur le marié
+  const dist=realDist;
+
+  // Bouquet spawning + collection
+  if(pdFreezeFr>0)pdFreezeFr--;
+  if(bouq){
+    bouq.life--; bouq.bob+=.13;
+    if(Math.hypot(gm.x-bouq.x,gm.y-bouq.y)<26){
+      pdFreezeFr=80; bouqCount++; bouq=null; bouqTimer=240+Math.random()*150;
+      gFlashFr=10;
+      // Burst petals
+      for(let i=0;i<14;i++) hearts.push({x:gm.x+(Math.random()-.5)*22,y:gm.y-12,vy:-1.5-Math.random()*1.8,life:1.4,sz:7+Math.random()*6,col:'#d4821a'});
+    } else if(bouq.life<=0){ bouq=null; bouqTimer=160+Math.random()*200; }
+  } else {
+    if(bouqTimer>0)bouqTimer--; else spawnBouquet();
+  }
+
+  // Poodle AI (stops while frozen)
+  if(pdFreezeFr>0){
+    pd.vx*=.85; pd.vy*=.85;
+  } else if(pdChargeFrames>0){
     pdChargeFrames--;
     const tdx=gm.x-pd.x,tdy=gm.y-pd.y,td=Math.hypot(tdx,tdy)||1;
-    pd.vx=pd.vx*.7+(tdx/td)*3.2*.3;
-    pd.vy=pd.vy*.7+(tdy/td)*3.2*.3;
+    pd.vx=pd.vx*.7+(tdx/td)*3.0*.3;
+    pd.vy=pd.vy*.7+(tdy/td)*3.0*.3;
   } else {
-    // Mode INTERCEPTEUR : vise un point sur la ligne marié↔mariée, du côté de la mariée
-    const tx=br.x*.58+gm.x*.42;
-    const ty=br.y*.58+gm.y*.42;
+    const tx=br.x*.55+gm.x*.45;
+    const ty=br.y*.55+gm.y*.45;
     const tdx=tx-pd.x,tdy=ty-pd.y,td=Math.hypot(tdx,tdy)||1;
     pd.vx=pd.vx*.82+(tdx/td)*3.0*.18;
     pd.vy=pd.vy*.82+(tdy/td)*3.0*.18;
-    // Déclencher une charge de temps en temps (environ toutes les ~3s)
-    if(Math.random()<.009) pdChargeFrames=22;
+    if(Math.random()<D.pdCharge) pdChargeFrames=22;
   }
   const pspd=Math.hypot(pd.vx,pd.vy)||1;
-  const ptgt=1.9;
-  if(pspd>ptgt){pd.vx=pd.vx/pspd*ptgt; pd.vy=pd.vy/pspd*ptgt;}
+  if(pspd>D.pdSpd){pd.vx=pd.vx/pspd*D.pdSpd; pd.vy=pd.vy/pspd*D.pdSpd;}
   pd.x+=pd.vx; pd.y+=pd.vy;
   if(pd.x<26){pd.vx=Math.abs(pd.vx);pd.x=26;}
   if(pd.x>W-26){pd.vx=-Math.abs(pd.vx);pd.x=W-26;}
   if(pd.y<30){pd.vy=Math.abs(pd.vy);pd.y=30;}
   if(pd.y>H-30){pd.vy=-Math.abs(pd.vy);pd.y=H-30;}
   pd.f=pd.vx>=0?1:-1;
-  // Poodle collides with groom → stun + gros bounce
-  if(!gmStunned&&Math.hypot(pd.x-gm.x,pd.y-gm.y)<30){
-    gmStunned=true; gmStunFrames=STUN_DUR;
+  // Poodle hits groom
+  if(!gmStunned&&pdFreezeFr===0&&Math.hypot(pd.x-gm.x,pd.y-gm.y)<30){
+    gmStunned=true; gmStunFrames=D.stunDur; gShake=8;
     const bx=gm.x-pd.x,by=gm.y-pd.y,bd=Math.hypot(bx,by)||1;
-    gm.x=clamp(gm.x+(bx/bd)*34,26,W-26);
-    gm.y=clamp(gm.y+(by/bd)*34,30,H-30);
+    gm.x=clamp(gm.x+(bx/bd)*30,26,W-26);
+    gm.y=clamp(gm.y+(by/bd)*30,30,H-30);
   }
-  // Hearts
+
+  // Hearts when close
   if(dist<120&&frame%7===0) hearts.push({x:(gm.x+br.x)/2+(Math.random()-.5)*38,y:Math.min(gm.y,br.y)-12,vy:-1.4-Math.random()*1.1,life:1,sz:8+Math.random()*8});
   hearts=hearts.filter(h=>h.life>0);
-  hearts.forEach(h=>{h.y+=h.vy;h.life-=.033;});
-  // Catch
+  hearts.forEach(h=>{
+    h.y+=h.vy;
+    if(h.vx) h.x+=h.vx;
+    h.vy+=.045;                   // gravity for explosion hearts
+    if(h.vx) h.vx*=.985;
+    if(h.rotV) h.rot+=h.rotV;
+    h.life-=.018;
+  });
+
+  // Catch — MASSIVE celebration
   if(dist<CATCH_R){
     gState='caught';lastScore=tLeft;
-    if(lastScore>bestScore){bestScore=lastScore;document.getElementById('gBest').textContent=bestScore+'s';}
-    clearInterval(tTick);
-    for(let i=0;i<24;i++) hearts.push({x:(gm.x+br.x)/2+(Math.random()-.5)*130,y:(gm.y+br.y)/2+(Math.random()-.5)*90,vy:-1.8-Math.random()*2.4,life:1.8+Math.random()*.6,sz:12+Math.random()*13});
+    const key='w_best1_'+DIFF;
+    if(lastScore>bestScore){bestScore=lastScore;document.getElementById('gBest').textContent=bestScore+'s';lsSet(key,bestScore);}
+    if(tTick){clearInterval(tTick);tTick=null;}
+    // Big initial heart shower from couple position
+    const cx0=(gm.x+br.x)/2, cy0=(gm.y+br.y)/2;
+    for(let i=0;i<70;i++){
+      const a=Math.random()*Math.PI*2, sp=2+Math.random()*5;
+      hearts.push({
+        x:cx0+(Math.random()-.5)*40, y:cy0+(Math.random()-.5)*30,
+        vx:Math.cos(a)*sp, vy:Math.sin(a)*sp-1.5,
+        life:2.4+Math.random()*1.2, sz:11+Math.random()*18,
+        col: Math.random()<.5?'#e85a7a':(Math.random()<.5?'#f0a8b8':'#ddb96a'),
+        rot:0, rotV:(Math.random()-.5)*.18
+      });
+    }
+    // Confetti waves from edges
+    gConf=gConf.concat(mkConf(W,140,-50));
+    // Burst rings (visual shockwaves)
+    for(let i=0;i<3;i++) winRings.push({x:cx0,y:cy0,r:10+i*8,life:1});
+    gShake=14;
+    winFrame=0;                                    // start the celebration timer
   }
-  drawScene();
 }
 
 function drawScene(){
-  cx.fillStyle='#192820';cx.fillRect(0,0,W,H);
-  cx.strokeStyle='rgba(58,84,68,.36)';cx.lineWidth=.5;
+  if(!gm||!br||!pd) return; // entities not initialized yet
+  cx.save();
+  if(gShake>0) cx.translate((Math.random()-.5)*gShake,(Math.random()-.5)*gShake);
+  // Background (subtle grass gradient)
+  const bg=cx.createRadialGradient(W*.5,H*.55,40,W*.5,H*.55,Math.max(W,H)*.7);
+  bg.addColorStop(0,'#1f2e22');bg.addColorStop(1,'#162018');
+  cx.fillStyle=bg;cx.fillRect(0,0,W,H);
+  cx.strokeStyle='rgba(58,84,68,.32)';cx.lineWidth=.5;
   for(let i=0;i*GRID<=W;i++){cx.beginPath();cx.moveTo(i*GRID,0);cx.lineTo(i*GRID,H);cx.stroke();}
   for(let i=0;i*GRID<=H;i++){cx.beginPath();cx.moveTo(0,i*GRID);cx.lineTo(W,i*GRID);cx.stroke();}
-  // Hearts
+
+  // Bouquet pickup
+  if(bouq){
+    const bb=Math.sin(bouq.bob)*3;
+    const al=bouq.life<60?bouq.life/60:1;
+    cx.save(); cx.globalAlpha=al;
+    // Glow ring
+    const g=cx.createRadialGradient(bouq.x,bouq.y+bb,2,bouq.x,bouq.y+bb,30);
+    g.addColorStop(0,'rgba(255,200,100,.5)');g.addColorStop(1,'rgba(255,200,100,0)');
+    cx.fillStyle=g;cx.beginPath();cx.arc(bouq.x,bouq.y+bb,30,0,Math.PI*2);cx.fill();
+    // Bouquet body
+    cx.translate(bouq.x,bouq.y+bb);
+    cx.fillStyle='#c4622d';cx.beginPath();cx.arc(0,0,7,0,Math.PI*2);cx.fill();
+    cx.fillStyle='#d4821a';cx.beginPath();cx.arc(-4,-4,4.5,0,Math.PI*2);cx.fill();
+    cx.fillStyle='#f5ead8';cx.beginPath();cx.arc(3,-3,3.5,0,Math.PI*2);cx.fill();
+    cx.fillStyle='#f0d99a';cx.beginPath();cx.arc(2,3,3,0,Math.PI*2);cx.fill();
+    cx.fillStyle='#c8a248';cx.beginPath();cx.arc(0,0,1.8,0,Math.PI*2);cx.fill();
+    cx.strokeStyle='#4a7a5a';cx.lineWidth=1.5;cx.beginPath();cx.moveTo(-1,4);cx.lineTo(-2,11);cx.stroke();
+    cx.restore();
+  }
+
+  // Hearts/petals
   cx.textAlign='center';cx.textBaseline='middle';
   hearts.forEach(h=>{
-    cx.save();cx.globalAlpha=Math.max(0,h.life*.85);
-    cx.font=h.sz+'px serif';cx.fillStyle='#ddb96a';cx.fillText('♥',h.x,h.y);cx.restore();
+    cx.save();cx.globalAlpha=Math.max(0,Math.min(h.life,1)*.95);
+    if(h.rot){cx.translate(h.x,h.y);cx.rotate(h.rot);cx.translate(-h.x,-h.y);}
+    cx.font=h.sz+'px serif';cx.fillStyle=h.col||'#ddb96a';cx.fillText('♥',h.x,h.y);
+    cx.restore();
   });
-  // Characters (poodle behind groom/bride)
+  // Win shockwave rings
+  if(winRings.length){
+    for(const r of winRings){
+      cx.save();cx.globalAlpha=r.life*.55;
+      cx.strokeStyle='#f0a8b8';cx.lineWidth=3;
+      cx.beginPath();cx.arc(r.x,r.y,r.r,0,Math.PI*2);cx.stroke();
+      cx.strokeStyle='#fff';cx.lineWidth=1;
+      cx.beginPath();cx.arc(r.x,r.y,r.r,0,Math.PI*2);cx.stroke();
+      cx.restore();
+    }
+  }
+
+  // Bride dash warning
+  if(brWarn>0&&brWarn<10){
+    cx.save();cx.globalAlpha=brWarn/10*.7;
+    cx.strokeStyle='#e8916a';cx.lineWidth=2;
+    cx.beginPath();cx.arc(br.x,br.y,18+brWarn*1.4,0,Math.PI*2);cx.stroke();
+    cx.restore();
+  }
+
+  // Frozen poodle visualization
+  if(pdFreezeFr>0){
+    cx.save();cx.globalAlpha=.55;
+    cx.fillStyle='rgba(160,210,255,.35)';
+    cx.beginPath();cx.arc(pd.x+2,pd.y,22,0,Math.PI*2);cx.fill();
+    cx.restore();
+  }
+
+  // Touch target indicator (mobile drag) — pulsing ring at finger position
+  if(g1TouchActive && gState==='playing'){
+    const ringR=14+Math.sin(frame*.25)*3;
+    cx.save();
+    cx.strokeStyle='rgba(240,217,154,.55)';cx.lineWidth=2;
+    cx.beginPath();cx.arc(g1TouchTX,g1TouchTY,ringR,0,Math.PI*2);cx.stroke();
+    cx.strokeStyle='rgba(240,217,154,.25)';cx.lineWidth=1;
+    cx.beginPath();cx.arc(g1TouchTX,g1TouchTY,ringR+6,0,Math.PI*2);cx.stroke();
+    // Dotted line from groom to target
+    cx.strokeStyle='rgba(240,217,154,.3)';cx.lineWidth=1.5;
+    cx.setLineDash([4,4]);
+    cx.beginPath();cx.moveTo(gm.x,gm.y);cx.lineTo(g1TouchTX,g1TouchTY);cx.stroke();
+    cx.setLineDash([]);
+    cx.restore();
+  }
+
   drawPoodle(pd.x,pd.y,pd.f,frame);
   drawBride(br.x,br.y,br.f,frame);
   drawGroom(gm.x,gm.y,gm.f,frame);
-  // Stun stars orbiting groom's head
+
+  // Stun stars
   if(gmStunned){
     const ang=frame*.32;
     for(let i=0;i<3;i++){
       const a=ang+(i*Math.PI*2/3);
       cx.save();cx.globalAlpha=.9;
       cx.font='13px serif';cx.fillStyle='#f0d99a';
-      cx.textAlign='center';cx.textBaseline='middle';
       cx.fillText('✦',gm.x+Math.cos(a)*18,(gm.y-32)+Math.sin(a)*7);
       cx.restore();
     }
   }
+
   // HUD
   cx.save();cx.textAlign='left';cx.textBaseline='top';
-  cx.font='11px "Cinzel",serif';cx.fillStyle='rgba(200,162,72,.6)';
-  cx.fillText('⏱ '+tLeft+'s',10,9);cx.restore();
+  cx.font='11px "Cinzel",serif';cx.fillStyle='rgba(200,162,72,.7)';
+  cx.fillText('⏱ '+tLeft+'s',10,9);
+  if(bouqCount>0){cx.font='11px serif';cx.fillStyle='rgba(245,234,216,.65)';cx.fillText('💐 ×'+bouqCount,W-58,9);}
+  if(pdFreezeFr>0){cx.font='10px "Cinzel",serif';cx.fillStyle='rgba(160,210,255,.85)';cx.textAlign='center';cx.fillText('CANICHE FIGÉ',W/2,9);}
+  cx.restore();
+  cx.restore();
+
+  // Bouquet pickup flash (outside shake)
+  if(gFlashFr>0){
+    cx.save();cx.globalAlpha=gFlashFr/10*.35;
+    cx.fillStyle='#f0d99a';cx.fillRect(0,0,W,H);cx.restore();
+  }
+
+  drwConf(cx,gConf);
+
   // Overlays
   if(gState==='idle'){
     ov();cx.font='15px "Cinzel",serif';cx.fillStyle='#ddb96a';cx.fillText('Cliquez « Nouvelle partie »',W/2,H/2-14);
-    cx.font='14px "Cormorant Garamond",serif';cx.fillStyle='rgba(200,162,72,.52)';cx.fillText('Aidez le marié à rattraper la mariée ! ♥',W/2,H/2+14);
+    cx.font='14px "Cormorant Garamond",serif';cx.fillStyle='rgba(200,162,72,.55)';cx.fillText('Aidez le marié à rattraper la mariée ! ♥',W/2,H/2+14);
+    if(bestScore>0){cx.font='10.5px "Cinzel",serif';cx.fillStyle='rgba(200,162,72,.55)';cx.fillText('Meilleur ('+(DIFF==='easy'?'Facile':'Normal')+') : '+bestScore+'s',W/2,H/2+40);}
   }
   if(gState==='caught'){
-    ov();cx.font='bold 19px "Cinzel",serif';cx.fillStyle='#f0d99a';cx.fillText("Il l'a rattrapée ! 💕",W/2,H/2-27);
-    cx.font='15px "Cormorant Garamond",serif';cx.fillStyle='#ddb96a';cx.fillText('Temps restant : '+lastScore+'s',W/2,H/2+8);
-    cx.font='12px "Cormorant Garamond",serif';cx.fillStyle='rgba(200,162,72,.5)';cx.fillText('Cliquez « Nouvelle partie » pour rejouer',W/2,H/2+35);
+    // Wait for celebration to settle before showing overlay
+    const overlayDelay=70;
+    if(winFrame>=overlayDelay){
+      const t=Math.min((winFrame-overlayDelay)/30,1);
+      cx.save();cx.fillStyle='rgba(25,40,32,'+(.84*t)+')';cx.fillRect(0,0,W,H);
+      cx.textAlign='center';cx.textBaseline='middle';cx.globalAlpha=t;
+      const pulse=1+Math.sin(winFrame*.08)*.04;
+      cx.save();cx.translate(W/2,H/2-30);cx.scale(pulse,pulse);
+      cx.font='bold 22px "Cinzel",serif';cx.fillStyle='#f0d99a';cx.fillText("Il l'a rattrapée ! 💕",0,0);cx.restore();
+      cx.font='15px "Cormorant Garamond",serif';cx.fillStyle='#ddb96a';cx.fillText('Temps restant : '+lastScore+'s',W/2,H/2+4);
+      if(lastScore===bestScore&&bestScore>0){cx.font='12px "Cinzel",serif';cx.fillStyle='#c8a248';cx.fillText('🏆 Nouveau record !',W/2,H/2+26);}
+      cx.font='12px "Cormorant Garamond",serif';cx.fillStyle='rgba(200,162,72,.5)';cx.fillText('Cliquez « Nouvelle partie » pour rejouer',W/2,H/2+48);
+      cx.restore();
+    }
   }
   if(gState==='timeout'){
     ov();cx.font='bold 18px "Cinzel",serif';cx.fillStyle='#e8906a';cx.fillText("Elle s'est sauvée ! 😅",W/2,H/2-22);
@@ -763,29 +1080,24 @@ function drawScene(){
 }
 function ov(){cx.fillStyle='rgba(25,40,32,.82)';cx.fillRect(0,0,W,H);cx.textAlign='center';cx.textBaseline='middle';}
 
-/* ── Draw Groom 🤵 ── */
+/* ── Draw Groom ── */
 function drawGroom(x,y,f,fr){
   cx.save();cx.translate(x,y);cx.scale(f,1);
   const l=Math.sin(fr*.25)*5,a=Math.sin(fr*.25)*4;
-  // Shadow
   cx.fillStyle='rgba(0,0,0,.28)';cx.beginPath();cx.ellipse(0,28,13,4.5,0,0,Math.PI*2);cx.fill();
-  // Legs
   cx.fillStyle='#1a2030';cx.fillRect(-9,14,7,17+l);cx.fillRect(2,14,7,17-l);
   cx.fillStyle='#0e1220';cx.fillRect(-11,30+l,10,5);cx.fillRect(1,30-l,10,5);
-  // Body
   cx.fillStyle='#1a2030';cx.beginPath();cx.roundRect(-11,-10,22,26,3);cx.fill();
   cx.fillStyle='#f5ead8';cx.fillRect(-5,-9,10,14);
   cx.fillStyle='#c8a248';cx.beginPath();cx.moveTo(-5,-5);cx.lineTo(0,-2);cx.lineTo(5,-5);cx.lineTo(5,-8);cx.lineTo(0,-5);cx.lineTo(-5,-8);cx.closePath();cx.fill();
   cx.fillStyle='#1a2030';
   cx.beginPath();cx.moveTo(-11,-10);cx.lineTo(-5,-9);cx.lineTo(-8,5);cx.closePath();cx.fill();
   cx.beginPath();cx.moveTo(11,-10);cx.lineTo(5,-9);cx.lineTo(8,5);cx.closePath();cx.fill();
-  // Arms
   cx.fillStyle='#1a2030';
   cx.save();cx.translate(-14,-1+a);cx.rotate(-.18);cx.fillRect(-4,-3,10,6);cx.restore();
   cx.save();cx.translate(12,-1-a);cx.rotate(.18);cx.fillRect(-4,-3,10,6);cx.restore();
   cx.fillStyle='#f5c8a0';cx.beginPath();cx.arc(-18,-1+a,4,0,Math.PI*2);cx.fill();
   cx.beginPath();cx.arc(20,-1-a,4,0,Math.PI*2);cx.fill();
-  // Head
   cx.fillStyle='#f5c8a0';cx.beginPath();cx.arc(0,-22,11,0,Math.PI*2);cx.fill();
   cx.fillStyle='#2c1e10';cx.beginPath();cx.arc(0,-22,11,Math.PI,0);cx.fill();
   cx.fillRect(-11,-33,22,13);
@@ -795,40 +1107,32 @@ function drawGroom(x,y,f,fr){
   cx.restore();
 }
 
-/* ── Draw Bride 👰 ── */
+/* ── Draw Bride ── */
 function drawBride(x,y,f,fr){
   cx.save();cx.translate(x,y);cx.scale(f,1);
   const sw=Math.sin(fr*.22)*3.5,a=Math.sin(fr*.22)*3;
-  // Shadow
   cx.fillStyle='rgba(0,0,0,.22)';cx.beginPath();cx.ellipse(sw*.35,30,15,5,0,0,Math.PI*2);cx.fill();
-  // Dress
   cx.fillStyle='#f5ead8';cx.beginPath();cx.moveTo(-8,8);cx.lineTo(-21+sw,34);cx.lineTo(21+sw,34);cx.lineTo(8,8);cx.closePath();cx.fill();
   cx.fillStyle='rgba(200,162,72,.1)';cx.beginPath();cx.moveTo(2,8);cx.lineTo(8+sw,34);cx.lineTo(21+sw,34);cx.lineTo(8,8);cx.closePath();cx.fill();
   cx.strokeStyle='rgba(200,162,72,.22)';cx.lineWidth=1;
   cx.beginPath();cx.moveTo(-4,10);cx.lineTo(-14+sw,34);cx.stroke();
   cx.beginPath();cx.moveTo(4,10);cx.lineTo(14+sw,34);cx.stroke();
-  // Bodice
   cx.fillStyle='#ede0cc';cx.beginPath();cx.roundRect(-8,-12,16,22,2);cx.fill();
   cx.strokeStyle='rgba(200,162,72,.38)';cx.lineWidth=1;cx.beginPath();cx.roundRect(-8,-12,16,22,2);cx.stroke();
   cx.fillStyle='#c8a248';cx.fillRect(-8,8,16,3);
-  // Arms
   cx.fillStyle='#f5c8a0';
   cx.save();cx.translate(-12,-4+a);cx.rotate(-.24);cx.fillRect(-5,-3,11,5);cx.restore();
   cx.save();cx.translate(10,-4-a);cx.rotate(.2);cx.fillRect(-5,-3,10,5);cx.restore();
-  // Bouquet
   cx.save();cx.translate(-19,-3+a);
   cx.fillStyle='#c4622d';cx.beginPath();cx.arc(0,0,6,0,Math.PI*2);cx.fill();
   cx.fillStyle='#d4821a';cx.beginPath();cx.arc(-4,-4,4,0,Math.PI*2);cx.fill();
   cx.fillStyle='#f5ead8';cx.beginPath();cx.arc(2,-3,3.2,0,Math.PI*2);cx.fill();
   cx.fillStyle='#c8a248';cx.beginPath();cx.arc(-1,-1,1.8,0,Math.PI*2);cx.fill();
   cx.restore();
-  // Head
   cx.fillStyle='#f5c8a0';cx.beginPath();cx.arc(0,-24,10.5,0,Math.PI*2);cx.fill();
   cx.fillStyle='#5a3018';cx.beginPath();cx.arc(0,-24,10.5,Math.PI,0);cx.fill();cx.fillRect(-10.5,-35,21,13);
-  // Veil
   cx.strokeStyle='rgba(245,234,216,.58)';cx.lineWidth=2.2;cx.beginPath();cx.moveTo(-1,-34);cx.quadraticCurveTo(17,-22,18,5);cx.stroke();
   cx.lineWidth=1.3;cx.beginPath();cx.moveTo(-1,-34);cx.quadraticCurveTo(20,-19,22,8);cx.stroke();
-  // Tiara
   cx.fillStyle='#c8a248';cx.fillRect(-7,-36,14,3);
   cx.beginPath();cx.moveTo(-3,-36);cx.lineTo(-1,-41);cx.lineTo(3,-41);cx.lineTo(3,-36);cx.closePath();cx.fill();
   cx.beginPath();cx.moveTo(-7,-36);cx.lineTo(-6,-39);cx.lineTo(-3,-36);cx.closePath();cx.fill();
@@ -837,7 +1141,6 @@ function drawBride(x,y,f,fr){
   cx.beginPath();cx.arc(0,-41,1.7,0,Math.PI*2);cx.fill();
   cx.beginPath();cx.arc(-6,-39,1.1,0,Math.PI*2);cx.fill();
   cx.beginPath();cx.arc(6,-39,1.1,0,Math.PI*2);cx.fill();
-  // Eyes
   cx.fillStyle='#2d1a0e';cx.beginPath();cx.arc(-3.5,-26,1.8,0,Math.PI*2);cx.fill();cx.beginPath();cx.arc(3.5,-26,1.8,0,Math.PI*2);cx.fill();
   cx.fillStyle='white';cx.beginPath();cx.arc(-2.6,-27,.65,0,Math.PI*2);cx.fill();cx.beginPath();cx.arc(4.4,-27,.65,0,Math.PI*2);cx.fill();
   cx.strokeStyle='#2d1a0e';cx.lineWidth=1;
@@ -851,333 +1154,987 @@ function drawBride(x,y,f,fr){
   cx.restore();
 }
 
-/* ── Draw Poodle 🐩 ── */
+/* ── Draw Poodle ── */
 function drawPoodle(x,y,f,fr){
   cx.save();cx.translate(x,y);cx.scale(f,1);
-  const lg=Math.sin(fr*.3)*2.8; // leg bounce
-  const FC='#18182e', FH='#2e2e48'; // dark fur, highlight
-
-  // Shadow
+  const lg=Math.sin(fr*.3)*2.8;
+  const FC='#18182e', FH='#2e2e48';
   cx.fillStyle='rgba(0,0,0,.22)';cx.beginPath();cx.ellipse(2,24,13,4,0,0,Math.PI*2);cx.fill();
-
-  // TAIL: curved stem + pompom
   cx.strokeStyle=FC;cx.lineWidth=3.5;
   cx.beginPath();cx.moveTo(-10,2);cx.quadraticCurveTo(-22,0,-20,-10);cx.stroke();
   cx.fillStyle=FC;cx.beginPath();cx.arc(-20,-13,6.5,0,Math.PI*2);cx.fill();
   cx.fillStyle=FH;cx.beginPath();cx.arc(-22,-15,3,0,Math.PI*2);cx.fill();
-
-  // Back ankle puffs
   cx.fillStyle=FC;
   cx.beginPath();cx.arc(-7,20+lg,6.5,0,Math.PI*2);cx.fill();
   cx.beginPath();cx.arc(-1,20-lg,6.5,0,Math.PI*2);cx.fill();
-  // Back leg stubs
   cx.lineWidth=4;cx.strokeStyle=FC;
   cx.beginPath();cx.moveTo(-6,11);cx.lineTo(-7,17+lg);cx.stroke();
   cx.beginPath();cx.moveTo(-1,11);cx.lineTo(-1,17-lg);cx.stroke();
-
-  // BODY (two puffs for fluffy look)
   cx.fillStyle=FC;cx.beginPath();cx.arc(-2,5,13,0,Math.PI*2);cx.fill();
-  cx.beginPath();cx.arc(6,3,10,0,Math.PI*2);cx.fill(); // chest
-  cx.fillStyle=FH;cx.beginPath();cx.arc(-3,1,7,0,Math.PI*2);cx.fill(); // top sheen
-
-  // Front ankle puffs
+  cx.beginPath();cx.arc(6,3,10,0,Math.PI*2);cx.fill();
+  cx.fillStyle=FH;cx.beginPath();cx.arc(-3,1,7,0,Math.PI*2);cx.fill();
   cx.fillStyle=FC;
   cx.beginPath();cx.arc(9,20-lg,6.5,0,Math.PI*2);cx.fill();
   cx.beginPath();cx.arc(4,20+lg,6.5,0,Math.PI*2);cx.fill();
   cx.strokeStyle=FC;cx.lineWidth=4;
   cx.beginPath();cx.moveTo(8,11);cx.lineTo(9,17-lg);cx.stroke();
   cx.beginPath();cx.moveTo(4,11);cx.lineTo(4,17+lg);cx.stroke();
-
-  // NECK
   cx.fillStyle=FC;cx.beginPath();cx.arc(10,-4,7,0,Math.PI*2);cx.fill();
-
-  // HEAD
   cx.beginPath();cx.arc(12,-14,10.5,0,Math.PI*2);cx.fill();
   cx.fillStyle=FH;cx.beginPath();cx.arc(10,-18,5,0,Math.PI*2);cx.fill();
-
-  // Ear puffs (floppy, both sides)
   cx.fillStyle=FC;
-  cx.beginPath();cx.arc(4,-14,7.5,0,Math.PI*2);cx.fill();  // back ear
-  cx.beginPath();cx.arc(19,-15,6,0,Math.PI*2);cx.fill();   // front ear
-
-  // Snout
+  cx.beginPath();cx.arc(4,-14,7.5,0,Math.PI*2);cx.fill();
+  cx.beginPath();cx.arc(19,-15,6,0,Math.PI*2);cx.fill();
   cx.fillStyle='#24243a';cx.beginPath();cx.arc(21,-13,5.5,0,Math.PI*2);cx.fill();
-  // Nose
   cx.fillStyle='#0a0a14';cx.beginPath();cx.arc(25,-12,2.8,0,Math.PI*2);cx.fill();
   cx.fillStyle='rgba(255,255,255,.3)';cx.beginPath();cx.arc(24,-13,1,0,Math.PI*2);cx.fill();
-  // Mouth
   cx.strokeStyle='#0a0a14';cx.lineWidth=1;
   cx.beginPath();cx.moveTo(25,-10);cx.quadraticCurveTo(27,-8,25,-7);cx.stroke();
-
-  // Eye
   cx.fillStyle='white';cx.beginPath();cx.arc(16,-18,3.5,0,Math.PI*2);cx.fill();
   cx.fillStyle='#14141e';cx.beginPath();cx.arc(17,-18,2.2,0,Math.PI*2);cx.fill();
   cx.fillStyle='white';cx.beginPath();cx.arc(18,-19,.8,0,Math.PI*2);cx.fill();
-
-  // Red collar + gold tag
   cx.fillStyle='#b82020';cx.fillRect(4,-9,16,3.5);
   cx.fillStyle='#c8a248';cx.beginPath();cx.arc(12,-5.5,3.2,0,Math.PI*2);cx.fill();
-
   cx.restore();
 }
 
+/* ── Game 1 loop & lifecycle ── */
+function g1Tick(){
+  if(canRun()) step();
+  drawScene();
+  gRafId=setTimeout(()=>requestAnimationFrame(g1Tick),40);
+}
 function startGame(){
-  clearInterval(gLoop);clearInterval(tTick);
+  if(gRafId){clearTimeout(gRafId);gRafId=null;}
+  if(tTick){clearInterval(tTick);tTick=null;}
   initGame();
   gState='playing';
   drawScene();
-  gLoop=setInterval(step,40);
+  g1Tick();
   tTick=setInterval(()=>{
+    if(!canRun())return; // pause timer too
     if(gState!=='playing')return;
     tLeft--;
     document.getElementById('gTimer').textContent=tLeft+'s';
-    if(tLeft<=0){gState='timeout';clearInterval(tTick);drawScene();}
+    if(tLeft<=0){gState='timeout';clearInterval(tTick);tTick=null;}
   },1000);
 }
+window.startGame=startGame;
 
 document.addEventListener('keydown',e=>{
   keys[e.key]=true;
   if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key))e.preventDefault();
-  if(gState!=='playing'&&['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','w','s','a','d','W','S','A','D'].includes(e.key))startGame();
+  if(gState!=='playing'&&document.getElementById('gameChase').style.display!=='none'&&['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','w','s','a','d','W','S','A','D'].includes(e.key))startGame();
 });
 document.addEventListener('keyup',e=>{keys[e.key]=false;});
 
-// Initial idle screen
-document.getElementById('gTimer').textContent=TSEC+'s';
-initGame();drawScene();
+/* ── Touch-drag controls for game 1 canvas (mobile) ── */
+let g1TouchActive=false;
+let g1TouchTX=0, g1TouchTY=0;        // target position groom moves toward
 
-/* ══════════════════════════════════════════════════════════
-   🏃 JEU 2 — LA COURSE VERS L'HÔTEL
-   ══════════════════════════════════════════════════════════ */
-const cv2=document.getElementById('plCanvas');
-const cx2=cv2.getContext('2d');
-const PW=440,PH=352,PGR=PH-58,PTOTAL=5000;
-const PJUMP=-13,PGRAV=0.56,MAXJ=2,PB_SCR=2.8;
-
-if(!cx2.roundRect){
-  CanvasRenderingContext2D.prototype.roundRect=CanvasRenderingContext2D.prototype.roundRect||function(x,y,w,h,r){r=Math.min(r,Math.abs(w)/2,Math.abs(h)/2);this.beginPath();this.moveTo(x+r,y);this.lineTo(x+w-r,y);this.arcTo(x+w,y,x+w,y+r,r);this.lineTo(x+w,y+h-r);this.arcTo(x+w,y+h,x+w-r,y+h,r);this.lineTo(x+r,y+h);this.arcTo(x,y+h,x,y+h-r,r);this.lineTo(x,y+r);this.arcTo(x,y,x+r,y,r);this.closePath();return this;};
+function g1CanvasPos(ev){
+  const r=cv.getBoundingClientRect();
+  const sx=W/r.width, sy=H/r.height;
+  return {
+    x:(ev.clientX-r.left)*sx,
+    y:(ev.clientY-r.top)*sy
+  };
 }
+function g1TouchStart(ev){
+  ev.preventDefault();
+  // Don't restart during celebration — let user enjoy it / click button
+  if(gState==='caught' && winFrame<280) return;
+  if(gState!=='playing') startGame();
+  g1TouchActive=true;
+  const p=g1CanvasPos(ev); g1TouchTX=p.x; g1TouchTY=p.y;
+}
+function g1TouchMove(ev){
+  if(!g1TouchActive) return;
+  ev.preventDefault();
+  const p=g1CanvasPos(ev); g1TouchTX=p.x; g1TouchTY=p.y;
+}
+function g1TouchEnd(){
+  g1TouchActive=false;
+  // Stop movement when finger lifts
+  dpX=0; dpY=0;
+}
+cv.addEventListener('pointerdown',g1TouchStart);
+cv.addEventListener('pointermove',g1TouchMove);
+cv.addEventListener('pointerup',g1TouchEnd);
+cv.addEventListener('pointercancel',g1TouchEnd);
+cv.addEventListener('pointerleave',g1TouchEnd);
 
-/* ── Arrière-plan pré-généré ── */
-const p2Trees=[];
-(function(){const cols=['#c4622d','#d4821a','#8b3c22','#c8a248','#a85028','#b8501e','#6b8c3a'];
-for(let wx=180;wx<PTOTAL;wx+=55+Math.random()*70){p2Trees.push({wx,h:44+Math.random()*58,w:17+Math.random()*20,c:cols[Math.floor(Math.random()*cols.length)],near:Math.random()>.5});}})();
-const p2Mtns=[];
-(function(){for(let wx=0;wx<PTOTAL*.25;wx+=90+Math.random()*70){p2Mtns.push({wx,h:32+Math.random()*52,w:65+Math.random()*60});}})();
+// Init
+initGame();
+setDiff('easy');
+document.getElementById('gTimer').textContent=D.tsec+'s';
+drawScene();
+g1Tick();
 
-/* ── État du jeu ── */
-let p2gr={x:82,y:PGR,vy:0,onGr:true,jumps:0,w:24,h:46,inv:0,fr:0};
-let p2sx=0,p2state='idle',p2lives=3,p2fr=0,p2loop=null;
-let p2obs=[],p2parts=[];
+/* ════════════════════════════════════════════════════════════
+   🏃 JEU 2 — LA COURSE VERS L'HÔTEL
+   Améliorations majeures :
+   • Espacement d'obstacles GARANTI franchissable
+     (calcul de l'arc de saut avant chaque placement)
+   • Coyote time (8 frames après quitter le sol)
+   • Jump buffer (8 frames avant atterrissage)
+   • Hauteur de saut variable (relâcher tôt = saut bas)
+   • Bagues 💍 collectibles, 5 = +1 vie
+   • Ciel dynamique, feuilles qui tombent, village au loin
+   ════════════════════════════════════════════════════════════ */
+const cv2=document.getElementById('plCanvas');
+const cx2=setupHD(cv2);
+const PW=parseInt(cv2.style.width,10), PH=parseInt(cv2.style.height,10);
+const PGR=PH-58, PTOTAL=4500;
+const PJUMP=-12.5, PGRAV=0.55, MAXJ=2;
+const PB_SCR=2.6;                  // base scroll speed
+const COYOTE_MAX=8, BUF_MAX=8;
+
+/* Pré-générer décor (parallaxe) */
+const p2Trees=[]; const p2Mtns=[]; const p2Houses=[]; const p2Stars=[]; const p2Leaves=[];
+(function(){
+  const cols=['#c4622d','#d4821a','#8b3c22','#c8a248','#a85028','#b8501e','#6b8c3a'];
+  for(let wx=180;wx<PTOTAL+200;wx+=55+Math.random()*70){
+    p2Trees.push({wx,h:44+Math.random()*58,w:17+Math.random()*20,c:cols[Math.floor(Math.random()*cols.length)],near:Math.random()>.5});
+  }
+  for(let wx=0;wx<PTOTAL*.3;wx+=90+Math.random()*70){
+    p2Mtns.push({wx,h:36+Math.random()*58,w:65+Math.random()*60});
+  }
+  // Distant houses near the end (signaling approaching town)
+  for(let wx=PTOTAL*.55;wx<PTOTAL-100;wx+=60+Math.random()*40){
+    p2Houses.push({wx,h:24+Math.random()*22,w:24+Math.random()*16,roof:Math.random()>.5});
+  }
+  for(let i=0;i<32;i++){
+    p2Stars.push({x:Math.random()*PW,y:Math.random()*(PGR*.55),tw:Math.random()*Math.PI*2,sz:.6+Math.random()*1.2});
+  }
+  for(let i=0;i<10;i++){
+    p2Leaves.push({x:Math.random()*PW,y:Math.random()*PGR,vx:-.6-Math.random()*.7,vy:.4+Math.random()*.5,sw:Math.random()*Math.PI*2,c:cols[Math.floor(Math.random()*cols.length)]});
+  }
+})();
+
+// Obstacle types — `dyn` flag = animated; `air` flag = floating (groom can pass under it)
+const OBS_TYPES=[
+  {t:'pot',     w:24, h:36, minGap:140},   // small static
+  {t:'crate',   w:28, h:40, minGap:150},   // medium static (NEW — clear silhouette)
+  {t:'fence',   w:46, h:42, minGap:175},   // wide static
+  {t:'cake',    w:36, h:60, minGap:215},   // tall static
+  {t:'balloon', w:30, h:32, minGap:165, dyn:'bob', air:true},   // bobs up/down — duck under or jump
+  {t:'bird',    w:28, h:18, minGap:175, dyn:'fly', air:true},   // flies horizontally — timing
+];
+
+let p2gr,p2sx,p2state,p2lives,p2fr,p2obs,p2rings,p2parts,p2coyote,p2buf,p2hold;
+let p2bestDist=lsGet('w_best2',0);
+let p2ringsCol=0, p2ringTotal=0;
+let p2RafId=null, p2flash=0;
+let p2wedFrame=0, p2wedConf=[], p2wedHearts=[];   // wedding ceremony state
+
+function p2makeLevel(){
+  // Rhythm-based level generation with patterns of varying difficulty
+  const obs=[];
+  let wx=620;
+
+  // Pattern types — each adds a chunk of obstacles + advance
+  function pickGround(){
+    // Static ground obstacles only (no air ones)
+    const gnd=OBS_TYPES.filter(o=>!o.air);
+    return gnd[Math.floor(Math.random()*gnd.length)];
+  }
+  function pickAny(){ return OBS_TYPES[Math.floor(Math.random()*OBS_TYPES.length)]; }
+
+  function patternSingle(){
+    const o=Object.assign({},pickAny());
+    o.wx=wx; o.phase=Math.random()*Math.PI*2;
+    obs.push(o);
+    wx += o.minGap + 80 + Math.random()*100;
+  }
+  function patternDouble(){
+    // Two obstacles close — needs DOUBLE jump (or precise single jump over both)
+    const a=Object.assign({},pickGround()); a.wx=wx; obs.push(a);
+    const gap=60 + Math.random()*30;
+    const b=Object.assign({},pickGround()); b.wx=wx+a.w+gap; obs.push(b);
+    wx = b.wx + b.w + 200 + Math.random()*60;
+  }
+  function patternCluster(){
+    // 3 short obstacles in a row — rhythmic single jumps
+    for(let i=0;i<3;i++){
+      const o=Object.assign({},OBS_TYPES[0]); // small pot
+      o.wx=wx; obs.push(o);
+      wx += o.w + 95;
+    }
+    wx += 120;
+  }
+  function patternAir(){
+    // Floating obstacle alone (timing challenge)
+    const air=OBS_TYPES.filter(o=>o.air);
+    const o=Object.assign({},air[Math.floor(Math.random()*air.length)]);
+    o.wx=wx; o.phase=Math.random()*Math.PI*2;
+    obs.push(o);
+    wx += o.minGap + 90 + Math.random()*70;
+  }
+  function patternMix(){
+    // Ground obstacle + air obstacle nearby (jump high and far)
+    const g=Object.assign({},pickGround()); g.wx=wx; obs.push(g);
+    const air=OBS_TYPES.filter(o=>o.air);
+    const a=Object.assign({},air[Math.floor(Math.random()*air.length)]);
+    a.wx=wx+g.w+90; a.phase=Math.random()*Math.PI*2;
+    obs.push(a);
+    wx = a.wx + a.w + 200 + Math.random()*60;
+  }
+
+  // Easy intro: just singles
+  patternSingle(); patternSingle();
+
+  // Main run: weighted mix that gets harder
+  while(wx<PTOTAL-460){
+    const prog=wx/PTOTAL;
+    const r=Math.random();
+    if(prog<.3){
+      // Mostly singles, occasional cluster
+      if(r<.7) patternSingle();
+      else if(r<.9) patternCluster();
+      else patternAir();
+    } else if(prog<.6){
+      // Mid: introduce doubles + air
+      if(r<.45) patternSingle();
+      else if(r<.65) patternDouble();
+      else if(r<.85) patternAir();
+      else patternCluster();
+    } else {
+      // End: harder mixes
+      if(r<.3) patternSingle();
+      else if(r<.55) patternDouble();
+      else if(r<.75) patternMix();
+      else patternAir();
+    }
+  }
+
+  // Rings between obstacles
+  const rings=[];
+  for(let i=-1;i<obs.length;i++){
+    const gapStart= i<0 ? 280 : (obs[i].wx+obs[i].w+30);
+    const gapEnd  = i>=obs.length-1 ? PTOTAL-220 : (obs[i+1].wx-30);
+    const gapW=gapEnd-gapStart;
+    if(gapW<70) continue;
+    if(Math.random()<.25) continue;
+    const pattern=Math.random();
+    if(pattern<.55){
+      const n=3;
+      for(let j=0;j<n;j++){
+        const t=(j+1)/(n+1);
+        const rx=gapStart+gapW*t;
+        const ry=PGR-30-Math.sin(t*Math.PI)*36;
+        rings.push({wx:rx,y:ry,col:false,sp:Math.random()*Math.PI*2});
+      }
+    } else if(pattern<.8){
+      const n=Math.min(3,Math.floor(gapW/35));
+      for(let j=0;j<n;j++){
+        rings.push({wx:gapStart+(j+.5)*(gapW/n),y:PGR-22,col:false,sp:Math.random()*Math.PI*2});
+      }
+    } else {
+      rings.push({wx:gapStart+gapW/2,y:PGR-58-Math.random()*15,col:false,sp:Math.random()*Math.PI*2});
+    }
+  }
+  return {obs,rings};
+}
 
 function p2init(){
-  p2gr={x:82,y:PGR,vy:0,onGr:true,jumps:0,w:24,h:46,inv:0,fr:0};
-  p2sx=0;p2lives=3;p2fr=0;p2obs=p2makeObs();p2parts=[];
+  p2gr={x:82,y:PGR,vy:0,onGr:true,jumps:0,inv:0,fr:0};
+  p2sx=0;p2lives=3;p2fr=0;p2parts=[];
+  p2coyote=0; p2buf=0; p2hold=false;
+  p2ringsCol=0;
+  p2wedFrame=0; p2wedConf=[]; p2wedHearts=[];
+  const lvl=p2makeLevel();
+  p2obs=lvl.obs; p2rings=lvl.rings;
+  p2ringTotal=p2rings.length;
+  document.getElementById('p2Rings').textContent='0';
 }
 
-function p2makeObs(){
-  const obs=[],T=[
-    {t:'pot',w:24,h:35},{t:'bottle',w:18,h:54},
-    {t:'fence',w:42,h:44},{t:'cake',w:32,h:60}
-  ];
-  let wx=620;
-  while(wx<PTOTAL-420){obs.push({...T[Math.floor(Math.random()*T.length)],wx});wx+=185+Math.random()*210;}
-  return obs;
-}
-
-function p2jump(){
-  if(p2state!=='playing'){p2start();return;}
-  if(p2gr.jumps<MAXJ){
-    p2gr.vy=PJUMP*(p2gr.jumps===0?1:.82);
-    p2gr.onGr=false;p2gr.jumps++;
-    for(let i=0;i<6;i++) p2parts.push({x:p2gr.x+(Math.random()-.5)*14,y:PGR-4,vx:(Math.random()-.5)*2.5,vy:-Math.random()*2.8,life:1});
+function p2pressJump(){
+  // Don't restart during wedding ceremony — let user watch it
+  if(p2state==='wedding') return;
+  p2hold=true;
+  if(p2state!=='playing'){ p2start(); return; }
+  // Try to jump. If can't, buffer it.
+  if(p2gr.onGr || p2coyote>0){
+    p2doJump(true);
+  } else if(p2gr.jumps<MAXJ){
+    p2doJump(false);
+  } else {
+    p2buf=BUF_MAX;
   }
 }
+function p2releaseJump(){
+  p2hold=false;
+  // Variable jump: if going up, cut it short
+  if(p2gr.vy<-4) p2gr.vy*=.55;
+}
+function p2doJump(fromGround){
+  p2gr.vy = PJUMP * (fromGround ? 1 : .82);
+  p2gr.onGr=false;
+  p2gr.jumps = fromGround ? 1 : (p2gr.jumps+1);
+  p2coyote=0;
+  for(let i=0;i<7;i++) p2parts.push({x:p2gr.x+(Math.random()-.5)*14,y:PGR-4,vx:(Math.random()-.5)*2.6,vy:-Math.random()*2.8,life:1,c:'#c8a248'});
+}
+// Backwards compat (the SAUTER button used to call p2jump)
+function p2jump(){ p2pressJump(); }
 window.p2jump=p2jump;
+window.p2pressJump=p2pressJump;
+window.p2releaseJump=p2releaseJump;
 
 function p2start(){
-  clearInterval(p2loop);
-  if(gState==='playing'){gState='idle';clearInterval(gLoop);clearInterval(tTick);}
+  if(p2RafId){clearTimeout(p2RafId);p2RafId=null;}
+  // Stop game 1 too if running
+  if(gState==='playing'){gState='idle';if(tTick){clearInterval(tTick);tTick=null;}}
   p2init();p2state='playing';p2draw();
-  p2loop=setInterval(p2step,40);
+  p2tick();
 }
 window.p2start=p2start;
 
 function p2step(){
+  // Wedding ceremony — animated sequence after reaching hotel
+  if(p2state==='wedding'){
+    p2wedFrame++;
+    p2fr++;   // keep animation cycles going
+
+    // Update wedding particles
+    p2wedConf=updConf(p2wedConf);
+    p2wedHearts=p2wedHearts.filter(h=>h.life>0);
+    p2wedHearts.forEach(h=>{
+      h.x+=h.vx; h.y+=h.vy; h.vy+=.04;
+      if(h.vx) h.vx*=.99;
+      if(h.rotV) h.rot+=h.rotV;
+      h.life-=.012;
+    });
+
+    // Phase 0 (0-90): groom walks from start to under the arch (~80 frames)
+    // Phase 1 (90-150): groom and bride face each other
+    // Phase 2 (150-210): ring exchange (groom raises ring)
+    // Phase 3 (210+): kiss + confetti explosion + bells
+    if(p2wedFrame===150){
+      // Burst confetti when ring is raised
+      p2wedConf=p2wedConf.concat(mkConf(PW,80,-30));
+    }
+    if(p2wedFrame===210){
+      // KISS! Massive celebration
+      p2wedConf=p2wedConf.concat(mkConf(PW,140,-60));
+      // Heart explosion at couple position
+      const cxC=PW*.62, cyC=PGR-30;
+      for(let i=0;i<60;i++){
+        const a=Math.random()*Math.PI*2, sp=2+Math.random()*5;
+        p2wedHearts.push({
+          x:cxC, y:cyC,
+          vx:Math.cos(a)*sp, vy:Math.sin(a)*sp-1.5,
+          life:2.5+Math.random(), sz:11+Math.random()*16,
+          col: Math.random()<.5?'#ff5577':(Math.random()<.5?'#f0a8b8':'#ffd966'),
+          rot:0, rotV:(Math.random()-.5)*.18
+        });
+      }
+    }
+    // Continuous heart rain after kiss
+    if(p2wedFrame>=210 && p2wedFrame<400 && p2wedFrame%5===0){
+      p2wedHearts.push({
+        x:Math.random()*PW, y:-15,
+        vx:(Math.random()-.5)*.5, vy:1+Math.random()*1.5,
+        life:3, sz:8+Math.random()*10,
+        col: Math.random()<.4?'#ff5577':'#f0d99a',
+        rot:0, rotV:(Math.random()-.5)*.12
+      });
+    }
+    // Periodic confetti waves
+    if(p2wedFrame>=210 && p2wedFrame%50===20){
+      p2wedConf=p2wedConf.concat(mkConf(PW,25,-30));
+    }
+    return;
+  }
+
   if(p2state!=='playing') return;
   p2fr++;
-  const spd=PB_SCR+p2sx/PTOTAL*1.5;
+  // Speed: gentle ramp, eased near end, slowing as we approach the hotel
+  const prog=p2sx/PTOTAL;
+  let spd=PB_SCR + Math.min(prog,.85)*1.4;
+  // Slow down dramatically in the last 15% so we coast into the hotel
+  if(prog>.85) spd *= Math.max(.25, 1-(prog-.85)/.15*.75);
   p2sx=Math.min(p2sx+spd,PTOTAL);
-  if(p2sx>=PTOTAL){p2state='win';clearInterval(p2loop);p2draw();return;}
+  // Trigger wedding when the hotel reaches a nice composition position
+  // (so the bride is visible on screen, not off the left edge).
+  // We want htlSx ≈ PW*0.42, so p2sx ≈ (PTOTAL-200) + 82 - PW*0.42
+  const WEDDING_TRIGGER_SX = PTOTAL - 118 - PW*0.42;
+  if(p2sx>=WEDDING_TRIGGER_SX){
+    // Snap p2sx to the trigger so htlSx is consistent during slide
+    p2sx = WEDDING_TRIGGER_SX;
+    // Trigger wedding ceremony sequence (no more scroll, no obstacles spawn)
+    p2state='wedding';
+    p2wedFrame=0;
+    p2bestDist=PTOTAL;lsSet('w_best2',PTOTAL);document.getElementById('p2Best').textContent='100%';
+    return;
+  }
   // Physics
   p2gr.vy+=PGRAV;
   p2gr.y+=p2gr.vy;
-  if(p2gr.y>=PGR){p2gr.y=PGR;p2gr.vy=0;p2gr.onGr=true;p2gr.jumps=0;}
+  const wasInAir=!p2gr.onGr;
+  if(p2gr.y>=PGR){
+    p2gr.y=PGR;p2gr.vy=0;
+    if(wasInAir){
+      // landing dust
+      for(let i=0;i<5;i++) p2parts.push({x:p2gr.x+(Math.random()-.5)*16,y:PGR-2,vx:(Math.random()-.5)*1.8,vy:-Math.random()*1.4,life:.8,c:'rgba(245,234,216,.6)'});
+    }
+    p2gr.onGr=true;p2gr.jumps=0; p2coyote=COYOTE_MAX;
+  } else {
+    p2gr.onGr=false;
+    if(p2coyote>0)p2coyote--;
+  }
+  // Buffered jump
+  if(p2buf>0){
+    p2buf--;
+    if(p2gr.onGr || p2coyote>0){ p2doJump(true); p2buf=0; }
+  }
   if(p2gr.inv>0) p2gr.inv--;
   if(p2gr.onGr) p2gr.fr++;
-  // Collisions
+
+  // Collisions with obstacles
   if(p2gr.inv===0){
     for(const ob of p2obs){
       const osx=ob.wx-p2sx+82;
       if(osx<-ob.w-5||osx>PW+5) continue;
-      const gL=82-9,gR=82+9,gT=p2gr.y-p2gr.h+10,gB=p2gr.y-6;
-      const oL=osx+2,oR=osx+ob.w-2,oT=PGR-ob.h+4,oB=PGR;
-      if(gL<oR&&gR>oL&&gT<oB&&gB>oT){
-        p2lives--;p2gr.inv=85;
-        if(p2lives<=0){p2state='lose';clearInterval(p2loop);}
+      // Compute current Y of obstacle (dynamic for air)
+      let oTopY, oBotY;
+      if(ob.air){
+        // Compute floating position
+        let yC;
+        if(ob.dyn==='bob') yC = PGR-90 + Math.sin(p2fr*.05+ob.phase)*16;
+        else if(ob.dyn==='fly') yC = PGR-70 + Math.sin(p2fr*.07+ob.phase)*22;
+        else yC = PGR-90;
+        oTopY = yC - ob.h/2;
+        oBotY = yC + ob.h/2;
+      } else {
+        oTopY = PGR - ob.h + 4;
+        oBotY = PGR;
+      }
+      const gL=82-9,gR=82+9,gT=p2gr.y-44,gB=p2gr.y-6;
+      const oL=osx+2,oR=osx+ob.w-2;
+      if(gL<oR&&gR>oL&&gT<oBotY&&gB>oTopY){
+        p2lives--;p2gr.inv=85; p2flash=10;
+        for(let i=0;i<10;i++) p2parts.push({x:p2gr.x+(Math.random()-.5)*16,y:p2gr.y-22,vx:(Math.random()-.5)*3.5,vy:-1-Math.random()*2.5,life:1.1,c:'#e8916a'});
+        if(p2lives<=0){p2state='lose';}
+        break;
       }
     }
   }
-  // Particles
+  // Ring collection
+  for(const r of p2rings){
+    if(r.col) continue;
+    const rsx=r.wx-p2sx+82;
+    if(rsx<-25) { r.col=true; continue; } // missed
+    if(rsx>PW+25) break;
+    if(Math.hypot(82-rsx, p2gr.y-22-r.y)<22){
+      r.col=true; p2ringsCol++;
+      document.getElementById('p2Rings').textContent=p2ringsCol;
+      if(p2ringsCol%5===0 && p2lives<5){
+        p2lives++;
+        for(let i=0;i<14;i++) p2parts.push({x:rsx,y:r.y,vx:(Math.random()-.5)*3,vy:-1-Math.random()*2,life:1.4,c:'#f0d99a'});
+      } else {
+        for(let i=0;i<6;i++) p2parts.push({x:rsx,y:r.y,vx:(Math.random()-.5)*2,vy:-Math.random()*1.5,life:.9,c:'#c8a248'});
+      }
+    }
+  }
+  // Particles + leaves
   p2parts=p2parts.filter(p=>p.life>0);
-  p2parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.12;p.life-=.055;});
-  p2draw();
+  p2parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.13;p.life-=.05;});
+  // Falling leaves loop
+  for(const lf of p2Leaves){
+    lf.x+=lf.vx-spd*.4; lf.y+=lf.vy; lf.sw+=.05;
+    if(lf.x<-12){ lf.x=PW+10; lf.y=Math.random()*PGR*.6; }
+    if(lf.y>PGR){ lf.y=-5; lf.x=PW*Math.random(); }
+  }
+  if(p2flash>0)p2flash--;
 }
 
 function p2draw(){
   cx2.clearRect(0,0,PW,PH);
-  // Ciel
+  const prog = (p2state==='wedding') ? 1 : Math.min(p2sx/PTOTAL,1);
+  // Sky gradient — shifts as you progress (dusk → golden hour)
+  const skyTop = prog<.5 ? '#12202a' : `rgb(${Math.round(lerp(18,40,(prog-.5)*2))},${Math.round(lerp(32,20,(prog-.5)*2))},${Math.round(lerp(42,30,(prog-.5)*2))})`;
+  const skyMid = prog<.5 ? '#1e2e22' : `rgb(${Math.round(lerp(30,80,(prog-.5)*2))},${Math.round(lerp(46,52,(prog-.5)*2))},${Math.round(lerp(34,38,(prog-.5)*2))})`;
   const sk=cx2.createLinearGradient(0,0,0,PGR);
-  sk.addColorStop(0,'#12202a');sk.addColorStop(.5,'#1e2e22');sk.addColorStop(1,'#2e4232');
-  cx2.fillStyle=sk;cx2.fillRect(0,0,PW,PH);
-  // Grille (même que jeu 1)
-  cx2.strokeStyle='rgba(58,84,68,.22)';cx2.lineWidth=.5;
+  sk.addColorStop(0,skyTop);sk.addColorStop(.6,skyMid);sk.addColorStop(1,'#2e4232');
+  cx2.fillStyle=sk;cx2.fillRect(0,0,PW,PGR);
+  // Stars (early progress only)
+  if(prog<.6){
+    cx2.fillStyle='#f0d99a';
+    for(const s of p2Stars){
+      const tw=.4+Math.abs(Math.sin(s.tw+p2fr*.04))*.6;
+      cx2.globalAlpha=tw*(1-prog/.6);
+      cx2.beginPath();cx2.arc(s.x,s.y,s.sz,0,Math.PI*2);cx2.fill();
+    }
+    cx2.globalAlpha=1;
+  }
+  // Moon early, sun late
+  if(prog<.45){
+    cx2.fillStyle='rgba(245,234,216,.85)';
+    cx2.beginPath();cx2.arc(PW-58,38,16,0,Math.PI*2);cx2.fill();
+    cx2.fillStyle='rgba(20,32,42,.95)';
+    cx2.beginPath();cx2.arc(PW-52,33,14,0,Math.PI*2);cx2.fill();
+  } else {
+    cx2.save();
+    cx2.fillStyle='rgba(255,210,120,.7)';
+    cx2.beginPath();cx2.arc(PW-58,42,21,0,Math.PI*2);cx2.fill();
+    cx2.fillStyle='rgba(255,210,120,.25)';
+    cx2.beginPath();cx2.arc(PW-58,42,32,0,Math.PI*2);cx2.fill();
+    cx2.restore();
+  }
+  // Subtle grid
+  cx2.strokeStyle='rgba(58,84,68,.16)';cx2.lineWidth=.5;
   for(let i=0;i*22<=PW;i++){cx2.beginPath();cx2.moveTo(i*22,0);cx2.lineTo(i*22,PH);cx2.stroke();}
   for(let i=0;i*22<=PH;i++){cx2.beginPath();cx2.moveTo(0,i*22);cx2.lineTo(PW,i*22);cx2.stroke();}
-  const prog=Math.min(p2sx/PTOTAL,1);
-  // Montagnes (parallaxe 0.15)
-  cx2.fillStyle='rgba(32,50,36,.68)';
-  for(const m of p2Mtns){const sx=m.wx-p2sx*.15;if(sx<-m.w||sx>PW+5)continue;cx2.beginPath();cx2.moveTo(sx,PGR-6);cx2.lineTo(sx+m.w/2,PGR-6-m.h);cx2.lineTo(sx+m.w,PGR-6);cx2.closePath();cx2.fill();}
-  // Arbres (parallaxe 0.42)
+  // Mountains
+  cx2.fillStyle='rgba(32,50,36,.7)';
+  for(const m of p2Mtns){
+    const sx=m.wx-p2sx*.15;if(sx<-m.w||sx>PW+5)continue;
+    cx2.beginPath();cx2.moveTo(sx,PGR-6);cx2.lineTo(sx+m.w/2,PGR-6-m.h);cx2.lineTo(sx+m.w,PGR-6);cx2.closePath();cx2.fill();
+  }
+  // Distant houses (only late game)
+  if(p2sx>PTOTAL*.4){
+    for(const h of p2Houses){
+      const sx=h.wx-p2sx*.32; if(sx<-h.w-12||sx>PW+5) continue;
+      cx2.fillStyle='rgba(58,72,52,.78)';cx2.fillRect(sx,PGR-6-h.h,h.w,h.h);
+      // roof
+      cx2.fillStyle='rgba(40,52,38,.92)';
+      cx2.beginPath();cx2.moveTo(sx-2,PGR-6-h.h);cx2.lineTo(sx+h.w/2,PGR-6-h.h-h.h*.45);cx2.lineTo(sx+h.w+2,PGR-6-h.h);cx2.closePath();cx2.fill();
+      // tiny lit window
+      cx2.fillStyle='rgba(255,210,120,.4)';cx2.fillRect(sx+h.w*.3,PGR-6-h.h*.55,h.w*.18,h.h*.25);
+    }
+  }
+  // Trees
   for(const tr of p2Trees){
     const sx=tr.wx-p2sx*.42;if(sx<-tr.w-12||sx>PW+22)continue;
     cx2.fillStyle='#3a2218';cx2.fillRect(sx+tr.w*.4,PGR-tr.h*.38,tr.w*.22,tr.h*.38);
-    cx2.globalAlpha=tr.near?.58:.32;cx2.fillStyle=tr.c;
+    cx2.globalAlpha=tr.near?.62:.34;cx2.fillStyle=tr.c;
     cx2.beginPath();cx2.ellipse(sx+tr.w/2,PGR-tr.h*.52,tr.w*.68,tr.h*.52,0,0,Math.PI*2);cx2.fill();
     cx2.globalAlpha=1;
   }
-  // Hôtel (apparaît depuis la droite)
-  const htlWx=PTOTAL-220,htlSx=htlWx-p2sx+82;
-  if(htlSx<PW+180&&htlSx>-100) p2drawHotel(htlSx,PGR);
-  // Sol
+  // Falling leaves (foreground-ish)
+  for(const lf of p2Leaves){
+    cx2.save();cx2.translate(lf.x,lf.y);cx2.rotate(Math.sin(lf.sw)*.6);
+    cx2.fillStyle=lf.c;cx2.globalAlpha=.55;
+    cx2.beginPath();cx2.ellipse(0,0,4,2,0,0,Math.PI*2);cx2.fill();cx2.restore();
+  }
+  cx2.globalAlpha=1;
+  // Hotel position — during wedding, p2sx is frozen at the trigger point
+  // so htlSx is already at a nice composition spot (~PW*0.42)
+  const htlWx=PTOTAL-200;
+  const htlSx = htlWx - p2sx + 82;
+  if(htlSx<PW+200&&htlSx>-120) p2drawHotel(htlSx,PGR);
+  // Ground
   cx2.fillStyle='#1a2814';cx2.fillRect(0,PGR,PW,PH-PGR);
   cx2.fillStyle='rgba(200,162,72,.13)';cx2.fillRect(0,PGR,PW,3);
-  // Herbe animée
+  // Animated grass tufts
   cx2.fillStyle='rgba(88,124,68,.42)';
-  for(let i=0;i<24;i++){const gx=((i*41+Math.floor(p2sx*.9))%520)%(PW+20)-10;cx2.fillRect(gx,PGR-3,3,6);cx2.fillRect(gx+8,PGR-5,2,6);}
-  // Obstacles
-  for(const ob of p2obs){const osx=ob.wx-p2sx+82;if(osx<-ob.w-5||osx>PW+8)continue;p2drawOb(ob.t,osx,PGR,ob.w,ob.h);}
-  // Particules
-  p2parts.forEach(p=>{cx2.globalAlpha=p.life*.75;cx2.fillStyle='#c8a248';cx2.beginPath();cx2.arc(p.x,p.y,2.8,0,Math.PI*2);cx2.fill();});cx2.globalAlpha=1;
-  // Mariée à l'hôtel
-  if(p2sx>PTOTAL-680){const brX=htlSx+42;if(brX<PW+55&&brX>-55) p2drawBride(brX,PGR,-1,p2fr);}
-  // Marié (clignote si invincible)
-  if(p2gr.inv===0||Math.floor(p2gr.inv/5)%2===0) p2drawGroom(82,p2gr.y,1,p2gr.fr);
-  // HUD — vies
-  cx2.globalAlpha=1;cx2.font='16px serif';cx2.textAlign='left';cx2.textBaseline='top';
-  for(let i=0;i<3;i++){cx2.globalAlpha=i<p2lives?1:.2;cx2.fillStyle='#ddb96a';cx2.fillText('♥',10+i*22,8);}cx2.globalAlpha=1;
-  // Barre de progression
-  cx2.fillStyle='rgba(200,162,72,.18)';cx2.fillRect(PW/2-72,12,144,5);
-  cx2.fillStyle='#c8a248';cx2.fillRect(PW/2-72,12,144*prog,5);
-  cx2.font='9px "Cinzel",serif';cx2.fillStyle='rgba(200,162,72,.65)';cx2.textAlign='center';cx2.textBaseline='top';
-  cx2.fillText('🏨 '+Math.round(prog*100)+'%',PW/2,20);
-  // Overlays
-  if(p2state==='idle'||p2state==='playing'&&p2fr<2){
-    if(p2state==='idle'){p2ov();cx2.font='14px "Cinzel",serif';cx2.fillStyle='#ddb96a';cx2.fillText('La Course vers l\'Hôtel',PW/2,PH/2-28);cx2.font='13px "Cormorant Garamond",serif';cx2.fillStyle='rgba(200,162,72,.72)';cx2.fillText('Rejoins la mariée à l\'hôtel avant la cérémonie !',PW/2,PH/2+1);cx2.font='11px "Cormorant Garamond",serif';cx2.fillStyle='rgba(200,162,72,.45)';cx2.fillText('Espace · bouton · toucher l\'écran pour sauter',PW/2,PH/2+24);}
+  const sxOffset=Math.floor(p2sx*.9);
+  for(let i=0;i<28;i++){
+    const gx=((i*38+sxOffset)%(PW+60))-20;
+    cx2.fillRect(gx,PGR-3,3,6);cx2.fillRect(gx+8,PGR-5,2,6);
   }
-  if(p2state==='win'){p2ov();cx2.font='bold 17px "Cinzel",serif';cx2.fillStyle='#f0d99a';cx2.fillText('Arrivé à l\'hôtel ! 💍',PW/2,PH/2-28);cx2.font='14px "Cormorant Garamond",serif';cx2.fillStyle='#ddb96a';cx2.fillText('La mariée vous attendait avec la bague !',PW/2,PH/2+4);cx2.font='11px "Cormorant Garamond",serif';cx2.fillStyle='rgba(200,162,72,.5)';cx2.fillText('Cliquez « Nouvelle partie » pour rejouer',PW/2,PH/2+30);}
-  if(p2state==='lose'){p2ov();cx2.font='bold 16px "Cinzel",serif';cx2.fillStyle='#e8906a';cx2.fillText('Trop d\'obstacles… 😅',PW/2,PH/2-24);cx2.font='13px "Cormorant Garamond",serif';cx2.fillStyle='rgba(200,162,72,.6)';cx2.fillText('La mariée attend toujours au bout du chemin…',PW/2,PH/2+8);cx2.font='11px "Cormorant Garamond",serif';cx2.fillStyle='rgba(200,162,72,.4)';cx2.fillText('Cliquez « Nouvelle partie » pour réessayer',PW/2,PH/2+32);}
+  // Speed lines on ground
+  cx2.strokeStyle='rgba(245,234,216,.10)';cx2.lineWidth=1;
+  const so=Math.floor(p2sx*1.5)%30;
+  for(let i=0;i<6;i++){
+    const lx=((i*60-so)%(PW+30))-30;
+    cx2.beginPath();cx2.moveTo(lx,PH-30);cx2.lineTo(lx+18,PH-30);cx2.stroke();
+  }
+  // Obstacles
+  for(const ob of p2obs){
+    const osx=ob.wx-p2sx+82;
+    if(osx<-ob.w-5||osx>PW+8)continue;
+    if(ob.air){
+      // Compute floating Y center
+      let yC;
+      if(ob.dyn==='bob') yC = PGR-90 + Math.sin(p2fr*.05+(ob.phase||0))*16;
+      else if(ob.dyn==='fly') yC = PGR-70 + Math.sin(p2fr*.07+(ob.phase||0))*22;
+      else yC = PGR-90;
+      p2drawOb(ob.t,osx,yC,ob.w,ob.h,ob);
+    } else {
+      p2drawOb(ob.t,osx,PGR,ob.w,ob.h,ob);
+    }
+  }
+  // Rings
+  for(const r of p2rings){
+    if(r.col) continue;
+    const rsx=r.wx-p2sx+82;
+    if(rsx<-15||rsx>PW+15) continue;
+    p2drawRing(rsx,r.y,r.sp+p2fr*.08);
+  }
+  // Particles
+  p2parts.forEach(p=>{cx2.globalAlpha=Math.min(p.life,1)*.85;cx2.fillStyle=p.c||'#c8a248';cx2.beginPath();cx2.arc(p.x,p.y,2.6,0,Math.PI*2);cx2.fill();});cx2.globalAlpha=1;
+  // Bride at hotel
+  if(p2state==='wedding'){
+    // p2sx is frozen at trigger, so htlSx is stable — bride is at fixed position
+    const brX = htlSx + 60;       // closer to entrance, just inside the arch
+    const brY = PGR;
+    p2drawBride2(brX,brY,-1,p2fr,true);
+
+    // Groom walks in from the left
+    const walkFrames = 75;     // duration of walk-in
+    const wp = Math.min(p2wedFrame/walkFrames, 1);
+    const we = 1 - Math.pow(1-wp, 2);  // ease-out
+    const gEndX = brX - 38;            // stops 38px to the left of bride
+    const gStartX = -30;
+    const gX = lerp(gStartX, gEndX, we);
+    const gWalking = wp < 1;
+    p2drawGroom2(gX, PGR, 1, p2gr.fr+(gWalking?p2wedFrame:0), gWalking);
+
+    // Ring exchange — draw ring lifted up between them
+    if(p2wedFrame>=130){
+      const rt = clamp((p2wedFrame-130)/30, 0, 1);
+      const rx = lerp(gX+10, (gX+brX)/2, rt);
+      const ry = lerp(PGR-30, PGR-50, rt);
+      // Glow
+      const rg=cx2.createRadialGradient(rx,ry,2,rx,ry,28);
+      rg.addColorStop(0,'rgba(255,230,120,.6)');rg.addColorStop(1,'rgba(255,230,120,0)');
+      cx2.fillStyle=rg;cx2.beginPath();cx2.arc(rx,ry,28,0,Math.PI*2);cx2.fill();
+      // Big ring
+      cx2.strokeStyle='#c8a248';cx2.lineWidth=3.5;
+      cx2.beginPath();cx2.ellipse(rx,ry,11,11,0,0,Math.PI*2);cx2.stroke();
+      cx2.strokeStyle='#fff5cc';cx2.lineWidth=1.5;
+      cx2.beginPath();cx2.ellipse(rx,ry-1,10,10,0,0,Math.PI*2);cx2.stroke();
+      // Diamond
+      cx2.fillStyle='#fff';cx2.beginPath();
+      cx2.moveTo(rx,ry-13);cx2.lineTo(rx+4,ry-9);cx2.lineTo(rx,ry-4);cx2.lineTo(rx-4,ry-9);cx2.closePath();cx2.fill();
+      cx2.fillStyle='rgba(255,255,255,.85)';cx2.fillRect(rx-1,ry-12,1.2,3);
+    }
+    // Kiss — draw a heart between them
+    if(p2wedFrame>=210){
+      const cxC = (gX+brX)/2;
+      const cyC = PGR - 38;
+      const sz = 16+Math.sin(p2wedFrame*.15)*2;
+      cx2.save();cx2.translate(cxC,cyC);
+      cx2.fillStyle='#ff5577';
+      cx2.beginPath();
+      cx2.moveTo(0,sz*.65);
+      cx2.bezierCurveTo(-sz,sz*.05, -sz*.85,-sz*.6, 0,-sz*.25);
+      cx2.bezierCurveTo(sz*.85,-sz*.6, sz,sz*.05, 0,sz*.65);
+      cx2.closePath();cx2.fill();
+      cx2.strokeStyle='#fff';cx2.lineWidth=1.5;cx2.stroke();
+      cx2.restore();
+    }
+  } else if(p2sx>PTOTAL-680){
+    const brX=htlSx+45;
+    if(brX<PW+55&&brX>-55) p2drawBride2(brX,PGR,-1,p2fr);
+  }
+  // Groom (only during gameplay; during wedding, drawn above with bride)
+  if(p2state!=='wedding'){
+    if(p2gr.inv===0||Math.floor(p2gr.inv/5)%2===0) p2drawGroom2(82,p2gr.y,1,p2gr.fr);
+  }
+  // Wedding ceremony particles (drawn on top of characters, before HUD)
+  if(p2state==='wedding'){
+    // Confetti
+    drwConf(cx2, p2wedConf);
+    // Hearts
+    cx2.textAlign='center';cx2.textBaseline='middle';
+    p2wedHearts.forEach(h=>{
+      cx2.save();cx2.globalAlpha=Math.max(0,Math.min(h.life,1)*.95);
+      if(h.rot){cx2.translate(h.x,h.y);cx2.rotate(h.rot);cx2.translate(-h.x,-h.y);}
+      cx2.font=h.sz+'px serif';cx2.fillStyle=h.col||'#ddb96a';cx2.fillText('♥',h.x,h.y);
+      cx2.restore();
+    });
+  }
+
+  // Damage flash
+  if(p2flash>0){cx2.save();cx2.globalAlpha=p2flash/10*.4;cx2.fillStyle='#e8916a';cx2.fillRect(0,0,PW,PH);cx2.restore();}
+  // HUD — lives, progress, rings (hidden during wedding ceremony)
+  if(p2state!=='wedding'){
+    cx2.font='16px serif';cx2.textAlign='left';cx2.textBaseline='top';
+    for(let i=0;i<5;i++){cx2.globalAlpha=i<p2lives?1:.18;cx2.fillStyle='#ddb96a';cx2.fillText('♥',10+i*20,8);}cx2.globalAlpha=1;
+    // Progress bar
+    cx2.fillStyle='rgba(200,162,72,.18)';cx2.fillRect(PW/2-72,12,144,5);
+    cx2.fillStyle='#c8a248';cx2.fillRect(PW/2-72,12,144*prog,5);
+    cx2.font='9px "Cinzel",serif';cx2.fillStyle='rgba(200,162,72,.7)';cx2.textAlign='center';cx2.textBaseline='top';
+    cx2.fillText('🏨 '+Math.round(prog*100)+'%',PW/2,20);
+    // Ring counter
+    cx2.font='10px "Cinzel",serif';cx2.fillStyle='rgba(245,234,216,.7)';cx2.textAlign='right';cx2.textBaseline='top';
+    cx2.fillText('💍 '+p2ringsCol+(p2ringTotal?'/'+p2ringTotal:''),PW-10,9);
+    // Combo glow when hitting 5/10/15
+    if(p2ringsCol>0 && p2ringsCol%5===0){
+      const since=(p2fr%30)/30;
+      if(since<.5){
+        cx2.save();cx2.globalAlpha=(1-since*2)*.5;
+        cx2.font='bold 13px "Cinzel",serif';cx2.fillStyle='#f0d99a';cx2.textAlign='center';cx2.fillText('+1 VIE !',PW/2,40);
+        cx2.restore();
+      }
+    }
+  }
+  // Overlays
+  if(p2state==='idle'){
+    p2ov();
+    cx2.font='15px "Cinzel",serif';cx2.fillStyle='#ddb96a';cx2.fillText("La Course vers l'Hôtel",PW/2,PH/2-32);
+    cx2.font='13px "Cormorant Garamond",serif';cx2.fillStyle='rgba(200,162,72,.72)';cx2.fillText("Rejoins la mariée à l'hôtel avant la cérémonie !",PW/2,PH/2-6);
+    cx2.font='11px "Cormorant Garamond",serif';cx2.fillStyle='rgba(200,162,72,.55)';
+    cx2.fillText('💍 5 bagues = +1 vie · Maintien = saut plus haut',PW/2,PH/2+15);
+    cx2.fillText('Espace · bouton · toucher l\'écran',PW/2,PH/2+33);
+  }
+  if(p2state==='wedding'){
+    // Staged dialog: shows different text at different stages of the ceremony
+    const ph = p2wedFrame;
+    if(ph < 90){
+      // Walking in
+      cx2.save();
+      cx2.fillStyle='rgba(20,34,26,.4)';cx2.fillRect(0,PH-50,PW,50);
+      cx2.font='14px "Cormorant Garamond",serif';cx2.fillStyle='#f0d99a';cx2.textAlign='center';cx2.textBaseline='middle';
+      cx2.fillText('La mariée attend à l\'autel… 💍',PW/2,PH-26);
+      cx2.restore();
+    } else if(ph < 150){
+      cx2.save();
+      cx2.fillStyle='rgba(20,34,26,.4)';cx2.fillRect(0,PH-50,PW,50);
+      cx2.font='14px "Cormorant Garamond",serif';cx2.fillStyle='#f0d99a';cx2.textAlign='center';cx2.textBaseline='middle';
+      cx2.fillText('Voulez-vous prendre cette femme… 💕',PW/2,PH-26);
+      cx2.restore();
+    } else if(ph < 210){
+      cx2.save();
+      cx2.fillStyle='rgba(20,34,26,.4)';cx2.fillRect(0,PH-50,PW,50);
+      cx2.font='14px "Cormorant Garamond",serif';cx2.fillStyle='#f0d99a';cx2.textAlign='center';cx2.textBaseline='middle';
+      cx2.fillText('Échange des alliances…  💍',PW/2,PH-26);
+      cx2.restore();
+    } else if(ph < 280){
+      // Big "MARIÉS !" announcement
+      const t=Math.min((ph-210)/30,1);
+      cx2.save();
+      cx2.globalAlpha=t;
+      const pulse=1+Math.sin(ph*.15)*.06;
+      cx2.translate(PW/2,80);cx2.scale(pulse,pulse);
+      cx2.font='bold 30px "Cinzel",serif';cx2.fillStyle='#fff5cc';cx2.textAlign='center';cx2.textBaseline='middle';
+      cx2.strokeStyle='#c8a248';cx2.lineWidth=2;
+      cx2.strokeText('MARIÉS !',0,0);
+      cx2.fillText('MARIÉS !',0,0);
+      cx2.restore();
+    } else {
+      // Final overlay with stats and button hint
+      const t=Math.min((ph-280)/40, 1);
+      cx2.save();
+      cx2.fillStyle='rgba(20,34,26,'+(.78*t)+')';cx2.fillRect(0,0,PW,PH);
+      cx2.globalAlpha=t;cx2.textAlign='center';cx2.textBaseline='middle';
+      cx2.font='bold 24px "Cinzel",serif';cx2.fillStyle='#fff5cc';
+      cx2.fillText('Vive les mariés ! 💕',PW/2,PH/2-44);
+      cx2.font='14px "Cormorant Garamond",serif';cx2.fillStyle='#f0d99a';
+      cx2.fillText('Andréanne & Étienne sont enfin réunis !',PW/2,PH/2-15);
+      cx2.font='12px "Cinzel",serif';cx2.fillStyle='rgba(200,162,72,.85)';
+      cx2.fillText('💍 Bagues : '+p2ringsCol+' · ♥ Vies restantes : '+p2lives,PW/2,PH/2+12);
+      cx2.font='11px "Cormorant Garamond",serif';cx2.fillStyle='rgba(200,162,72,.55)';
+      cx2.fillText('Cliquez « Nouvelle partie » pour rejouer',PW/2,PH/2+38);
+      cx2.restore();
+    }
+  }
+  if(p2state==='lose'){
+    p2ov();
+    cx2.font='bold 17px "Cinzel",serif';cx2.fillStyle='#e8906a';cx2.fillText("Trop d'obstacles… 😅",PW/2,PH/2-26);
+    cx2.font='13px "Cormorant Garamond",serif';cx2.fillStyle='rgba(200,162,72,.72)';cx2.fillText('Distance : '+Math.round(prog*100)+'% · 💍 '+p2ringsCol,PW/2,PH/2);
+    cx2.font='11px "Cormorant Garamond",serif';cx2.fillStyle='rgba(200,162,72,.45)';cx2.fillText('Cliquez « Nouvelle partie » pour réessayer',PW/2,PH/2+25);
+  }
 }
-function p2ov(){cx2.fillStyle='rgba(20,34,26,.84)';cx2.fillRect(0,0,PW,PH);cx2.textAlign='center';cx2.textBaseline='middle';}
+function p2ov(){cx2.fillStyle='rgba(20,34,26,.86)';cx2.fillRect(0,0,PW,PH);cx2.textAlign='center';cx2.textBaseline='middle';}
+
+function p2drawRing(x,y,sp){
+  cx2.save();cx2.translate(x,y);
+  // Glow
+  const g=cx2.createRadialGradient(0,0,2,0,0,18);
+  g.addColorStop(0,'rgba(240,217,154,.45)');g.addColorStop(1,'rgba(240,217,154,0)');
+  cx2.fillStyle=g;cx2.beginPath();cx2.arc(0,0,18,0,Math.PI*2);cx2.fill();
+  // Ring (3D-ish wobble)
+  const rx=8+Math.cos(sp)*1.5;
+  cx2.strokeStyle='#c8a248';cx2.lineWidth=2.6;
+  cx2.beginPath();cx2.ellipse(0,0,rx,8,0,0,Math.PI*2);cx2.stroke();
+  cx2.strokeStyle='#f0d99a';cx2.lineWidth=1.2;
+  cx2.beginPath();cx2.ellipse(0,-1,rx-1,7,0,0,Math.PI*2);cx2.stroke();
+  // Diamond
+  cx2.fillStyle='#fff';cx2.beginPath();
+  cx2.moveTo(0,-9);cx2.lineTo(2.5,-7);cx2.lineTo(0,-4);cx2.lineTo(-2.5,-7);cx2.closePath();cx2.fill();
+  cx2.fillStyle='rgba(255,255,255,.7)';cx2.fillRect(-.7,-8.5,.6,1.6);
+  cx2.restore();
+}
 
 function p2drawHotel(sx,gy){
-  // Corps principal
+  // Body
   cx2.fillStyle='#253626';cx2.fillRect(sx,gy-130,90,130);
-  // Texture de pierre
+  // Stone texture
   cx2.strokeStyle='rgba(200,162,72,.07)';cx2.lineWidth=.8;
-  for(let r=0;r<6;r++) for(let c=0;c<4;c++){const bx=sx+c*23-(c%2?0:11),by=gy-128+r*23;if(by>gy-128&&by<gy)cx2.strokeRect(bx,by,22,22);}
-  // Toit pointu
+  for(let r=0;r<6;r++) for(let c=0;c<4;c++){
+    const bx=sx+c*23-(c%2?0:11),by=gy-128+r*23;
+    if(by>gy-128&&by<gy)cx2.strokeRect(bx,by,22,22);
+  }
+  // Roof
   cx2.fillStyle='#1a2a1e';cx2.beginPath();cx2.moveTo(sx-14,gy-130);cx2.lineTo(sx+45,gy-175);cx2.lineTo(sx+104,gy-130);cx2.closePath();cx2.fill();
-  // Arête du toit
   cx2.strokeStyle='rgba(200,162,72,.42)';cx2.lineWidth=1.5;cx2.beginPath();cx2.moveTo(sx-14,gy-130);cx2.lineTo(sx+45,gy-175);cx2.lineTo(sx+104,gy-130);cx2.stroke();
-  // Entrée arrondie
+  // Flag on top
+  cx2.strokeStyle='#c8a248';cx2.lineWidth=1.5;cx2.beginPath();cx2.moveTo(sx+45,gy-175);cx2.lineTo(sx+45,gy-188);cx2.stroke();
+  cx2.fillStyle='#c8a248';cx2.beginPath();cx2.moveTo(sx+45,gy-188);cx2.lineTo(sx+56,gy-185);cx2.lineTo(sx+45,gy-182);cx2.closePath();cx2.fill();
+  // Entrance arch
   cx2.fillStyle='#141e14';cx2.fillRect(sx+29,gy-58,32,58);
   cx2.beginPath();cx2.arc(sx+45,gy-58,16,Math.PI,0);cx2.fill();
   cx2.strokeStyle='rgba(200,162,72,.5)';cx2.lineWidth=1.5;cx2.beginPath();cx2.arc(sx+45,gy-58,16,Math.PI,0);cx2.stroke();cx2.strokeRect(sx+29,gy-58,32,58);
-  // Fenêtres illuminées
+  // Wedding arch with flowers
+  cx2.strokeStyle='#4a7a5a';cx2.lineWidth=2.5;
+  cx2.beginPath();cx2.arc(sx+45,gy-58,20,Math.PI,0);cx2.stroke();
+  // Flower clusters on arch
+  ['#c4622d','#d4821a','#f5ead8','#c8a248','#e8916a'].forEach((c,i)=>{
+    const t=i/4, ang=Math.PI+t*Math.PI;
+    const fx=sx+45+Math.cos(ang)*20, fy=gy-58+Math.sin(ang)*20;
+    cx2.fillStyle=c;cx2.beginPath();cx2.arc(fx,fy,3,0,Math.PI*2);cx2.fill();
+  });
+  // Windows
   [[sx+6,gy-110],[sx+6,gy-82],[sx+64,gy-110],[sx+64,gy-82]].forEach(([wx,wy])=>{
-    cx2.fillStyle='rgba(255,210,100,.28)';cx2.fillRect(wx,wy,19,15);
+    cx2.fillStyle='rgba(255,210,100,.32)';cx2.fillRect(wx,wy,19,15);
     cx2.strokeStyle='rgba(200,162,72,.6)';cx2.lineWidth=1;cx2.strokeRect(wx,wy,19,15);
     cx2.beginPath();cx2.moveTo(wx+9.5,wy);cx2.lineTo(wx+9.5,wy+15);cx2.stroke();
     cx2.beginPath();cx2.moveTo(wx,wy+7.5);cx2.lineTo(wx+19,wy+7.5);cx2.stroke();
   });
-  // Enseigne
+  // Sign
   cx2.fillStyle='rgba(200,162,72,.22)';cx2.fillRect(sx+12,gy-154,66,16);
   cx2.strokeStyle='rgba(200,162,72,.52)';cx2.lineWidth=1;cx2.strokeRect(sx+12,gy-154,66,16);
   cx2.font='bold 8px "Cinzel",serif';cx2.fillStyle='#c8a248';cx2.textAlign='center';cx2.textBaseline='middle';
   cx2.fillText('MANOIR',sx+45,gy-146);
-  // Bordure décorative
+  // Bordering lines
   cx2.strokeStyle='rgba(200,162,72,.32)';cx2.lineWidth=1.5;cx2.strokeRect(sx,gy-130,90,130);
 }
 
-function p2drawOb(type,sx,gy,w,h){
-  cx2.fillStyle='rgba(0,0,0,.2)';cx2.beginPath();cx2.ellipse(sx+w/2,gy,w*.55,3.5,0,0,Math.PI*2);cx2.fill();
+function p2drawOb(type,sx,gy,w,h,ob){
+  // Ground shadow (only for non-air)
+  if(!ob||!ob.air){
+    cx2.fillStyle='rgba(0,0,0,.28)';cx2.beginPath();cx2.ellipse(sx+w/2,gy,w*.55,3.8,0,0,Math.PI*2);cx2.fill();
+  }
+  // Subtle backlight glow so obstacles separate from sky
+  if(!ob||!ob.air){
+    const glow=cx2.createRadialGradient(sx+w/2,gy-h*.5,2,sx+w/2,gy-h*.5,Math.max(w,h)*.9);
+    glow.addColorStop(0,'rgba(255,220,160,.12)');glow.addColorStop(1,'rgba(255,220,160,0)');
+    cx2.fillStyle=glow;cx2.beginPath();cx2.arc(sx+w/2,gy-h*.5,Math.max(w,h)*.9,0,Math.PI*2);cx2.fill();
+  }
   switch(type){
     case 'pot':
-      cx2.fillStyle='#8b3c22';cx2.beginPath();cx2.moveTo(sx+5,gy-h);cx2.lineTo(sx,gy);cx2.lineTo(sx+w,gy);cx2.lineTo(sx+w-5,gy-h);cx2.closePath();cx2.fill();
-      cx2.fillStyle='#6b2c12';cx2.fillRect(sx+3,gy-h,w-6,5);
-      cx2.fillStyle='#4a7a5a';cx2.fillRect(sx+w/2-1.5,gy-h-10,3,10);
-      cx2.fillStyle='#c4622d';cx2.beginPath();cx2.arc(sx+w/2,gy-h-12,7,0,Math.PI*2);cx2.fill();
-      cx2.fillStyle='#d4821a';cx2.beginPath();cx2.arc(sx+w/2-4,gy-h-15,4.5,0,Math.PI*2);cx2.fill();
-      cx2.fillStyle='#f5ead8';cx2.beginPath();cx2.arc(sx+w/2,gy-h-12,3,0,Math.PI*2);cx2.fill();
-      cx2.fillStyle='#c8a248';cx2.beginPath();cx2.arc(sx+w/2,gy-h-12,1.5,0,Math.PI*2);cx2.fill();
+      // Brighter terracotta with thick gold rim & dark outline
+      cx2.fillStyle='#c45a28';cx2.beginPath();cx2.moveTo(sx+5,gy-h);cx2.lineTo(sx,gy);cx2.lineTo(sx+w,gy);cx2.lineTo(sx+w-5,gy-h);cx2.closePath();cx2.fill();
+      cx2.strokeStyle='#000';cx2.lineWidth=1.5;cx2.stroke();
+      cx2.fillStyle='#8b3a16';cx2.fillRect(sx+3,gy-h,w-6,6);
+      cx2.strokeRect(sx+3,gy-h,w-6,6);
+      cx2.fillStyle='#4a7a5a';cx2.fillRect(sx+w/2-1.5,gy-h-12,3,12);
+      // Bright flowers
+      cx2.fillStyle='#ff5577';cx2.beginPath();cx2.arc(sx+w/2-3,gy-h-13,5,0,Math.PI*2);cx2.fill();
+      cx2.fillStyle='#ff9933';cx2.beginPath();cx2.arc(sx+w/2+3,gy-h-15,4,0,Math.PI*2);cx2.fill();
+      cx2.fillStyle='#fff';cx2.beginPath();cx2.arc(sx+w/2,gy-h-12,3,0,Math.PI*2);cx2.fill();
+      cx2.fillStyle='#ffcc44';cx2.beginPath();cx2.arc(sx+w/2,gy-h-12,1.6,0,Math.PI*2);cx2.fill();
       break;
-    case 'bottle':
-      cx2.fillStyle='#2e4436';cx2.beginPath();cx2.roundRect(sx+w*.18,gy-h*.78,w*.64,h*.78,4);cx2.fill();
-      cx2.fillStyle='#1e2e25';cx2.fillRect(sx+w*.3,gy-h,w*.4,h*.26);
-      cx2.fillStyle='#c8a248';cx2.fillRect(sx+w*.24,gy-h,w*.52,8);
-      cx2.fillStyle='rgba(245,234,216,.14)';cx2.fillRect(sx+w*.18,gy-h*.52,w*.64,h*.22);
-      cx2.strokeStyle='rgba(200,162,72,.22)';cx2.lineWidth=1;cx2.beginPath();cx2.roundRect(sx+w*.18,gy-h*.78,w*.64,h*.78,4);cx2.stroke();
+    case 'crate':
+      // Wooden crate — high contrast
+      cx2.fillStyle='#c88f4a';cx2.fillRect(sx,gy-h,w,h);
+      cx2.strokeStyle='#000';cx2.lineWidth=2;cx2.strokeRect(sx,gy-h,w,h);
+      cx2.strokeStyle='#5a3a18';cx2.lineWidth=1.5;
+      cx2.beginPath();cx2.moveTo(sx,gy-h);cx2.lineTo(sx+w,gy);cx2.stroke();
+      cx2.beginPath();cx2.moveTo(sx+w,gy-h);cx2.lineTo(sx,gy);cx2.stroke();
+      // Bright label
+      cx2.fillStyle='#fff';cx2.fillRect(sx+w*.15,gy-h*.5-3,w*.7,8);
+      cx2.fillStyle='#c8324a';cx2.font='bold 6px sans-serif';cx2.textAlign='center';cx2.textBaseline='middle';
+      cx2.fillText('FRAGILE',sx+w/2,gy-h*.5+1);
       break;
     case 'fence':
-      cx2.fillStyle='#7a5030';cx2.fillRect(sx,gy-h*.32,w,6);cx2.fillRect(sx,gy-h*.64,w,5);
-      cx2.fillStyle='#5a3a18';
-      for(let i=0;i<3;i++){const px=sx+i*(w/3)+3;cx2.beginPath();cx2.moveTo(px+w/6,gy-h);cx2.lineTo(px,gy);cx2.lineTo(px+w/3-5,gy);cx2.closePath();cx2.fill();}
-      cx2.strokeStyle='rgba(200,162,72,.12)';cx2.lineWidth=.8;cx2.strokeRect(sx,gy-h,w,h);
+      // Wood fence — bright wood + dark outline
+      cx2.fillStyle='#a0703a';cx2.fillRect(sx,gy-h*.32,w,7);cx2.fillRect(sx,gy-h*.64,w,6);
+      cx2.strokeStyle='#000';cx2.lineWidth=1.2;cx2.strokeRect(sx,gy-h*.32,w,7);cx2.strokeRect(sx,gy-h*.64,w,6);
+      cx2.fillStyle='#7a5028';
+      for(let i=0;i<3;i++){
+        const px=sx+i*(w/3)+3;
+        cx2.beginPath();cx2.moveTo(px+w/6,gy-h);cx2.lineTo(px,gy);cx2.lineTo(px+w/3-5,gy);cx2.closePath();
+        cx2.fill();cx2.strokeStyle='#000';cx2.lineWidth=1;cx2.stroke();
+      }
       break;
     case 'cake':
-      cx2.fillStyle='#f5ead8';cx2.fillRect(sx,gy-h*.38,w,h*.38);
-      cx2.fillStyle='#ede0cc';cx2.fillRect(sx+5,gy-h*.72,w-10,h*.34);
-      cx2.fillStyle='#e8d5bc';cx2.fillRect(sx+10,gy-h,w-20,h*.28);
-      cx2.fillStyle='#c8a248';cx2.fillRect(sx,gy-h*.38,w,2.5);cx2.fillRect(sx+5,gy-h*.72,w-10,2);cx2.fillRect(sx+10,gy-h,w-20,2);
-      cx2.font='10px serif';cx2.textAlign='center';cx2.textBaseline='middle';cx2.fillText('💕',sx+w/2,gy-h-6);
+      // Wedding cake — very bright vs dark sky
+      cx2.fillStyle='#fffaf0';cx2.fillRect(sx,gy-h*.38,w,h*.38);
+      cx2.fillStyle='#fff5e8';cx2.fillRect(sx+5,gy-h*.72,w-10,h*.34);
+      cx2.fillStyle='#ffe8d0';cx2.fillRect(sx+10,gy-h,w-20,h*.28);
+      cx2.strokeStyle='#000';cx2.lineWidth=1.5;
+      cx2.strokeRect(sx,gy-h*.38,w,h*.38);
+      cx2.strokeRect(sx+5,gy-h*.72,w-10,h*.34);
+      cx2.strokeRect(sx+10,gy-h,w-20,h*.28);
+      // Pink fondant trim
+      cx2.fillStyle='#ff8aa8';cx2.fillRect(sx,gy-h*.38,w,3);
+      cx2.fillStyle='#ff8aa8';cx2.fillRect(sx+5,gy-h*.72,w-10,3);
+      cx2.fillStyle='#ff8aa8';cx2.fillRect(sx+10,gy-h,w-20,3);
+      // Topper
+      cx2.font='12px serif';cx2.textAlign='center';cx2.textBaseline='middle';cx2.fillText('💕',sx+w/2,gy-h-7);
       break;
+    case 'balloon': {
+      // Floating heart balloon — bobs vertically. Pos provided by ob.dyn computation
+      // gy here is the center y position passed in
+      const cyB = gy;
+      // String down to ground
+      cx2.strokeStyle='rgba(245,234,216,.6)';cx2.lineWidth=1.2;
+      cx2.beginPath();cx2.moveTo(sx+w/2,cyB+h/2);cx2.lineTo(sx+w/2+Math.sin(p2fr*.04)*4,cyB+h/2+30);cx2.stroke();
+      // Heart-shaped balloon
+      const hx=sx+w/2, hy=cyB-2;
+      cx2.fillStyle='#ff4060';
+      cx2.beginPath();
+      cx2.moveTo(hx,hy+10);
+      cx2.bezierCurveTo(hx-16,hy-2, hx-14,hy-14, hx,hy-6);
+      cx2.bezierCurveTo(hx+14,hy-14, hx+16,hy-2, hx,hy+10);
+      cx2.closePath();cx2.fill();
+      cx2.strokeStyle='#000';cx2.lineWidth=1.5;cx2.stroke();
+      // Highlight
+      cx2.fillStyle='rgba(255,255,255,.45)';
+      cx2.beginPath();cx2.ellipse(hx-4,hy-5,3,5,-.4,0,Math.PI*2);cx2.fill();
+      // Tiny knot
+      cx2.fillStyle='#c0202c';cx2.beginPath();cx2.arc(hx,hy+11,2,0,Math.PI*2);cx2.fill();
+      break;
+    }
+    case 'bird': {
+      // Bird flying — animated wings
+      const cyB=gy;
+      const wingFlap=Math.sin(p2fr*.4)*8;
+      // Body
+      cx2.fillStyle='#3a3a3a';
+      cx2.beginPath();cx2.ellipse(sx+w/2,cyB,w*.4,h*.45,0,0,Math.PI*2);cx2.fill();
+      cx2.strokeStyle='#000';cx2.lineWidth=1.2;cx2.stroke();
+      // Wings (animated)
+      cx2.fillStyle='#5a5a5a';
+      cx2.beginPath();
+      cx2.moveTo(sx+w*.5,cyB);
+      cx2.quadraticCurveTo(sx+w*.5-8,cyB-wingFlap-4,sx+w*.5-13,cyB-wingFlap);
+      cx2.quadraticCurveTo(sx+w*.5-6,cyB,sx+w*.5,cyB);
+      cx2.fill();cx2.stroke();
+      cx2.beginPath();
+      cx2.moveTo(sx+w*.5,cyB);
+      cx2.quadraticCurveTo(sx+w*.5+8,cyB-wingFlap-4,sx+w*.5+13,cyB-wingFlap);
+      cx2.quadraticCurveTo(sx+w*.5+6,cyB,sx+w*.5,cyB);
+      cx2.fill();cx2.stroke();
+      // Beak
+      cx2.fillStyle='#ffaa22';
+      cx2.beginPath();cx2.moveTo(sx,cyB);cx2.lineTo(sx+5,cyB-2);cx2.lineTo(sx+5,cyB+2);cx2.closePath();cx2.fill();
+      cx2.strokeStyle='#000';cx2.lineWidth=1;cx2.stroke();
+      // Eye
+      cx2.fillStyle='#fff';cx2.beginPath();cx2.arc(sx+w*.32,cyB-2,1.8,0,Math.PI*2);cx2.fill();
+      cx2.fillStyle='#000';cx2.beginPath();cx2.arc(sx+w*.32,cyB-2,1,0,Math.PI*2);cx2.fill();
+      break;
+    }
   }
 }
 
-function p2drawGroom(x,y,f,fr){
+function p2drawGroom2(x,y,f,fr,forceWalk){
   cx2.save();cx2.translate(x,y);cx2.scale(f,1);
-  const onGr=p2gr.onGr;
+  const onGr = forceWalk ? true : p2gr.onGr;
   const l=onGr?Math.sin(fr*.28)*6:0, a=onGr?Math.sin(fr*.28)*5:0;
-  // Shadow
-  cx2.fillStyle='rgba(0,0,0,.24)';cx2.beginPath();cx2.ellipse(0,3,12,3.5,0,0,Math.PI*2);cx2.fill();
-  // Jambes
+  cx2.fillStyle='rgba(0,0,0,.24)';
+  // Shadow shrinks/distorts when in air
+  const shAlpha=onGr?.24:.12, shScale=onGr?1:.7;
+  cx2.fillStyle='rgba(0,0,0,'+shAlpha+')';
+  cx2.beginPath();cx2.ellipse(0,3,12*shScale,3.5*shScale,0,0,Math.PI*2);cx2.fill();
   cx2.fillStyle='#1a2030';cx2.fillRect(-9,14,7,15+l);cx2.fillRect(2,14,7,15-l);
   cx2.fillStyle='#0e1220';cx2.fillRect(-11,28+l,10,5);cx2.fillRect(1,28-l,10,5);
-  // Corps
   cx2.fillStyle='#1a2030';cx2.beginPath();cx2.roundRect(-11,-10,22,26,3);cx2.fill();
   cx2.fillStyle='#f5ead8';cx2.fillRect(-5,-9,10,13);
   cx2.fillStyle='#c8a248';cx2.beginPath();cx2.moveTo(-5,-5);cx2.lineTo(0,-2);cx2.lineTo(5,-5);cx2.lineTo(5,-8);cx2.lineTo(0,-5);cx2.lineTo(-5,-8);cx2.closePath();cx2.fill();
   cx2.fillStyle='#1a2030';cx2.beginPath();cx2.moveTo(-11,-10);cx2.lineTo(-5,-9);cx2.lineTo(-8,5);cx2.closePath();cx2.fill();
   cx2.beginPath();cx2.moveTo(11,-10);cx2.lineTo(5,-9);cx2.lineTo(8,5);cx2.closePath();cx2.fill();
-  // Bras (levés en sautant)
   const armRot=onGr?0:-0.45, armY=onGr?0:5;
   cx2.fillStyle='#1a2030';
   cx2.save();cx2.translate(-14,-1+a+armY);cx2.rotate(-0.18+armRot);cx2.fillRect(-4,-3,10,6);cx2.restore();
   cx2.save();cx2.translate(12,-1-a+armY);cx2.rotate(0.18-armRot);cx2.fillRect(-4,-3,10,6);cx2.restore();
   cx2.fillStyle='#f5c8a0';cx2.beginPath();cx2.arc(-18,-1+a+armY,4,0,Math.PI*2);cx2.fill();
   cx2.beginPath();cx2.arc(20,-1-a+armY,4,0,Math.PI*2);cx2.fill();
-  // Tête
   cx2.fillStyle='#f5c8a0';cx2.beginPath();cx2.arc(0,-22,10,0,Math.PI*2);cx2.fill();
   cx2.fillStyle='#2c1e10';cx2.beginPath();cx2.arc(0,-22,10,Math.PI,0);cx2.fill();cx2.fillRect(-10,-32,20,11);
   cx2.fillStyle='#1a1a1a';cx2.beginPath();cx2.arc(-3.5,-23,1.7,0,Math.PI*2);cx2.fill();cx2.beginPath();cx2.arc(3.5,-23,1.7,0,Math.PI*2);cx2.fill();
@@ -1186,63 +2143,759 @@ function p2drawGroom(x,y,f,fr){
   cx2.restore();
 }
 
-function p2drawBride(x,y,f,fr){
+function p2drawBride2(x,y,f,fr){
   cx2.save();cx2.translate(x,y);cx2.scale(f,1);
   const sw=Math.sin(fr*.22)*2.5, a=Math.sin(fr*.22)*2.5;
   cx2.fillStyle='rgba(0,0,0,.18)';cx2.beginPath();cx2.ellipse(sw*.3,2,12,3.5,0,0,Math.PI*2);cx2.fill();
-  // Robe
   cx2.fillStyle='#f5ead8';cx2.beginPath();cx2.moveTo(-7,7);cx2.lineTo(-18+sw,30);cx2.lineTo(18+sw,30);cx2.lineTo(7,7);cx2.closePath();cx2.fill();
-  // Corsage
   cx2.fillStyle='#ede0cc';cx2.beginPath();cx2.roundRect(-7,-11,14,20,2);cx2.fill();
   cx2.fillStyle='#c8a248';cx2.fillRect(-7,7,14,2.5);
-  // Bras ouverts (geste d'accueil)
   cx2.fillStyle='#f5c8a0';
   cx2.save();cx2.translate(-16,-4+a);cx2.rotate(-.55);cx2.fillRect(-4,-2.5,10,5);cx2.restore();
   cx2.save();cx2.translate(14,-4-a);cx2.rotate(.55);cx2.fillRect(-4,-2.5,10,5);cx2.restore();
-  // Bague à la main droite
   cx2.save();cx2.translate(22,-7-a);cx2.font='12px serif';cx2.textAlign='center';cx2.textBaseline='middle';cx2.fillText('💍',0,0);cx2.restore();
-  // Tête
   cx2.fillStyle='#f5c8a0';cx2.beginPath();cx2.arc(0,-22,9.5,0,Math.PI*2);cx2.fill();
   cx2.fillStyle='#5a3018';cx2.beginPath();cx2.arc(0,-22,9.5,Math.PI,0);cx2.fill();cx2.fillRect(-9.5,-32,19,11);
-  // Voile
   cx2.strokeStyle='rgba(245,234,216,.55)';cx2.lineWidth=2.2;cx2.beginPath();cx2.moveTo(-1,-31);cx2.quadraticCurveTo(16,-19,17,5);cx2.stroke();
   cx2.lineWidth=1.3;cx2.beginPath();cx2.moveTo(-1,-31);cx2.quadraticCurveTo(19,-16,20,8);cx2.stroke();
-  // Tiare
   cx2.fillStyle='#c8a248';cx2.fillRect(-6,-33,12,2.5);
   cx2.beginPath();cx2.moveTo(-2,-33);cx2.lineTo(0,-37);cx2.lineTo(2,-33);cx2.closePath();cx2.fill();
   cx2.beginPath();cx2.moveTo(-6,-33);cx2.lineTo(-5,-36);cx2.lineTo(-2,-33);cx2.closePath();cx2.fill();
   cx2.beginPath();cx2.moveTo(6,-33);cx2.lineTo(5,-36);cx2.lineTo(2,-33);cx2.closePath();cx2.fill();
-  // Yeux
   cx2.fillStyle='#2d1a0e';cx2.beginPath();cx2.arc(-3,-23,1.5,0,Math.PI*2);cx2.fill();cx2.beginPath();cx2.arc(3,-23,1.5,0,Math.PI*2);cx2.fill();
   cx2.fillStyle='white';cx2.beginPath();cx2.arc(-2.2,-24,.55,0,Math.PI*2);cx2.fill();cx2.beginPath();cx2.arc(3.8,-24,.55,0,Math.PI*2);cx2.fill();
-  // Sourire
   cx2.strokeStyle='#8b4a2a';cx2.lineWidth=1.3;cx2.beginPath();cx2.arc(0,-20,3.5,.2,Math.PI-.2);cx2.stroke();
   cx2.restore();
 }
 
-/* ── Clavier : Espace pour sauter (jeu 2) ── */
+/* ── Game 2 loop ── */
+function p2tick(){
+  if(canRun()) p2step();
+  p2draw();
+  p2RafId=setTimeout(()=>requestAnimationFrame(p2tick),40);
+}
+
+/* Keyboard for game 2 */
 document.addEventListener('keydown',function(e){
   if((e.code==='Space'||e.key===' ')&&document.getElementById('gameRun').style.display!=='none'){
-    e.preventDefault();p2jump();
+    e.preventDefault();p2pressJump();
   }
 });
-
-/* ── Touch sur canvas du jeu 2 ── */
-cv2.addEventListener('pointerdown',function(){
-  if(document.getElementById('gameRun').style.display!=='none') p2jump();
+document.addEventListener('keyup',function(e){
+  if((e.code==='Space'||e.key===' ')&&document.getElementById('gameRun').style.display!=='none'){
+    e.preventDefault();p2releaseJump();
+  }
 });
+/* Tap canvas for game 2 */
+cv2.addEventListener('pointerdown',function(){
+  if(document.getElementById('gameRun').style.display!=='none') p2pressJump();
+});
+cv2.addEventListener('pointerup',function(){ p2releaseJump(); });
+cv2.addEventListener('pointerleave',function(){ p2releaseJump(); });
 
-/* ── Init jeu 2 ── */
-p2init();p2draw();
+// Init game 2
+p2init();
+p2state='idle';
+if(p2bestDist>=PTOTAL) document.getElementById('p2Best').textContent='100%';
+else if(p2bestDist>0) document.getElementById('p2Best').textContent=Math.round(p2bestDist/PTOTAL*100)+'%';
+p2draw();
+p2tick();
 
-/* ── Sélection d'onglets ── */
+/* ════════════════════════════════════════════════════════════
+   👰💐 JEU 3 — LA PLUIE DE PÉTALES
+   La mariée se déplace en bas de l'écran et attrape les pétales,
+   bouquets et bagues qui tombent — tout en évitant la pluie et la boue.
+   ════════════════════════════════════════════════════════════ */
+const cv3=document.getElementById('petalsCanvas');
+const cx3=setupHD(cv3);
+const P3W=parseInt(cv3.style.width,10), P3H=parseInt(cv3.style.height,10);
+const P3GR=P3H-50;                  // ground line where bride walks
+const P3_DUR=60;                    // seconds total
+const BR_SPD=4.2;                   // movement speed
+
+// Object types: petal=1pt, bouquet=5pt, ring=time bonus, drop=damage, mud=damage
+// "good" types are the only ones the bride wants to catch
+const P3_TYPES = {
+  petal:   {good:true,  pts:1, sz:14, vmin:1.6, vmax:2.6, weight:60},
+  bouquet: {good:true,  pts:5, sz:22, vmin:1.4, vmax:2.0, weight:14},
+  ring:    {good:true,  pts:0, sz:18, vmin:1.8, vmax:2.4, weight:5,  bonus:'time'},
+  drop:    {good:false, pts:0, sz:14, vmin:2.4, vmax:3.6, weight:14},
+  mud:     {good:false, pts:0, sz:18, vmin:2.0, vmax:3.0, weight:7}
+};
+
+let p3br = {x:P3W/2, vx:0, f:1, fr:0, hitFr:0};
+let p3objs = [];
+let p3parts = [];
+let p3score = 0;
+let p3lives = 3;
+let p3combo = 0;
+let p3comboFlash = 0;
+let p3time = P3_DUR;
+let p3state = 'idle';
+let p3frame = 0;
+let p3RafId = null;
+let p3TimerId = null;
+let p3Best = lsGet('w_best3', 0);
+let p3touchActive = false;
+let p3touchX = P3W/2;
+let p3keys = {};
+let p3spawnTimer = 30;
+let p3sky = [];
+let p3clouds = [];
+let p3fireworks = [];
+
+// Pre-generate background bits
+(function(){
+  for(let i=0;i<28;i++) p3sky.push({x:Math.random()*P3W, y:Math.random()*(P3GR*.6), tw:Math.random()*Math.PI*2, sz:.5+Math.random()*1.1});
+  for(let i=0;i<6;i++) p3clouds.push({x:Math.random()*P3W, y:30+Math.random()*60, sp:.15+Math.random()*.25, w:50+Math.random()*40});
+})();
+
+if(p3Best>0) document.getElementById('p3Best').textContent=p3Best;
+
+function p3pickType(){
+  let total=0;
+  for(const k in P3_TYPES) total+=P3_TYPES[k].weight;
+  let r=Math.random()*total;
+  for(const k in P3_TYPES){
+    r-=P3_TYPES[k].weight;
+    if(r<=0) return k;
+  }
+  return 'petal';
+}
+
+function p3spawn(){
+  // Difficulty ramps with elapsed time: more dangerous types late
+  const elapsed = P3_DUR - p3time;
+  const dangerBoost = clamp(elapsed/P3_DUR, 0, 1);  // 0→1 over duration
+  let type = p3pickType();
+  // Late game: 30% chance to convert good→bad to keep tension high
+  if(dangerBoost>.5 && P3_TYPES[type].good && Math.random()<dangerBoost*.3){
+    type = Math.random()<.6 ? 'drop' : 'mud';
+  }
+  const T = P3_TYPES[type];
+  const speedMult = 1 + dangerBoost*.4;     // ~40% faster by end
+  p3objs.push({
+    type, x: 18+Math.random()*(P3W-36), y: -20,
+    vy: lerp(T.vmin, T.vmax, Math.random())*speedMult,
+    vx: (Math.random()-.5)*.4,
+    rot: Math.random()*Math.PI*2,
+    rotV: (Math.random()-.5)*.08,
+    sw: Math.random()*Math.PI*2,
+    sz: T.sz
+  });
+}
+
+function p3init(){
+  p3br = {x:P3W/2, vx:0, f:1, fr:0, hitFr:0};
+  p3objs = []; p3parts = []; p3fireworks = [];
+  p3score = 0; p3lives = 3; p3combo = 0; p3comboFlash = 0;
+  p3time = P3_DUR; p3frame = 0; p3spawnTimer = 30;
+  document.getElementById('p3Score').textContent='0';
+  document.getElementById('p3Timer').textContent=P3_DUR+'s';
+}
+
+function p3start(){
+  if(p3RafId){clearTimeout(p3RafId);p3RafId=null;}
+  if(p3TimerId){clearInterval(p3TimerId);p3TimerId=null;}
+  // Pause other games
+  if(gState==='playing'){gState='idle';if(tTick){clearInterval(tTick);tTick=null;}}
+  if(p2state==='playing'){p2state='idle';}
+  p3init();
+  p3state='playing';
+  p3draw();
+  p3tick();
+  p3TimerId = setInterval(()=>{
+    if(!canRun()) return;
+    if(p3state!=='playing') return;
+    p3time--;
+    document.getElementById('p3Timer').textContent=p3time+'s';
+    if(p3time<=0){ p3finish(); }
+  }, 1000);
+}
+window.p3start=p3start;
+
+function p3finish(){
+  p3state='ended';
+  if(p3TimerId){clearInterval(p3TimerId);p3TimerId=null;}
+  if(p3score>p3Best){
+    p3Best=p3score;
+    lsSet('w_best3',p3Best);
+    document.getElementById('p3Best').textContent=p3Best;
+    // Celebration fireworks if new best
+    for(let i=0;i<5;i++){
+      p3fireworks.push({
+        x: 60+Math.random()*(P3W-120),
+        y: 60+Math.random()*100,
+        delay: Math.random()*60,
+        triggered:false
+      });
+    }
+  }
+}
+
+function p3step(){
+  if(p3state==='ended'){
+    // Animate fireworks during end celebration
+    p3frame++;
+    p3parts = p3parts.filter(p=>p.life>0);
+    p3parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.05;p.vx*=.99;p.life-=.018;});
+    p3fireworks.forEach(fw=>{
+      if(!fw.triggered && p3frame>fw.delay){
+        fw.triggered=true;
+        const cols=['#ff5577','#f0d99a','#fff5cc','#c8a248','#ff8aa8'];
+        const c = cols[Math.floor(Math.random()*cols.length)];
+        for(let i=0;i<24;i++){
+          const a=Math.random()*Math.PI*2, sp=2+Math.random()*3;
+          p3parts.push({
+            x:fw.x, y:fw.y,
+            vx:Math.cos(a)*sp, vy:Math.sin(a)*sp,
+            life:1.4+Math.random()*.5,
+            sz:2+Math.random()*1.5,
+            col:c
+          });
+        }
+      }
+    });
+    return;
+  }
+  if(p3state!=='playing') return;
+  p3frame++;
+
+  // Bride movement
+  let mx = 0;
+  if(p3keys['ArrowLeft']||p3keys['a']||p3keys['A']) mx=-1;
+  else if(p3keys['ArrowRight']||p3keys['d']||p3keys['D']) mx=1;
+  if(p3touchActive){
+    const dx = p3touchX - p3br.x;
+    if(Math.abs(dx)>3) mx = dx>0 ? 1 : -1;
+    else mx = 0;
+  }
+  if(mx!==0){p3br.f = mx>0 ? 1 : -1; p3br.fr++;}
+  p3br.x = clamp(p3br.x + mx*BR_SPD, 24, P3W-24);
+
+  // Spawn objects (rate ramps with time)
+  const elapsed = P3_DUR - p3time;
+  const baseInterval = Math.max(14, 32 - elapsed*.32);
+  p3spawnTimer--;
+  if(p3spawnTimer<=0){
+    p3spawn();
+    p3spawnTimer = baseInterval + Math.random()*8;
+  }
+  // Sometimes spawn a small burst of petals (visually nice)
+  if(elapsed>10 && Math.random()<.008){
+    for(let i=0;i<4;i++){
+      p3objs.push({
+        type:'petal', x: 18+Math.random()*(P3W-36), y: -20-i*15,
+        vy: lerp(1.8,2.6,Math.random()), vx:(Math.random()-.5)*.5,
+        rot:Math.random()*Math.PI*2, rotV:(Math.random()-.5)*.08,
+        sw:Math.random()*Math.PI*2, sz:14
+      });
+    }
+  }
+
+  // Update objects
+  for(const o of p3objs){
+    o.y += o.vy;
+    o.x += o.vx;
+    o.rot += o.rotV;
+    o.sw += .07;
+    // Sway for petals
+    if(o.type==='petal') o.x += Math.sin(o.sw)*.4;
+  }
+  // Catch detection (bride hitbox: oval around her body, basket-like at lap level)
+  const catchY = P3GR - 20;     // height where catches register (chest level)
+  const catchR = 26;
+  for(const o of p3objs){
+    if(o.caught||o.missed) continue;
+    if(o.y > catchY-catchR && o.y < catchY+catchR){
+      const dx = Math.abs(o.x - p3br.x);
+      if(dx < catchR){
+        o.caught = true;
+        const T = P3_TYPES[o.type];
+        if(T.good){
+          if(o.type==='ring'){
+            // Time bonus
+            p3time = Math.min(P3_DUR, p3time+5);
+            document.getElementById('p3Timer').textContent=p3time+'s';
+            // Burst gold particles
+            for(let i=0;i<14;i++){
+              const a=Math.random()*Math.PI*2;
+              p3parts.push({x:o.x,y:o.y,vx:Math.cos(a)*2.5,vy:Math.sin(a)*2.5-1,life:1.2,sz:2,col:'#f0d99a'});
+            }
+            p3comboFlash = 35;
+          } else {
+            p3combo++;
+            const comboBonus = p3combo>=10?3:(p3combo>=5?2:1);
+            const pts = T.pts * comboBonus;
+            p3score += pts;
+            document.getElementById('p3Score').textContent=p3score;
+            // Particles
+            const col = o.type==='bouquet'?'#ff5577':'#f0a8b8';
+            for(let i=0;i<8;i++){
+              const a=Math.random()*Math.PI*2;
+              p3parts.push({x:o.x,y:o.y,vx:Math.cos(a)*1.8,vy:Math.sin(a)*1.8-1,life:1,sz:2,col});
+            }
+            if(p3combo>=5 && p3combo%5===0) p3comboFlash = 30;
+          }
+        } else {
+          // Bad catch: lose a life and break combo
+          p3lives--;
+          p3combo = 0;
+          p3br.hitFr = 25;
+          // Splash
+          const col = o.type==='drop'?'#5a8caa':'#5a4030';
+          for(let i=0;i<12;i++){
+            p3parts.push({x:o.x,y:o.y+5,vx:(Math.random()-.5)*3,vy:-Math.random()*2.5,life:1,sz:2.5,col});
+          }
+          if(p3lives<=0) p3finish();
+        }
+      }
+    }
+    if(o.y > P3H+20){
+      o.missed = true;
+      // Missing a good item also breaks combo (only for petal/bouquet)
+      if(P3_TYPES[o.type].good && o.type!=='ring') p3combo = 0;
+    }
+  }
+  p3objs = p3objs.filter(o => !o.caught && !o.missed);
+  p3parts = p3parts.filter(p=>p.life>0);
+  p3parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.07;p.vx*=.99;p.life-=.025;});
+  if(p3comboFlash>0) p3comboFlash--;
+  if(p3br.hitFr>0) p3br.hitFr--;
+  // Move clouds
+  p3clouds.forEach(c=>{c.x-=c.sp;if(c.x<-c.w-20){c.x=P3W+20;c.y=30+Math.random()*60;}});
+}
+
+function p3draw(){
+  cx3.clearRect(0,0,P3W,P3H);
+  // Sky (soft pink/purple)
+  const sk=cx3.createLinearGradient(0,0,0,P3GR);
+  sk.addColorStop(0,'#3d2840'); sk.addColorStop(.55,'#6e3d52'); sk.addColorStop(1,'#a45d6e');
+  cx3.fillStyle=sk; cx3.fillRect(0,0,P3W,P3GR);
+  // Twinkling stars
+  cx3.fillStyle='#fff5cc';
+  for(const s of p3sky){
+    const tw=.4+Math.abs(Math.sin(s.tw+p3frame*.04))*.6;
+    cx3.globalAlpha=tw*.7;
+    cx3.beginPath();cx3.arc(s.x,s.y,s.sz,0,Math.PI*2);cx3.fill();
+  }
+  cx3.globalAlpha=1;
+  // Soft moon
+  cx3.save();
+  cx3.fillStyle='rgba(255,240,200,.9)';
+  cx3.beginPath();cx3.arc(P3W-58,52,17,0,Math.PI*2);cx3.fill();
+  cx3.fillStyle='rgba(80,50,60,.85)';
+  cx3.beginPath();cx3.arc(P3W-52,46,15,0,Math.PI*2);cx3.fill();
+  cx3.restore();
+  // Clouds
+  cx3.fillStyle='rgba(245,234,216,.18)';
+  for(const c of p3clouds){
+    cx3.beginPath();
+    cx3.ellipse(c.x,c.y,c.w*.6,c.w*.22,0,0,Math.PI*2);
+    cx3.ellipse(c.x-c.w*.3,c.y+c.w*.05,c.w*.4,c.w*.18,0,0,Math.PI*2);
+    cx3.ellipse(c.x+c.w*.3,c.y+c.w*.04,c.w*.4,c.w*.18,0,0,Math.PI*2);
+    cx3.fill();
+  }
+  // Distant garden silhouette (bushes)
+  cx3.fillStyle='rgba(40,32,38,.7)';
+  for(let i=0;i<8;i++){
+    const bx = i*60+10, by=P3GR-8, bw=45+Math.sin(i*1.3)*8;
+    cx3.beginPath();cx3.ellipse(bx,by,bw,12,0,0,Math.PI*2);cx3.fill();
+  }
+  // Ground (path)
+  cx3.fillStyle='#3a2238'; cx3.fillRect(0,P3GR,P3W,P3H-P3GR);
+  cx3.fillStyle='rgba(200,162,72,.16)';cx3.fillRect(0,P3GR,P3W,2);
+  // Petals strewn on ground (decoration)
+  cx3.fillStyle='rgba(255,150,170,.4)';
+  for(let i=0;i<14;i++){
+    const px = (i*32 + (p3frame*.05)%32) % P3W;
+    cx3.beginPath();cx3.ellipse(px, P3GR+(i%2===0?5:11), 3, 1.5, i*.3, 0, Math.PI*2);cx3.fill();
+  }
+  // Falling fireworks particles (during end celebration)
+  if(p3state==='ended'){
+    p3parts.forEach(p=>{
+      cx3.save();
+      cx3.globalAlpha=Math.min(p.life,1);
+      cx3.fillStyle=p.col;
+      cx3.beginPath();cx3.arc(p.x,p.y,p.sz,0,Math.PI*2);cx3.fill();
+      cx3.restore();
+    });
+    cx3.globalAlpha=1;
+  }
+  // Falling objects
+  for(const o of p3objs) p3drawObj(o);
+  // Bride
+  p3drawBride(p3br.x, P3GR, p3br.f, p3br.fr, p3br.hitFr>0);
+  // Catch zone hint (subtle glow during play, only first 4 seconds)
+  if(p3state==='playing' && p3frame<140){
+    cx3.save();
+    cx3.globalAlpha=Math.max(0,(140-p3frame)/140)*.4;
+    const g=cx3.createRadialGradient(p3br.x,P3GR-20,5,p3br.x,P3GR-20,40);
+    g.addColorStop(0,'rgba(255,210,200,.5)'); g.addColorStop(1,'rgba(255,210,200,0)');
+    cx3.fillStyle=g; cx3.beginPath();cx3.arc(p3br.x,P3GR-20,40,0,Math.PI*2);cx3.fill();
+    cx3.restore();
+  }
+  // Particles (during play)
+  if(p3state==='playing'){
+    p3parts.forEach(p=>{
+      cx3.save();
+      cx3.globalAlpha=Math.min(p.life,1);
+      cx3.fillStyle=p.col;
+      cx3.beginPath();cx3.arc(p.x,p.y,p.sz,0,Math.PI*2);cx3.fill();
+      cx3.restore();
+    });
+    cx3.globalAlpha=1;
+  }
+  // HUD: lives & combo
+  if(p3state==='playing'){
+    cx3.font='15px serif';cx3.textAlign='left';cx3.textBaseline='top';
+    for(let i=0;i<3;i++){cx3.globalAlpha=i<p3lives?1:.18;cx3.fillStyle='#ffaacc';cx3.fillText('♥',10+i*18,8);}cx3.globalAlpha=1;
+    if(p3combo>=3){
+      cx3.font='bold 11px "Cinzel",serif';
+      const flashing = p3comboFlash>0;
+      cx3.fillStyle=flashing?'#fff5cc':'#f0d99a';
+      cx3.textAlign='center';cx3.textBaseline='top';
+      const mult = p3combo>=10?'×3':(p3combo>=5?'×2':'×1');
+      cx3.fillText('COMBO '+p3combo+' '+mult, P3W/2, 9);
+    }
+    // Time bonus flash
+    if(p3comboFlash>0 && p3combo===0){
+      // Indicates ring bonus (combo unchanged)
+      cx3.save();
+      cx3.globalAlpha=p3comboFlash/35;
+      cx3.font='bold 14px "Cinzel",serif';cx3.fillStyle='#f0d99a';cx3.textAlign='center';
+      cx3.fillText('+5s ⏱', P3W/2, 28);
+      cx3.restore();
+    }
+  }
+  // Overlays
+  if(p3state==='idle'){
+    p3ov();
+    cx3.font='15px "Cinzel",serif';cx3.fillStyle='#ddb96a';cx3.fillText('La Pluie de Pétales',P3W/2,P3H/2-44);
+    cx3.font='13px "Cormorant Garamond",serif';cx3.fillStyle='rgba(245,234,216,.78)';
+    cx3.fillText('Aidez la mariée à attraper les pétales et bouquets ! 🌹💐',P3W/2,P3H/2-18);
+    cx3.font='11px "Cormorant Garamond",serif';cx3.fillStyle='rgba(245,234,216,.55)';
+    cx3.fillText('🌹 1pt · 💐 5pts · 💍 +5s · Combo ×2 (5) ×3 (10)',P3W/2,P3H/2+5);
+    cx3.fillText('Évitez 💧 et 🌫️ qui tâchent la robe !',P3W/2,P3H/2+22);
+    if(p3Best>0){
+      cx3.font='10.5px "Cinzel",serif';cx3.fillStyle='rgba(200,162,72,.7)';
+      cx3.fillText('Meilleur : '+p3Best+' pts',P3W/2,P3H/2+44);
+    }
+  }
+  if(p3state==='ended'){
+    p3ov();
+    const won = p3lives>0;
+    cx3.font='bold 19px "Cinzel",serif';cx3.fillStyle=won?'#f0d99a':'#e89aaa';
+    cx3.fillText(won ? 'La mariée est ravie ! 💕' : 'La robe est trop tâchée… 😅', P3W/2, P3H/2-32);
+    cx3.font='15px "Cormorant Garamond",serif';cx3.fillStyle='#f5ead8';
+    cx3.fillText('Score : '+p3score+' pts', P3W/2, P3H/2-4);
+    if(p3score===p3Best && p3score>0){
+      cx3.font='12px "Cinzel",serif';cx3.fillStyle='#fff5cc';
+      cx3.fillText('🏆 Nouveau record !', P3W/2, P3H/2+18);
+    }
+    cx3.font='11px "Cormorant Garamond",serif';cx3.fillStyle='rgba(200,162,72,.55)';
+    cx3.fillText('Cliquez « Nouvelle partie » pour rejouer', P3W/2, P3H/2+44);
+  }
+}
+function p3ov(){cx3.fillStyle='rgba(40,24,40,.85)';cx3.fillRect(0,0,P3W,P3H);cx3.textAlign='center';cx3.textBaseline='middle';}
+
+/* ── Falling object renderer ── */
+function p3drawObj(o){
+  cx3.save();cx3.translate(o.x,o.y);cx3.rotate(o.rot);
+  switch(o.type){
+    case 'petal':
+      // Pink rose petal — small, with shading
+      cx3.fillStyle='#ff7a9c';
+      cx3.beginPath();cx3.ellipse(0,0,5.5,8,0,0,Math.PI*2);cx3.fill();
+      cx3.fillStyle='rgba(255,255,255,.4)';
+      cx3.beginPath();cx3.ellipse(-1,-1,2.5,4,0,0,Math.PI*2);cx3.fill();
+      cx3.strokeStyle='#c84064';cx3.lineWidth=.8;
+      cx3.beginPath();cx3.ellipse(0,0,5.5,8,0,0,Math.PI*2);cx3.stroke();
+      break;
+    case 'bouquet': {
+      // Bouquet — multiple flowers tied
+      const flowers=[
+        {x:-4,y:-3,c:'#ff5577',r:5},
+        {x:4,y:-2,c:'#ffaa44',r:4.5},
+        {x:0,y:-7,c:'#fff5cc',r:4},
+        {x:-5,y:3,c:'#ff8aa8',r:4},
+        {x:5,y:3,c:'#ffcc44',r:4}
+      ];
+      // Stems
+      cx3.strokeStyle='#5a8c5a';cx3.lineWidth=1.5;
+      cx3.beginPath();cx3.moveTo(0,3);cx3.lineTo(-2,11);cx3.stroke();
+      cx3.beginPath();cx3.moveTo(0,3);cx3.lineTo(2,11);cx3.stroke();
+      // Ribbon
+      cx3.fillStyle='#ddb96a';cx3.fillRect(-4,8,8,3);
+      cx3.strokeStyle='#000';cx3.lineWidth=.6;cx3.strokeRect(-4,8,8,3);
+      // Flowers
+      for(const f of flowers){
+        cx3.fillStyle=f.c;
+        cx3.beginPath();cx3.arc(f.x,f.y,f.r,0,Math.PI*2);cx3.fill();
+        cx3.strokeStyle='rgba(0,0,0,.4)';cx3.lineWidth=.8;cx3.stroke();
+        cx3.fillStyle='rgba(255,255,255,.4)';
+        cx3.beginPath();cx3.arc(f.x-1,f.y-1,f.r*.4,0,Math.PI*2);cx3.fill();
+      }
+      // Glow
+      cx3.globalAlpha=.5;
+      const g=cx3.createRadialGradient(0,0,2,0,0,16);
+      g.addColorStop(0,'rgba(255,200,210,.5)');g.addColorStop(1,'rgba(255,200,210,0)');
+      cx3.fillStyle=g;cx3.beginPath();cx3.arc(0,0,16,0,Math.PI*2);cx3.fill();
+      cx3.globalAlpha=1;
+      break;
+    }
+    case 'ring': {
+      // Diamond ring with strong glow
+      const g=cx3.createRadialGradient(0,0,2,0,0,18);
+      g.addColorStop(0,'rgba(255,230,120,.7)');g.addColorStop(1,'rgba(255,230,120,0)');
+      cx3.fillStyle=g;cx3.beginPath();cx3.arc(0,0,18,0,Math.PI*2);cx3.fill();
+      cx3.strokeStyle='#c8a248';cx3.lineWidth=2.5;
+      cx3.beginPath();cx3.ellipse(0,0,8,8,0,0,Math.PI*2);cx3.stroke();
+      cx3.strokeStyle='#fff5cc';cx3.lineWidth=1.2;
+      cx3.beginPath();cx3.ellipse(0,-1,7,7,0,0,Math.PI*2);cx3.stroke();
+      cx3.fillStyle='#fff';cx3.beginPath();
+      cx3.moveTo(0,-10);cx3.lineTo(3,-7);cx3.lineTo(0,-3);cx3.lineTo(-3,-7);cx3.closePath();cx3.fill();
+      cx3.strokeStyle='#000';cx3.lineWidth=.6;cx3.stroke();
+      // Sparkle
+      const tw = .3+Math.abs(Math.sin(o.sw))*.7;
+      cx3.fillStyle='rgba(255,255,255,'+tw+')';
+      cx3.fillRect(-.5,-9,1,3);cx3.fillRect(-2,-7,3,1);
+      break;
+    }
+    case 'drop':
+      // Dark blue rain drop
+      cx3.fillStyle='#3a6a90';
+      cx3.beginPath();
+      cx3.moveTo(0,-8);
+      cx3.bezierCurveTo(5,-3, 5,5, 0,7);
+      cx3.bezierCurveTo(-5,5, -5,-3, 0,-8);
+      cx3.closePath();cx3.fill();
+      cx3.strokeStyle='#000';cx3.lineWidth=1;cx3.stroke();
+      cx3.fillStyle='rgba(255,255,255,.4)';
+      cx3.beginPath();cx3.ellipse(-1.5,-1,1.2,2,-.3,0,Math.PI*2);cx3.fill();
+      break;
+    case 'mud':
+      // Mud blob — irregular brown shape
+      cx3.fillStyle='#5a3018';
+      cx3.beginPath();
+      cx3.moveTo(-7,-2);
+      cx3.bezierCurveTo(-9,-7, -3,-9, 1,-7);
+      cx3.bezierCurveTo(8,-8, 9,0, 6,4);
+      cx3.bezierCurveTo(7,9, -1,9, -4,6);
+      cx3.bezierCurveTo(-9,5, -9,1, -7,-2);
+      cx3.closePath();cx3.fill();
+      cx3.strokeStyle='#000';cx3.lineWidth=1;cx3.stroke();
+      // Splatters
+      cx3.fillStyle='#3a1808';
+      cx3.beginPath();cx3.arc(-2,0,1.5,0,Math.PI*2);cx3.fill();
+      cx3.beginPath();cx3.arc(3,2,1,0,Math.PI*2);cx3.fill();
+      break;
+  }
+  cx3.restore();
+}
+
+/* ── Big detailed bride drawing for game 3 ── */
+function p3drawBride(x,y,f,fr,hit){
+  cx3.save();cx3.translate(x,y);cx3.scale(f,1);
+  // Hit flash effect
+  const flashAlpha = hit ? .4+Math.sin(fr*1.2)*.3 : 0;
+  const sw=Math.sin(fr*.18)*3, a=Math.sin(fr*.18)*2.8;
+  // Shadow
+  cx3.fillStyle='rgba(0,0,0,.32)';cx3.beginPath();cx3.ellipse(sw*.3,2,18,4.5,0,0,Math.PI*2);cx3.fill();
+  // Long flowing dress
+  cx3.fillStyle='#f5ead8';
+  cx3.beginPath();
+  cx3.moveTo(-9,9);
+  cx3.bezierCurveTo(-15+sw*.5, 18, -22+sw, 35, -24+sw, 45);
+  cx3.lineTo(24+sw, 45);
+  cx3.bezierCurveTo(22+sw, 35, 15+sw*.5, 18, 9,9);
+  cx3.closePath();cx3.fill();
+  // Dress shading (darker side)
+  cx3.fillStyle='rgba(220,200,180,.5)';
+  cx3.beginPath();
+  cx3.moveTo(2,9);
+  cx3.bezierCurveTo(8+sw*.5, 18, 14+sw, 35, 16+sw, 45);
+  cx3.lineTo(24+sw, 45);
+  cx3.bezierCurveTo(22+sw, 35, 15+sw*.5, 18, 9,9);
+  cx3.closePath();cx3.fill();
+  // Dress folds
+  cx3.strokeStyle='rgba(200,180,160,.4)';cx3.lineWidth=1;
+  cx3.beginPath();cx3.moveTo(-5,12);cx3.bezierCurveTo(-12+sw*.3, 24, -18+sw, 38, -19+sw, 45);cx3.stroke();
+  cx3.beginPath();cx3.moveTo(5,12);cx3.bezierCurveTo(12+sw*.3, 24, 18+sw, 38, 19+sw, 45);cx3.stroke();
+  cx3.beginPath();cx3.moveTo(0,12);cx3.bezierCurveTo(0, 25, 0+sw*.4, 38, 0+sw*.5, 45);cx3.stroke();
+  // Dress trim (gold border at bottom)
+  cx3.fillStyle='#c8a248';
+  cx3.beginPath();
+  cx3.moveTo(-24+sw, 45);
+  cx3.lineTo(24+sw, 45);
+  cx3.lineTo(23+sw, 43);
+  cx3.lineTo(-23+sw, 43);
+  cx3.closePath();cx3.fill();
+  // Mud splotches if hit recently
+  if(hit){
+    cx3.fillStyle='rgba(70,40,20,.7)';
+    cx3.beginPath();cx3.arc(-8+sw*.3, 28, 4, 0, Math.PI*2);cx3.fill();
+    cx3.beginPath();cx3.arc(6+sw*.3, 35, 3, 0, Math.PI*2);cx3.fill();
+  }
+  // Corset/bodice
+  cx3.fillStyle='#ede0cc';
+  cx3.beginPath();cx3.roundRect(-9,-13,18,24,3);cx3.fill();
+  cx3.strokeStyle='rgba(200,162,72,.5)';cx3.lineWidth=1;cx3.beginPath();cx3.roundRect(-9,-13,18,24,3);cx3.stroke();
+  // Lacing on corset
+  cx3.strokeStyle='#c8a248';cx3.lineWidth=.8;
+  for(let i=0;i<5;i++){
+    const ly=-10+i*5;
+    cx3.beginPath();cx3.moveTo(-3,ly);cx3.lineTo(3,ly+2);cx3.stroke();
+    cx3.beginPath();cx3.moveTo(3,ly);cx3.lineTo(-3,ly+2);cx3.stroke();
+  }
+  cx3.fillStyle='#c8a248';cx3.fillRect(-9,9,18,3);
+  // Arms — slightly raised, holding basket
+  cx3.fillStyle='#f5c8a0';
+  cx3.save();cx3.translate(-13,-3+a);cx3.rotate(-.7);cx3.fillRect(-5,-3,11,6);cx3.restore();
+  cx3.save();cx3.translate(13,-3-a);cx3.rotate(.7);cx3.fillRect(-5,-3,11,6);cx3.restore();
+  // Basket of flowers (between hands)
+  const basketY = -8 + Math.sin(fr*.18)*1;
+  cx3.fillStyle='#a05028';
+  cx3.beginPath();cx3.roundRect(-12,basketY,24,9,2);cx3.fill();
+  cx3.strokeStyle='#000';cx3.lineWidth=1;cx3.stroke();
+  // Basket weave pattern
+  cx3.strokeStyle='#5a2810';cx3.lineWidth=.5;
+  for(let i=-10;i<=10;i+=4){
+    cx3.beginPath();cx3.moveTo(i,basketY);cx3.lineTo(i,basketY+9);cx3.stroke();
+  }
+  cx3.beginPath();cx3.moveTo(-12,basketY+4);cx3.lineTo(12,basketY+4);cx3.stroke();
+  // Basket handle
+  cx3.strokeStyle='#a05028';cx3.lineWidth=2;
+  cx3.beginPath();cx3.arc(0,basketY,12,Math.PI,0);cx3.stroke();
+  // Flowers in basket
+  const baseFy = basketY-2;
+  cx3.fillStyle='#ff5577';cx3.beginPath();cx3.arc(-7,baseFy,3.5,0,Math.PI*2);cx3.fill();
+  cx3.fillStyle='#ffaa44';cx3.beginPath();cx3.arc(0,baseFy-2,3.5,0,Math.PI*2);cx3.fill();
+  cx3.fillStyle='#fff5cc';cx3.beginPath();cx3.arc(7,baseFy,3.2,0,Math.PI*2);cx3.fill();
+  cx3.fillStyle='#ff8aa8';cx3.beginPath();cx3.arc(-3,baseFy-1,3,0,Math.PI*2);cx3.fill();
+  cx3.fillStyle='#c8a248';cx3.beginPath();cx3.arc(4,baseFy,2.5,0,Math.PI*2);cx3.fill();
+  // Head
+  cx3.fillStyle='#f5c8a0';cx3.beginPath();cx3.arc(0,-26,11,0,Math.PI*2);cx3.fill();
+  // Hair (long, flowing)
+  cx3.fillStyle='#5a3018';
+  cx3.beginPath();cx3.arc(0,-26,11,Math.PI,0);cx3.fill();
+  cx3.fillRect(-11,-37,22,13);
+  // Hair flowing down sides
+  cx3.beginPath();
+  cx3.moveTo(-11,-26);
+  cx3.bezierCurveTo(-14,-15, -13,-5, -10,2);
+  cx3.lineTo(-7,2);
+  cx3.bezierCurveTo(-10,-5, -11,-15, -8,-25);
+  cx3.closePath();cx3.fill();
+  cx3.beginPath();
+  cx3.moveTo(11,-26);
+  cx3.bezierCurveTo(14,-15, 13,-5, 10,2);
+  cx3.lineTo(7,2);
+  cx3.bezierCurveTo(10,-5, 11,-15, 8,-25);
+  cx3.closePath();cx3.fill();
+  // Veil flowing back
+  cx3.strokeStyle='rgba(245,234,216,.55)';cx3.lineWidth=2.5;
+  cx3.beginPath();cx3.moveTo(-1,-36);cx3.quadraticCurveTo(20,-22, 22,8);cx3.stroke();
+  cx3.lineWidth=1.5;cx3.beginPath();cx3.moveTo(-1,-36);cx3.quadraticCurveTo(24,-18, 26,12);cx3.stroke();
+  cx3.lineWidth=1;cx3.beginPath();cx3.moveTo(-2,-36);cx3.quadraticCurveTo(16,-25, 18,5);cx3.stroke();
+  // Tiara
+  cx3.fillStyle='#c8a248';cx3.fillRect(-7,-38,14,3);
+  cx3.beginPath();cx3.moveTo(-3,-38);cx3.lineTo(0,-44);cx3.lineTo(3,-38);cx3.closePath();cx3.fill();
+  cx3.beginPath();cx3.moveTo(-7,-38);cx3.lineTo(-5,-41);cx3.lineTo(-3,-38);cx3.closePath();cx3.fill();
+  cx3.beginPath();cx3.moveTo(7,-38);cx3.lineTo(5,-41);cx3.lineTo(3,-38);cx3.closePath();cx3.fill();
+  // Tiara gems
+  cx3.fillStyle='#fff5cc';
+  cx3.beginPath();cx3.arc(0,-43,1.8,0,Math.PI*2);cx3.fill();
+  cx3.beginPath();cx3.arc(-5,-40,1.2,0,Math.PI*2);cx3.fill();
+  cx3.beginPath();cx3.arc(5,-40,1.2,0,Math.PI*2);cx3.fill();
+  // Eyes
+  cx3.fillStyle='#2d1a0e';cx3.beginPath();cx3.arc(-3.5,-26,1.8,0,Math.PI*2);cx3.fill();cx3.beginPath();cx3.arc(3.5,-26,1.8,0,Math.PI*2);cx3.fill();
+  cx3.fillStyle='white';cx3.beginPath();cx3.arc(-2.6,-27,.7,0,Math.PI*2);cx3.fill();cx3.beginPath();cx3.arc(4.4,-27,.7,0,Math.PI*2);cx3.fill();
+  // Eyelashes
+  cx3.strokeStyle='#2d1a0e';cx3.lineWidth=1;
+  cx3.beginPath();cx3.moveTo(1.8,-27.5);cx3.lineTo(2.6,-29.5);cx3.stroke();
+  cx3.beginPath();cx3.moveTo(4.5,-27);cx3.lineTo(5.8,-29);cx3.stroke();
+  cx3.beginPath();cx3.moveTo(-1.8,-27.5);cx3.lineTo(-2.6,-29.5);cx3.stroke();
+  cx3.beginPath();cx3.moveTo(-4.5,-27);cx3.lineTo(-5.8,-29);cx3.stroke();
+  // Blush
+  cx3.fillStyle='rgba(220,100,90,.22)';
+  cx3.beginPath();cx3.ellipse(-7,-23,4.5,2.5,-.3,0,Math.PI*2);cx3.fill();
+  cx3.beginPath();cx3.ellipse(7,-23,4.5,2.5,.3,0,Math.PI*2);cx3.fill();
+  // Smile
+  cx3.strokeStyle='#8b4a2a';cx3.lineWidth=1.5;
+  cx3.beginPath();cx3.arc(0,-22,4.2,.2,Math.PI-.2);cx3.stroke();
+  // Lipstick highlight
+  cx3.fillStyle='rgba(220,100,120,.45)';
+  cx3.beginPath();cx3.arc(0,-21,3.8,.25,Math.PI-.25);cx3.fill();
+  // Hit flash overlay
+  if(flashAlpha>0){
+    cx3.fillStyle='rgba(220,80,80,'+flashAlpha+')';
+    cx3.beginPath();cx3.arc(0,-26,11,0,Math.PI*2);cx3.fill();
+    cx3.fillRect(-9,-13,18,24);
+  }
+  cx3.restore();
+}
+
+/* ── Game 3 loop ── */
+function p3tick(){
+  if(canRun()) p3step();
+  p3draw();
+  p3RafId = setTimeout(()=>requestAnimationFrame(p3tick), 40);
+}
+
+/* ── Input handlers ── */
+document.addEventListener('keydown',function(e){
+  if(document.getElementById('gamePetals').style.display==='none') return;
+  p3keys[e.key]=true;
+  if(['ArrowLeft','ArrowRight'].includes(e.key)){
+    e.preventDefault();
+    if(p3state!=='playing') p3start();
+  }
+});
+document.addEventListener('keyup',function(e){p3keys[e.key]=false;});
+
+function p3CanvasPos(ev){
+  const r=cv3.getBoundingClientRect();
+  const sx=P3W/r.width;
+  return (ev.clientX-r.left)*sx;
+}
+function p3TouchStart(ev){
+  ev.preventDefault();
+  if(p3state!=='playing') p3start();
+  p3touchActive=true;
+  p3touchX = p3CanvasPos(ev);
+}
+function p3TouchMove(ev){
+  if(!p3touchActive) return;
+  ev.preventDefault();
+  p3touchX = p3CanvasPos(ev);
+}
+function p3TouchEnd(){p3touchActive=false;}
+cv3.addEventListener('pointerdown',p3TouchStart);
+cv3.addEventListener('pointermove',p3TouchMove);
+cv3.addEventListener('pointerup',p3TouchEnd);
+cv3.addEventListener('pointercancel',p3TouchEnd);
+cv3.addEventListener('pointerleave',p3TouchEnd);
+
+// Init
+p3init();
+p3state='idle';
+p3draw();
+p3tick();
+
+/* ── Tab switching (now handles 3 games) ── */
 function switchGame(g){
   document.getElementById('gameChase').style.display=g==='chase'?'':'none';
   document.getElementById('gameRun').style.display=g==='run'?'':'none';
+  document.getElementById('gamePetals').style.display=g==='petals'?'':'none';
   document.querySelectorAll('.game-tab').forEach(function(t){t.classList.toggle('active',t.dataset.g===g);});
-  if(g==='run'&&gState==='playing'){gState='idle';clearInterval(gLoop);clearInterval(tTick);}
-  if(g==='chase'&&p2state==='playing'){p2state='idle';clearInterval(p2loop);}
+  // Pause whichever isn't shown
+  if(g!=='chase' && gState==='playing'){gState='idle';if(tTick){clearInterval(tTick);tTick=null;}}
+  if(g!=='run' && p2state==='playing'){p2state='idle';}
+  if(g!=='petals' && p3state==='playing'){p3state='idle';if(p3TimerId){clearInterval(p3TimerId);p3TimerId=null;}}
 }
+window.switchGame=switchGame;
+
 </script>
 </body>
 </html>
