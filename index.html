@@ -112,8 +112,23 @@ textarea.fc-full{resize:vertical;min-height:125px}
 .mp-name{color:var(--cream);font-size:14.5px}
 .mp-sub{font-size:12px;color:var(--cream2);font-style:italic}
 .plist-head{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.pentry{display:grid;grid-template-columns:1.6fr 1.6fr 1.6fr auto;gap:7px;align-items:center;background:rgba(30,46,37,.55);padding:10px 12px;border-radius:5px;border:1px solid rgba(200,162,72,.15);margin-bottom:7px;transition:border-color .25s}
+/* New stacked person entry with clickable choice cards */
+.pentry{background:rgba(30,46,37,.55);padding:16px 16px 14px;border-radius:6px;border:1px solid rgba(200,162,72,.15);margin-bottom:14px;transition:border-color .25s;position:relative}
 .pentry:hover{border-color:rgba(200,162,72,.3)}
+.pentry-head{display:flex;gap:10px;align-items:center;margin-bottom:13px}
+.pentry-head .pn{flex:1}
+.pentry-num{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:.7;margin-right:4px;white-space:nowrap}
+.choice-section{margin-top:11px}
+.choice-section-label{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:7px;opacity:.85}
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.choice-card{position:relative;background:rgba(41,61,49,.4);border:1.5px solid var(--bord);border-radius:5px;padding:10px 12px;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;gap:2px}
+.choice-card:hover{border-color:rgba(200,162,72,.55);background:rgba(58,84,68,.45)}
+.choice-card input{position:absolute;opacity:0;pointer-events:none}
+.choice-card.selected{border-color:var(--gold);background:rgba(200,162,72,.16);box-shadow:0 0 0 1px var(--gold) inset}
+.choice-card.selected::after{content:'✓';position:absolute;top:6px;right:8px;color:var(--gold2);font-weight:600;font-size:14px}
+.choice-card .cc-name{color:var(--cream);font-size:14px;line-height:1.3}
+.choice-card .cc-sub{color:var(--cream2);font-size:12px;font-style:italic;line-height:1.25}
+@media(max-width:560px){.choice-grid{grid-template-columns:1fr}}
 .factions{display:flex;justify-content:space-between;align-items:center;margin-top:18px;flex-wrap:wrap;gap:10px}
 .fhint{font-size:13px;color:var(--cream2);font-style:italic}
 .cform{max-width:600px;margin:0 auto}
@@ -123,7 +138,7 @@ textarea.fc-full{resize:vertical;min-height:125px}
 .err-msg a{color:inherit}
 .arcade-wrap{text-align:center}
 .arcade-desc{font-size:15px;color:var(--cream2);font-style:italic;max-width:500px;margin:0 auto 22px}
-.game-stat{display:flex;align-items:center;justify-content:center;gap:28px;margin:12px 0;font-family:'Cinzel',serif;font-size:12px;color:var(--gold);letter-spacing:2px}
+.game-stat{display:flex;align-items:center;justify-content:center;gap:18px 24px;margin:12px 0;font-family:'Cinzel',serif;font-size:12px;color:var(--gold);letter-spacing:2px;flex-wrap:wrap}
 .game-stat strong{color:var(--gold2)}
 #gameCanvas{border:1.5px solid var(--gold);border-radius:4px;display:block;margin:0 auto;max-width:100%}
 .game-ctrl{display:flex;gap:12px;justify-content:center;margin:14px 0}
@@ -136,9 +151,12 @@ textarea.fc-full{resize:vertical;min-height:125px}
 .diff-btn{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;background:transparent;border:1px solid rgba(200,162,72,.25);color:var(--cream2);padding:5px 14px;border-radius:2px;cursor:pointer;transition:all .25s}
 .diff-btn.active{background:rgba(200,162,72,.18);border-color:var(--gold);color:var(--gold3)}
 .diff-btn:hover{color:var(--gold2)}
-.jump-btn{display:none;width:100%;padding:20px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:2.5px;text-transform:uppercase;background:rgba(58,84,68,.6);border:1.5px solid var(--bord);color:var(--gold2);border-radius:4px;cursor:pointer;touch-action:manipulation;margin:10px 0;transition:all .2s}
+.jump-btn{display:none;flex:1;padding:20px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:2.5px;text-transform:uppercase;background:rgba(58,84,68,.6);border:1.5px solid var(--bord);color:var(--gold2);border-radius:4px;cursor:pointer;touch-action:manipulation;transition:all .2s}
 .jump-btn:active{background:rgba(200,162,72,.28);border-color:var(--gold)}
-@media(max-width:680px){.jump-btn{display:block}}
+.boost-btn{display:none;flex:1;padding:20px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:2.5px;text-transform:uppercase;background:rgba(58,84,68,.6);border:1.5px solid var(--bord);color:var(--gold2);border-radius:4px;cursor:pointer;touch-action:manipulation;transition:all .2s}
+.boost-btn:active,.boost-btn.active-state{background:rgba(184,86,42,.3);border-color:var(--rust);color:#ffb497}
+.mobile-ctrls{display:none;gap:10px;margin:10px 0}
+@media(max-width:680px){.jump-btn{display:block}.boost-btn{display:block}.mobile-ctrls{display:flex}}
 .dpad{display:none;grid-template-columns:repeat(3,68px);grid-template-rows:repeat(3,68px);gap:6px;justify-content:center;margin:14px auto}
 .dpad-btn{background:rgba(58,84,68,.55);border:1.5px solid var(--bord);color:var(--gold);font-size:28px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;user-select:none;-webkit-user-select:none;touch-action:manipulation;transition:background .1s}
 .dpad-btn:active{background:rgba(200,162,72,.3);border-color:var(--gold)}
@@ -147,7 +165,10 @@ textarea.fc-full{resize:vertical;min-height:125px}
 @media(max-width:680px){
   .dpad{display:none}
   .game-hint{display:none}
-  #gameCanvas, #plCanvas, #petalsCanvas{width:100% !important; height:auto !important; max-width:440px; touch-action:none}
+  #gameCanvas, #plCanvas, #petalsCanvas{width:100% !important; height:auto !important; max-width:560px; touch-action:none}
+  /* Arcade gets reduced horizontal padding so canvas can be wider */
+  #arcade .sec-wrap{padding-left:10px;padding-right:10px}
+  .arcade-desc{font-size:14px;padding:0 8px}
 }
 .touch-hint{display:none;text-align:center;font-size:11px;font-style:italic;color:rgba(200,162,72,.55);margin-top:6px}
 @media(max-width:680px){.touch-hint{display:block}}
@@ -168,7 +189,6 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
   .hero-frame{padding:24px 22px}.hero-names{white-space:normal;font-size:clamp(2.7rem,10vw,4.8rem)}
   .card-grid,.rates-grid{grid-template-columns:1fr}
   .menu-box{padding:22px 15px}.menu-preview{grid-template-columns:1fr}
-  .pentry{grid-template-columns:1fr}
   .leaf-l,.leaf-r{display:none}
 }
 </style>
@@ -322,20 +342,8 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
 <div id="menu">
   <div class="sec-wrap">
     <div class="sec-head reveal"><div class="sec-eye">Repas trois services</div><div class="sec-title">Choix du menu</div><div class="sec-div"><span>◆</span></div></div>
-    <p class="reveal" style="text-align:center;font-style:italic;color:var(--cream2);margin-bottom:26px;font-size:15px">Veuillez indiquer votre choix de repas et de dessert pour chaque personne de votre groupe.</p>
+    <p class="reveal" style="text-align:center;font-style:italic;color:var(--cream2);margin-bottom:26px;font-size:15px">Pour chaque personne de votre groupe, choisissez le repas principal et le dessert en cliquant sur les cartes ci-dessous.</p>
     <div class="menu-box reveal">
-      <div class="menu-preview">
-        <div>
-          <div class="mp-head">🍽 Repas principal</div>
-          <div class="mp-item"><div class="mp-name">🍂 Ravioli à la courge</div><div class="mp-sub">sauce aux poivrons rôtis</div></div>
-          <div class="mp-item"><div class="mp-name">🐟 Filet de saumon</div><div class="mp-sub">sauce safranée</div></div>
-        </div>
-        <div>
-          <div class="mp-head">🍰 Dessert</div>
-          <div class="mp-item"><div class="mp-name">🥕 Gâteau au fromage</div><div class="mp-sub">carottes et caramel</div></div>
-          <div class="mp-item"><div class="mp-name">🍮 Gâteau crème brûlée</div><div class="mp-sub">fromage</div></div>
-        </div>
-      </div>
       <form id="menuForm">
         <div class="plist-head">
           <span>Vos choix</span>
@@ -418,34 +426,38 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
         </div>
         <div class="game-ctrl"><button class="btn btn-gold" onclick="startGame()">Nouvelle partie</button></div>
         <p class="game-hint">Flèches ou WASD · Appuyez pour commencer</p>
-        <p class="touch-hint">📱 Glissez votre doigt sur l'écran pour diriger le marié</p>
+        <p class="touch-hint">📱 Touchez l'écran pour téléporter le marié — glissez pour le diriger</p>
       </div>
 
       <!-- JEU 2 -->
       <div id="gameRun" style="display:none">
-        <p class="arcade-desc">Le marié doit rejoindre la mariée à l'hôtel avant la cérémonie ! 🏃🤵🏨<br>Saute par-dessus les obstacles et ramasse les bagues 💍 — 5 bagues = +1 vie !<br>Espace pour sauter · Maintien = saut plus haut · Double saut permis</p>
+        <p class="arcade-desc">Le marié doit rejoindre la mariée à l'hôtel avant la cérémonie ! 🏃🤵🏨<br>Saute par-dessus les obstacles et ramasse les bagues 💍 — 5 bagues = +1 vie !<br>Espace pour sauter · Maintien = saut plus haut · Double saut permis<br><strong style="color:var(--gold2)">⚡ Maintenez la flèche droite (ou le bouton ACCÉLÉRER) pour foncer plus vite !</strong></p>
         <div class="game-stat">
           <span>Bagues : <strong id="p2Rings">0</strong></span>
           <span>Meilleur : <strong id="p2Best">—</strong></span>
         </div>
         <canvas id="plCanvas" width="440" height="352" role="img" aria-label="Jeu de plateformes : le marié court vers l'hôtel de mariage en sautant par-dessus des obstacles."></canvas>
-        <button class="jump-btn" onpointerdown="p2pressJump()" onpointerup="p2releaseJump()" onpointerleave="p2releaseJump()">SAUTER 🚀</button>
+        <div class="mobile-ctrls">
+          <button class="jump-btn" onpointerdown="p2pressJump()" onpointerup="p2releaseJump()" onpointerleave="p2releaseJump()">SAUTER 🚀</button>
+          <button class="boost-btn" onpointerdown="p2pressBoost(this)" onpointerup="p2releaseBoost(this)" onpointerleave="p2releaseBoost(this)" oncontextmenu="return false">ACCÉLÉRER ⚡</button>
+        </div>
         <div class="game-ctrl"><button class="btn btn-gold" onclick="p2start()">Nouvelle partie</button></div>
-        <p class="game-hint">Espace ou toucher l'écran pour sauter</p>
+        <p class="game-hint">Espace = sauter · Flèche droite = accélérer · Toucher l'écran = sauter</p>
       </div>
 
       <!-- JEU 3 — LA PLUIE DE PÉTALES (mariée) -->
       <div id="gamePetals" style="display:none">
-        <p class="arcade-desc">La mariée se promène avant la cérémonie ! 👰💐<br>Attrapez les pétales 🌹 (1 pt) et bouquets 💐 (5 pts) qui tombent du ciel,<br>évitez les gouttes de pluie 💧 et la boue 🌫️ qui tâcheraient la robe !</p>
+        <p class="arcade-desc">Aidez la mariée à attraper <strong style="color:var(--gold2)">25 pétales</strong> avant la cérémonie ! 👰💐<br>🌹 Pétale = 1 pt · 💐 Bouquet = 5 pts · 💍 Bague = +5 secondes<br><strong style="color:#e89aaa">⚠️ Évitez les 💧 gouttes et 🌫️ boue : 3 touches = robe ruinée !</strong></p>
         <div class="game-stat">
-          <span>Score : <strong id="p3Score">0</strong></span>
+          <span>Score : <strong id="p3Score">0</strong> / 25</span>
+          <span>Vies : <strong id="p3Lives">♥♥♥</strong></span>
           <span>Chrono : <strong id="p3Timer">60s</strong></span>
           <span>Meilleur : <strong id="p3Best">—</strong></span>
         </div>
         <canvas id="petalsCanvas" width="440" height="352" role="img" aria-label="Jeu d'attrapage : la mariée attrape des pétales et bouquets qui tombent du ciel."></canvas>
         <div class="game-ctrl"><button class="btn btn-gold" onclick="p3start()">Nouvelle partie</button></div>
         <p class="game-hint">Flèches gauche/droite · Appuyez pour commencer</p>
-        <p class="touch-hint">📱 Glissez votre doigt pour déplacer la mariée</p>
+        <p class="touch-hint">📱 Touchez l'écran pour téléporter la mariée</p>
       </div>
 
     </div>
@@ -523,25 +535,79 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
   // Laisser le formulaire se soumettre normalement
 });
 
-/* ── Menu form (données dynamiques → iframe programmatique) ── */
+/* ── Menu form (cartes cliquables) ── */
 let pCount = 0;
-function addPerson(n='',r='',d=''){
+function addPerson(n='', r='', d=''){
   pCount++;
-  const div=document.createElement('div'); div.className='pentry';
-  div.innerHTML=`
-    <input type="text" class="fc pn" placeholder="Prénom et nom" value="${n}" autocomplete="off">
-    <select class="fc pr">
-      <option value="">— Repas —</option>
-      <option value="Ravioli à la courge, sauce aux poivrons rôtis" ${r.includes('Ravioli')?'selected':''}>🍂 Ravioli à la courge</option>
-      <option value="Filet de saumon, sauce safranée" ${r.includes('saumon')?'selected':''}>🐟 Filet de saumon</option>
-    </select>
-    <select class="fc pd">
-      <option value="">— Dessert —</option>
-      <option value="Gâteau au fromage, carottes et caramel" ${d.includes('carottes')?'selected':''}>🥕 Gâteau fromage, carottes</option>
-      <option value="Gâteau crème brûlée fromage" ${d.includes('brûlée')?'selected':''}>🍮 Crème brûlée fromage</option>
-    </select>
-    <button type="button" class="btn btn-del" onclick="this.closest('.pentry').remove()" title="Supprimer">✕</button>`;
+  const id = 'p'+Date.now()+'_'+pCount;
+  const div = document.createElement('div');
+  div.className = 'pentry';
+  div.dataset.repas = r;
+  div.dataset.dessert = d;
+  div.innerHTML = `
+    <div class="pentry-head">
+      <span class="pentry-num">Personne ${pCount}</span>
+      <input type="text" class="fc pn" placeholder="Prénom et nom" value="${n}" autocomplete="off">
+      <button type="button" class="btn btn-del" onclick="this.closest('.pentry').remove()" title="Supprimer">✕</button>
+    </div>
+    <div class="choice-section">
+      <div class="choice-section-label">🍽 Repas principal</div>
+      <div class="choice-grid" data-group="repas">
+        <label class="choice-card" data-val="Ravioli à la courge, sauce aux poivrons rôtis">
+          <input type="radio" name="repas_${id}">
+          <div class="cc-name">🍂 Ravioli à la courge</div>
+          <div class="cc-sub">sauce aux poivrons rôtis</div>
+        </label>
+        <label class="choice-card" data-val="Filet de saumon, sauce safranée">
+          <input type="radio" name="repas_${id}">
+          <div class="cc-name">🐟 Filet de saumon</div>
+          <div class="cc-sub">sauce safranée</div>
+        </label>
+      </div>
+    </div>
+    <div class="choice-section">
+      <div class="choice-section-label">🍰 Dessert</div>
+      <div class="choice-grid" data-group="dessert">
+        <label class="choice-card" data-val="Gâteau au fromage, carottes et caramel">
+          <input type="radio" name="dessert_${id}">
+          <div class="cc-name">🥕 Gâteau au fromage</div>
+          <div class="cc-sub">carottes et caramel</div>
+        </label>
+        <label class="choice-card" data-val="Gâteau crème brûlée fromage">
+          <input type="radio" name="dessert_${id}">
+          <div class="cc-name">🍮 Crème brûlée</div>
+          <div class="cc-sub">fromage</div>
+        </label>
+      </div>
+    </div>
+  `;
   document.getElementById('plist').appendChild(div);
+  // Wire up card clicks
+  div.querySelectorAll('.choice-grid').forEach(grid => {
+    const cards = grid.querySelectorAll('.choice-card');
+    cards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        e.preventDefault();
+        cards.forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        const input = card.querySelector('input');
+        if(input) input.checked = true;
+        // Clear error highlight
+        div.style.borderColor = '';
+      });
+    });
+  });
+  // Restore previous selections (when re-adding from saved state)
+  if(r){
+    div.querySelectorAll('[data-group="repas"] .choice-card').forEach(c => {
+      if(c.dataset.val === r){ c.click(); }
+    });
+  }
+  if(d){
+    div.querySelectorAll('[data-group="dessert"] .choice-card').forEach(c => {
+      if(c.dataset.val === d){ c.click(); }
+    });
+  }
   div.querySelector('.pn').focus();
 }
 addPerson();
@@ -551,11 +617,21 @@ document.getElementById('menuForm').addEventListener('submit', function(e) {
   const rows = document.querySelectorAll('.pentry');
   const lines = []; let bad = false;
   rows.forEach(row => {
-    const n=row.querySelector('.pn').value.trim(), r=row.querySelector('.pr').value, d=row.querySelector('.pd').value;
-    if(!n||!r||!d){bad=true;row.style.borderColor='var(--rust)';setTimeout(()=>row.style.borderColor='',2600);}
-    else{row.style.borderColor='';lines.push(`• ${n}\n  Repas : ${r}\n  Dessert : ${d}`);}
+    const n = row.querySelector('.pn').value.trim();
+    const repasCard = row.querySelector('[data-group="repas"] .choice-card.selected');
+    const dessertCard = row.querySelector('[data-group="dessert"] .choice-card.selected');
+    const r = repasCard ? repasCard.dataset.val : '';
+    const d = dessertCard ? dessertCard.dataset.val : '';
+    if(!n || !r || !d){
+      bad = true;
+      row.style.borderColor = 'var(--rust)';
+      setTimeout(() => row.style.borderColor = '', 2600);
+    } else {
+      row.style.borderColor = '';
+      lines.push(`• ${n}\n  Repas : ${r}\n  Dessert : ${d}`);
+    }
   });
-  if(bad){alert('Veuillez remplir tous les champs pour chaque personne.');return;}
+  if(bad){alert('Veuillez remplir tous les champs et faire vos choix pour chaque personne.');return;}
   if(!lines.length){alert('Ajoutez au moins une personne.');return;}
 
   const msg = `Choix de menu pour ${lines.length} personne(s) :\n\n${lines.join('\n\n')}`;
@@ -784,16 +860,21 @@ function step(){
 
   // Groom movement
   let mx=dpX,my=dpY;
-  // Touch drag (mobile): groom moves toward finger
+  let touchHandled = false;
+  // Touch (mobile): groom teleports rapidly toward finger position
   if(g1TouchActive && !gmStunned){
-    const ddx=g1TouchTX-gm.x, ddy=g1TouchTY-gm.y;
-    const dd=Math.hypot(ddx,ddy);
-    if(dd>4){
-      mx=ddx/dd;
-      my=ddy/dd;
-    } else { mx=0; my=0; }
+    const targX = clamp(g1TouchTX, 26, W-26);
+    const targY = clamp(g1TouchTY, 30, H-30);
+    const oldX = gm.x;
+    // Strong lerp for snappy "teleport" feel — but capped to avoid overshooting
+    const lerpAmt = .55;
+    gm.x = lerp(gm.x, targX, lerpAmt);
+    gm.y = lerp(gm.y, targY, lerpAmt);
+    if(Math.abs(gm.x - oldX) > .5) gm.f = (gm.x > oldX) ? 1 : -1;
+    touchHandled = true;
+    mx = 0; my = 0;
   }
-  if(!gmStunned){
+  if(!gmStunned && !touchHandled){
     if(keys['ArrowLeft']||keys['a']||keys['A'])mx=-1;
     else if(keys['ArrowRight']||keys['d']||keys['D'])mx=1;
     if(keys['ArrowUp']||keys['w']||keys['W'])my=-1;
@@ -1097,8 +1178,16 @@ function drawGroom(x,y,f,fr){
   cx.fillStyle='#f5c8a0';cx.beginPath();cx.arc(-18,-1+a,4,0,Math.PI*2);cx.fill();
   cx.beginPath();cx.arc(20,-1-a,4,0,Math.PI*2);cx.fill();
   cx.fillStyle='#f5c8a0';cx.beginPath();cx.arc(0,-22,11,0,Math.PI*2);cx.fill();
-  cx.fillStyle='#2c1e10';cx.beginPath();cx.arc(0,-22,11,Math.PI,0);cx.fill();
-  cx.fillRect(-11,-33,22,13);
+  // Hair: only top portion of head (above eye level), with wavy hairline
+  cx.fillStyle='#2c1e10';
+  cx.save();
+  cx.beginPath();cx.rect(-12,-34,24,7);cx.clip();
+  cx.beginPath();cx.arc(0,-22,11,0,Math.PI*2);cx.fill();
+  cx.restore();
+  // Front sweep across forehead (small bang)
+  cx.beginPath();
+  cx.moveTo(-2,-27);cx.quadraticCurveTo(3,-30,9,-27);
+  cx.quadraticCurveTo(4,-25,-2,-26);cx.closePath();cx.fill();
   cx.fillStyle='#1a1a1a';cx.beginPath();cx.arc(-4,-24,2,0,Math.PI*2);cx.fill();cx.beginPath();cx.arc(4,-24,2,0,Math.PI*2);cx.fill();
   cx.fillStyle='white';cx.beginPath();cx.arc(-3,-25,.7,0,Math.PI*2);cx.fill();cx.beginPath();cx.arc(5,-25,.7,0,Math.PI*2);cx.fill();
   cx.strokeStyle='#5c3a2a';cx.lineWidth=1.6;cx.beginPath();cx.arc(0,-20,4.5,.12,Math.PI-.12);cx.stroke();
@@ -1128,7 +1217,18 @@ function drawBride(x,y,f,fr){
   cx.fillStyle='#c8a248';cx.beginPath();cx.arc(-1,-1,1.8,0,Math.PI*2);cx.fill();
   cx.restore();
   cx.fillStyle='#f5c8a0';cx.beginPath();cx.arc(0,-24,10.5,0,Math.PI*2);cx.fill();
-  cx.fillStyle='#5a3018';cx.beginPath();cx.arc(0,-24,10.5,Math.PI,0);cx.fill();cx.fillRect(-10.5,-35,21,13);
+  // Hair: only top portion of head (above eye level)
+  cx.fillStyle='#5a3018';
+  cx.save();
+  cx.beginPath();cx.rect(-11.5,-36,23,8);cx.clip();
+  cx.beginPath();cx.arc(0,-24,10.5,0,Math.PI*2);cx.fill();
+  cx.restore();
+  // Soft front bangs
+  cx.beginPath();
+  cx.moveTo(-9,-29);cx.quadraticCurveTo(-4,-31,0,-29);
+  cx.quadraticCurveTo(4,-31,9,-29);
+  cx.quadraticCurveTo(5,-27,0,-28);
+  cx.quadraticCurveTo(-5,-27,-9,-29);cx.closePath();cx.fill();
   cx.strokeStyle='rgba(245,234,216,.58)';cx.lineWidth=2.2;cx.beginPath();cx.moveTo(-1,-34);cx.quadraticCurveTo(17,-22,18,5);cx.stroke();
   cx.lineWidth=1.3;cx.beginPath();cx.moveTo(-1,-34);cx.quadraticCurveTo(20,-19,22,8);cx.stroke();
   cx.fillStyle='#c8a248';cx.fillRect(-7,-36,14,3);
@@ -1325,11 +1425,13 @@ let p2bestDist=lsGet('w_best2',0);
 let p2ringsCol=0, p2ringTotal=0;
 let p2RafId=null, p2flash=0;
 let p2wedFrame=0, p2wedConf=[], p2wedHearts=[];   // wedding ceremony state
+let p2boost=false;                                  // speed boost: hold → faster scroll
+let p2speedLines=[];                                // visual speed lines when boosting
 
 function p2makeLevel(){
   // Rhythm-based level generation with patterns of varying difficulty
   const obs=[];
-  let wx=620;
+  let wx=460;
 
   // Pattern types — each adds a chunk of obstacles + advance
   function pickGround(){
@@ -1441,6 +1543,7 @@ function p2init(){
   p2coyote=0; p2buf=0; p2hold=false;
   p2ringsCol=0;
   p2wedFrame=0; p2wedConf=[]; p2wedHearts=[];
+  p2boost=false; p2speedLines=[];
   const lvl=p2makeLevel();
   p2obs=lvl.obs; p2rings=lvl.rings;
   p2ringTotal=p2rings.length;
@@ -1478,6 +1581,18 @@ function p2jump(){ p2pressJump(); }
 window.p2jump=p2jump;
 window.p2pressJump=p2pressJump;
 window.p2releaseJump=p2releaseJump;
+
+/* ── Boost: hold flèche droite (PC) ou bouton ACCÉLÉRER (mobile) pour foncer ── */
+function p2pressBoost(btn){
+  p2boost = true;
+  if(btn) btn.classList.add('active-state');
+}
+function p2releaseBoost(btn){
+  p2boost = false;
+  if(btn) btn.classList.remove('active-state');
+}
+window.p2pressBoost = p2pressBoost;
+window.p2releaseBoost = p2releaseBoost;
 
 function p2start(){
   if(p2RafId){clearTimeout(p2RafId);p2RafId=null;}
@@ -1552,7 +1667,24 @@ function p2step(){
   let spd=PB_SCR + Math.min(prog,.85)*1.4;
   // Slow down dramatically in the last 15% so we coast into the hotel
   if(prog>.85) spd *= Math.max(.25, 1-(prog-.85)/.15*.75);
+  // ⚡ BOOST: hold right arrow / boost button to accelerate
+  if(p2boost && prog<.85) spd *= 1.75;
   p2sx=Math.min(p2sx+spd,PTOTAL);
+
+  // Spawn / update speed lines for visual boost feedback
+  if(p2boost && prog<.85){
+    if(p2fr%2===0){
+      p2speedLines.push({
+        y: 30 + Math.random()*(PGR-50),
+        x: PW + 10,
+        len: 30 + Math.random()*40,
+        op: .25 + Math.random()*.45,
+        sp: 8 + Math.random()*5
+      });
+    }
+  }
+  for(const sl of p2speedLines){ sl.x -= sl.sp; sl.op *= .96; }
+  p2speedLines = p2speedLines.filter(sl => sl.x > -80 && sl.op > .04);
   // Trigger wedding when the hotel reaches a nice composition position
   // (so the bride is visible on screen, not off the left edge).
   // We want htlSx ≈ PW*0.42, so p2sx ≈ (PTOTAL-200) + 82 - PW*0.42
@@ -1821,6 +1953,17 @@ function p2draw(){
   // Groom (only during gameplay; during wedding, drawn above with bride)
   if(p2state!=='wedding'){
     if(p2gr.inv===0||Math.floor(p2gr.inv/5)%2===0) p2drawGroom2(82,p2gr.y,1,p2gr.fr);
+  }
+  // Speed lines visual when boosting (drawn after groom so they appear in front)
+  if(p2speedLines.length){
+    cx2.save();
+    cx2.strokeStyle='#fff5cc';cx2.lineCap='round';
+    for(const sl of p2speedLines){
+      cx2.globalAlpha = sl.op;
+      cx2.lineWidth = 2;
+      cx2.beginPath();cx2.moveTo(sl.x, sl.y);cx2.lineTo(sl.x+sl.len, sl.y);cx2.stroke();
+    }
+    cx2.restore();
   }
   // Wedding ceremony particles (drawn on top of characters, before HUD)
   if(p2state==='wedding'){
@@ -2134,7 +2277,16 @@ function p2drawGroom2(x,y,f,fr,forceWalk){
   cx2.fillStyle='#f5c8a0';cx2.beginPath();cx2.arc(-18,-1+a+armY,4,0,Math.PI*2);cx2.fill();
   cx2.beginPath();cx2.arc(20,-1-a+armY,4,0,Math.PI*2);cx2.fill();
   cx2.fillStyle='#f5c8a0';cx2.beginPath();cx2.arc(0,-22,10,0,Math.PI*2);cx2.fill();
-  cx2.fillStyle='#2c1e10';cx2.beginPath();cx2.arc(0,-22,10,Math.PI,0);cx2.fill();cx2.fillRect(-10,-32,20,11);
+  // Hair: only top portion of head (above eye level)
+  cx2.fillStyle='#2c1e10';
+  cx2.save();
+  cx2.beginPath();cx2.rect(-11,-33,22,7);cx2.clip();
+  cx2.beginPath();cx2.arc(0,-22,10,0,Math.PI*2);cx2.fill();
+  cx2.restore();
+  // Front sweep
+  cx2.beginPath();
+  cx2.moveTo(-2,-26);cx2.quadraticCurveTo(3,-29,8,-26);
+  cx2.quadraticCurveTo(4,-24,-2,-25);cx2.closePath();cx2.fill();
   cx2.fillStyle='#1a1a1a';cx2.beginPath();cx2.arc(-3.5,-23,1.7,0,Math.PI*2);cx2.fill();cx2.beginPath();cx2.arc(3.5,-23,1.7,0,Math.PI*2);cx2.fill();
   cx2.fillStyle='white';cx2.beginPath();cx2.arc(-2.7,-24,.65,0,Math.PI*2);cx2.fill();cx2.beginPath();cx2.arc(4.3,-24,.65,0,Math.PI*2);cx2.fill();
   cx2.strokeStyle='#5c3a2a';cx2.lineWidth=1.5;cx2.beginPath();cx2.arc(0,-20,4.2,.12,Math.PI-.12);cx2.stroke();
@@ -2153,7 +2305,17 @@ function p2drawBride2(x,y,f,fr){
   cx2.save();cx2.translate(14,-4-a);cx2.rotate(.55);cx2.fillRect(-4,-2.5,10,5);cx2.restore();
   cx2.save();cx2.translate(22,-7-a);cx2.font='12px serif';cx2.textAlign='center';cx2.textBaseline='middle';cx2.fillText('💍',0,0);cx2.restore();
   cx2.fillStyle='#f5c8a0';cx2.beginPath();cx2.arc(0,-22,9.5,0,Math.PI*2);cx2.fill();
-  cx2.fillStyle='#5a3018';cx2.beginPath();cx2.arc(0,-22,9.5,Math.PI,0);cx2.fill();cx2.fillRect(-9.5,-32,19,11);
+  // Hair: only top portion of head (above eye level)
+  cx2.fillStyle='#5a3018';
+  cx2.save();
+  cx2.beginPath();cx2.rect(-10.5,-32,21,7);cx2.clip();
+  cx2.beginPath();cx2.arc(0,-22,9.5,0,Math.PI*2);cx2.fill();
+  cx2.restore();
+  // Soft bangs
+  cx2.beginPath();
+  cx2.moveTo(-8,-26);cx2.quadraticCurveTo(0,-28,8,-26);
+  cx2.quadraticCurveTo(4,-25,0,-25.5);
+  cx2.quadraticCurveTo(-4,-25,-8,-26);cx2.closePath();cx2.fill();
   cx2.strokeStyle='rgba(245,234,216,.55)';cx2.lineWidth=2.2;cx2.beginPath();cx2.moveTo(-1,-31);cx2.quadraticCurveTo(16,-19,17,5);cx2.stroke();
   cx2.lineWidth=1.3;cx2.beginPath();cx2.moveTo(-1,-31);cx2.quadraticCurveTo(19,-16,20,8);cx2.stroke();
   cx2.fillStyle='#c8a248';cx2.fillRect(-6,-33,12,2.5);
@@ -2175,13 +2337,21 @@ function p2tick(){
 
 /* Keyboard for game 2 */
 document.addEventListener('keydown',function(e){
-  if((e.code==='Space'||e.key===' ')&&document.getElementById('gameRun').style.display!=='none'){
+  if(document.getElementById('gameRun').style.display==='none') return;
+  if(e.code==='Space'||e.key===' '){
     e.preventDefault();p2pressJump();
+  } else if(e.key==='ArrowRight' || e.key==='d' || e.key==='D'){
+    e.preventDefault();
+    p2pressBoost();
   }
 });
 document.addEventListener('keyup',function(e){
-  if((e.code==='Space'||e.key===' ')&&document.getElementById('gameRun').style.display!=='none'){
+  if(document.getElementById('gameRun').style.display==='none') return;
+  if(e.code==='Space'||e.key===' '){
     e.preventDefault();p2releaseJump();
+  } else if(e.key==='ArrowRight' || e.key==='d' || e.key==='D'){
+    e.preventDefault();
+    p2releaseBoost();
   }
 });
 /* Tap canvas for game 2 */
@@ -2210,6 +2380,8 @@ const P3W=parseInt(cv3.style.width,10), P3H=parseInt(cv3.style.height,10);
 const P3GR=P3H-50;                  // ground line where bride walks
 const P3_DUR=60;                    // seconds total
 const BR_SPD=4.2;                   // movement speed
+const P3_TARGET=25;                 // score to win — "Couronne d'or"
+const P3_HONOR=15;                  // partial success threshold
 
 // Object types: petal=1pt, bouquet=5pt, ring=time bonus, drop=damage, mud=damage
 // "good" types are the only ones the bride wants to catch
@@ -2290,6 +2462,13 @@ function p3init(){
   p3time = P3_DUR; p3frame = 0; p3spawnTimer = 30;
   document.getElementById('p3Score').textContent='0';
   document.getElementById('p3Timer').textContent=P3_DUR+'s';
+  p3updateLivesDisplay();
+}
+function p3updateLivesDisplay(){
+  const el = document.getElementById('p3Lives');
+  if(!el) return;
+  el.textContent = '♥'.repeat(p3lives) + '♡'.repeat(Math.max(0, 3-p3lives));
+  el.style.color = p3lives>=2 ? 'var(--gold2)' : (p3lives===1 ? '#e8916a' : '#b8562a');
 }
 
 function p3start(){
@@ -2315,11 +2494,14 @@ window.p3start=p3start;
 function p3finish(){
   p3state='ended';
   if(p3TimerId){clearInterval(p3TimerId);p3TimerId=null;}
-  if(p3score>p3Best){
+  const newRecord = p3score>p3Best;
+  if(newRecord){
     p3Best=p3score;
     lsSet('w_best3',p3Best);
     document.getElementById('p3Best').textContent=p3Best;
-    // Celebration fireworks if new best
+  }
+  // Celebration fireworks if reached target OR new best
+  if(p3score >= P3_TARGET || newRecord){
     for(let i=0;i<5;i++){
       p3fireworks.push({
         x: 60+Math.random()*(P3W-120),
@@ -2361,15 +2543,24 @@ function p3step(){
 
   // Bride movement
   let mx = 0;
-  if(p3keys['ArrowLeft']||p3keys['a']||p3keys['A']) mx=-1;
-  else if(p3keys['ArrowRight']||p3keys['d']||p3keys['D']) mx=1;
+  let bridgeTouchHandled = false;
   if(p3touchActive){
-    const dx = p3touchX - p3br.x;
-    if(Math.abs(dx)>3) mx = dx>0 ? 1 : -1;
-    else mx = 0;
+    // Teleport-style: bride snaps quickly toward finger position
+    const targX = clamp(p3touchX, 24, P3W-24);
+    const oldX = p3br.x;
+    p3br.x = lerp(p3br.x, targX, .55);
+    if(Math.abs(p3br.x - oldX) > .5){
+      p3br.f = (p3br.x > oldX) ? 1 : -1;
+      p3br.fr++;
+    }
+    bridgeTouchHandled = true;
   }
-  if(mx!==0){p3br.f = mx>0 ? 1 : -1; p3br.fr++;}
-  p3br.x = clamp(p3br.x + mx*BR_SPD, 24, P3W-24);
+  if(!bridgeTouchHandled){
+    if(p3keys['ArrowLeft']||p3keys['a']||p3keys['A']) mx=-1;
+    else if(p3keys['ArrowRight']||p3keys['d']||p3keys['D']) mx=1;
+    if(mx!==0){p3br.f = mx>0 ? 1 : -1; p3br.fr++;}
+    p3br.x = clamp(p3br.x + mx*BR_SPD, 24, P3W-24);
+  }
 
   // Spawn objects (rate ramps with time)
   const elapsed = P3_DUR - p3time;
@@ -2440,6 +2631,7 @@ function p3step(){
           p3lives--;
           p3combo = 0;
           p3br.hitFr = 25;
+          p3updateLivesDisplay();
           // Splash
           const col = o.type==='drop'?'#5a8caa':'#5a4030';
           for(let i=0;i<12;i++){
@@ -2569,30 +2761,52 @@ function p3draw(){
   // Overlays
   if(p3state==='idle'){
     p3ov();
-    cx3.font='15px "Cinzel",serif';cx3.fillStyle='#ddb96a';cx3.fillText('La Pluie de Pétales',P3W/2,P3H/2-44);
-    cx3.font='13px "Cormorant Garamond",serif';cx3.fillStyle='rgba(245,234,216,.78)';
-    cx3.fillText('Aidez la mariée à attraper les pétales et bouquets ! 🌹💐',P3W/2,P3H/2-18);
-    cx3.font='11px "Cormorant Garamond",serif';cx3.fillStyle='rgba(245,234,216,.55)';
-    cx3.fillText('🌹 1pt · 💐 5pts · 💍 +5s · Combo ×2 (5) ×3 (10)',P3W/2,P3H/2+5);
-    cx3.fillText('Évitez 💧 et 🌫️ qui tâchent la robe !',P3W/2,P3H/2+22);
+    cx3.font='15px "Cinzel",serif';cx3.fillStyle='#ddb96a';cx3.fillText('La Pluie de Pétales',P3W/2,P3H/2-52);
+    cx3.font='13px "Cormorant Garamond",serif';cx3.fillStyle='rgba(245,234,216,.85)';
+    cx3.fillText('Objectif : '+P3_TARGET+' points en 60 secondes 🏆',P3W/2,P3H/2-26);
+    cx3.font='11px "Cormorant Garamond",serif';cx3.fillStyle='rgba(245,234,216,.62)';
+    cx3.fillText('🌹 1pt · 💐 5pts · 💍 +5s · Combo ×2 (5) ×3 (10)',P3W/2,P3H/2-2);
+    cx3.fillStyle='#e89aaa';
+    cx3.fillText('⚠️ 3 vies — évitez 💧 gouttes et 🌫️ boue !',P3W/2,P3H/2+18);
     if(p3Best>0){
       cx3.font='10.5px "Cinzel",serif';cx3.fillStyle='rgba(200,162,72,.7)';
-      cx3.fillText('Meilleur : '+p3Best+' pts',P3W/2,P3H/2+44);
+      cx3.fillText('Meilleur : '+p3Best+' pts',P3W/2,P3H/2+42);
     }
   }
   if(p3state==='ended'){
     p3ov();
-    const won = p3lives>0;
-    cx3.font='bold 19px "Cinzel",serif';cx3.fillStyle=won?'#f0d99a':'#e89aaa';
-    cx3.fillText(won ? 'La mariée est ravie ! 💕' : 'La robe est trop tâchée… 😅', P3W/2, P3H/2-32);
+    const reachedTarget = p3score >= P3_TARGET;
+    const survived = p3lives>0;
+    let title, titleColor, subtitle;
+    if(!survived){
+      title = 'La robe est ruinée ! 😢';
+      titleColor = '#e89aaa';
+      subtitle = 'Trop d\'éclaboussures…';
+    } else if(reachedTarget){
+      title = '🏆 Couronne d\'or ! 💕';
+      titleColor = '#fff5cc';
+      subtitle = 'La mariée est radieuse !';
+    } else if(p3score >= P3_HONOR){
+      title = 'Bien joué ! 🌹';
+      titleColor = '#f0d99a';
+      subtitle = 'Encore un peu — il vous fallait '+P3_TARGET+' pts.';
+    } else {
+      title = 'Réessayez ! 🌸';
+      titleColor = '#e89aaa';
+      subtitle = 'Visez '+P3_TARGET+' points pour gagner.';
+    }
+    cx3.font='bold 19px "Cinzel",serif';cx3.fillStyle=titleColor;
+    cx3.fillText(title, P3W/2, P3H/2-38);
+    cx3.font='13px "Cormorant Garamond",serif';cx3.fillStyle='rgba(245,234,216,.78)';
+    cx3.fillText(subtitle, P3W/2, P3H/2-16);
     cx3.font='15px "Cormorant Garamond",serif';cx3.fillStyle='#f5ead8';
-    cx3.fillText('Score : '+p3score+' pts', P3W/2, P3H/2-4);
+    cx3.fillText('Score : '+p3score+' / '+P3_TARGET+' pts', P3W/2, P3H/2+8);
     if(p3score===p3Best && p3score>0){
       cx3.font='12px "Cinzel",serif';cx3.fillStyle='#fff5cc';
-      cx3.fillText('🏆 Nouveau record !', P3W/2, P3H/2+18);
+      cx3.fillText('🏆 Nouveau record !', P3W/2, P3H/2+30);
     }
     cx3.font='11px "Cormorant Garamond",serif';cx3.fillStyle='rgba(200,162,72,.55)';
-    cx3.fillText('Cliquez « Nouvelle partie » pour rejouer', P3W/2, P3H/2+44);
+    cx3.fillText('Cliquez « Nouvelle partie » pour rejouer', P3W/2, P3H/2+52);
   }
 }
 function p3ov(){cx3.fillStyle='rgba(40,24,40,.85)';cx3.fillRect(0,0,P3W,P3H);cx3.textAlign='center';cx3.textBaseline='middle';}
@@ -2774,10 +2988,18 @@ function p3drawBride(x,y,f,fr,hit){
   cx3.fillStyle='#c8a248';cx3.beginPath();cx3.arc(4,baseFy,2.5,0,Math.PI*2);cx3.fill();
   // Head
   cx3.fillStyle='#f5c8a0';cx3.beginPath();cx3.arc(0,-26,11,0,Math.PI*2);cx3.fill();
-  // Hair (long, flowing)
+  // Hair top: only above eye level (flowing sides drawn after)
   cx3.fillStyle='#5a3018';
-  cx3.beginPath();cx3.arc(0,-26,11,Math.PI,0);cx3.fill();
-  cx3.fillRect(-11,-37,22,13);
+  cx3.save();
+  cx3.beginPath();cx3.rect(-12,-38,24,9);cx3.clip();
+  cx3.beginPath();cx3.arc(0,-26,11,0,Math.PI*2);cx3.fill();
+  cx3.restore();
+  // Soft bangs over forehead
+  cx3.beginPath();
+  cx3.moveTo(-9,-30);cx3.quadraticCurveTo(-4,-32,0,-30);
+  cx3.quadraticCurveTo(4,-32,9,-30);
+  cx3.quadraticCurveTo(5,-29,0,-29.5);
+  cx3.quadraticCurveTo(-5,-29,-9,-30);cx3.closePath();cx3.fill();
   // Hair flowing down sides
   cx3.beginPath();
   cx3.moveTo(-11,-26);
@@ -2891,6 +3113,9 @@ function switchGame(g){
   if(g!=='chase' && gState==='playing'){gState='idle';if(tTick){clearInterval(tTick);tTick=null;}}
   if(g!=='run' && p2state==='playing'){p2state='idle';}
   if(g!=='petals' && p3state==='playing'){p3state='idle';if(p3TimerId){clearInterval(p3TimerId);p3TimerId=null;}}
+  // Release any held controls when switching tabs
+  p2boost=false;
+  document.querySelectorAll('.boost-btn').forEach(b=>b.classList.remove('active-state'));
 }
 window.switchGame=switchGame;
 
