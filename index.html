@@ -407,6 +407,7 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
           <span>Difficulté :</span>
           <button class="diff-btn active" data-diff="easy" onclick="setDiff('easy')">Facile</button>
           <button class="diff-btn" data-diff="normal" onclick="setDiff('normal')">Normal</button>
+          <button class="diff-btn" data-diff="hard" onclick="setDiff('hard')">Difficile</button>
         </div>
         <div class="game-stat">
           <span>Chrono : <strong id="gTimer">45s</strong></span>
@@ -743,12 +744,14 @@ const canRun=()=>pageVisible&&arcadeInView;
 const cv=document.getElementById('gameCanvas');
 const cx=setupHD(cv);
 const W=parseInt(cv.style.width,10), H=parseInt(cv.style.height,10);
-const GRID=22, GSPD=3.6, CATCH_R=34;
+const GRID=22, GSPD=3.6, CATCH_R=26;
+const TOUCH_MAX_STEP=5.4;     // cap groom movement per frame on touch — keeps responsive feel without trivial catches
 
 // Difficulty presets
 const DIFFS={
-  easy:   {bspd:1.8, tsec:45, dashCD:30, dashFr:6, predict:4, noise:.45, pdSpd:1.6, stunDur:18, pdCharge:.005},
-  normal: {bspd:2.4, tsec:35, dashCD:20, dashFr:8, predict:6, noise:.25, pdSpd:2.1, stunDur:22, pdCharge:.011}
+  easy:   {bspd:2.4, tsec:42, dashCD:24, dashFr:7, predict:6,  noise:.35, pdSpd:1.7, stunDur:18, pdCharge:.006, touchPred:5},
+  normal: {bspd:3.1, tsec:32, dashCD:18, dashFr:9, predict:9,  noise:.20, pdSpd:2.2, stunDur:22, pdCharge:.012, touchPred:9},
+  hard:   {bspd:3.7, tsec:26, dashCD:14, dashFr:10,predict:12, noise:.12, pdSpd:2.6, stunDur:26, pdCharge:.018, touchPred:14}
 };
 let DIFF='easy', D=DIFFS.easy;
 
@@ -861,16 +864,25 @@ function step(){
   // Groom movement
   let mx=dpX,my=dpY;
   let touchHandled = false;
-  // Touch (mobile): groom teleports rapidly toward finger position
+  // Touch (mobile): groom moves rapidly toward finger but capped per frame
   if(g1TouchActive && !gmStunned){
     const targX = clamp(g1TouchTX, 26, W-26);
     const targY = clamp(g1TouchTY, 30, H-30);
-    const oldX = gm.x;
-    // Strong lerp for snappy "teleport" feel — but capped to avoid overshooting
-    const lerpAmt = .55;
-    gm.x = lerp(gm.x, targX, lerpAmt);
-    gm.y = lerp(gm.y, targY, lerpAmt);
-    if(Math.abs(gm.x - oldX) > .5) gm.f = (gm.x > oldX) ? 1 : -1;
+    const dx = targX - gm.x, dy = targY - gm.y;
+    const dd = Math.hypot(dx, dy);
+    if(dd > .5){
+      // Lerp toward target, but cap step length so movement per frame is bounded
+      let stepX = dx * .55, stepY = dy * .55;
+      const stepLen = Math.hypot(stepX, stepY);
+      if(stepLen > TOUCH_MAX_STEP){
+        stepX = stepX/stepLen * TOUCH_MAX_STEP;
+        stepY = stepY/stepLen * TOUCH_MAX_STEP;
+      }
+      const oldX = gm.x;
+      gm.x = clamp(gm.x + stepX, 26, W-26);
+      gm.y = clamp(gm.y + stepY, 30, H-30);
+      if(Math.abs(gm.x - oldX) > .3) gm.f = (stepX > 0) ? 1 : -1;
+    }
     touchHandled = true;
     mx = 0; my = 0;
   }
@@ -889,11 +901,21 @@ function step(){
   // Bride AI
   const gmVx=gm.x-gmPrevX, gmVy=gm.y-gmPrevY;
   gmPrevX=gm.x; gmPrevY=gm.y;
-  const predX=gm.x+gmVx*D.predict, predY=gm.y+gmVy*D.predict;
+  // Predict where the groom will be — combines current velocity prediction
+  // with finger-target lookahead when touching (bride sees "where you're aiming")
+  let predX = gm.x + gmVx*D.predict;
+  let predY = gm.y + gmVy*D.predict;
+  if(g1TouchActive){
+    // Blend in touch target: bride anticipates that the groom is heading there
+    const tpW = D.touchPred / 18;          // 0..1ish blend amount
+    predX = lerp(predX, g1TouchTX, tpW);
+    predY = lerp(predY, g1TouchTY, tpW);
+  }
   const realDist=Math.hypot(br.x-gm.x,br.y-gm.y)||1;
   const pdx=br.x-predX, pdy=br.y-predY;
   const pdist=Math.hypot(pdx,pdy)||1;
-  const spd=realDist<170?D.bspd*(1+(170-realDist)/220):D.bspd*.55;
+  // Stronger close-range speedup so bride is hard to catch when cornered
+  const spd=realDist<200?D.bspd*(1+(200-realDist)/180):D.bspd*.6;
   let fx=pdx/pdist, fy=pdy/pdist;
   // Anti-corner
   const cornX=br.x<70?1:(br.x>W-70?-1:0);
@@ -1134,7 +1156,7 @@ function drawScene(){
   if(gState==='idle'){
     ov();cx.font='15px "Cinzel",serif';cx.fillStyle='#ddb96a';cx.fillText('Cliquez « Nouvelle partie »',W/2,H/2-14);
     cx.font='14px "Cormorant Garamond",serif';cx.fillStyle='rgba(200,162,72,.55)';cx.fillText('Aidez le marié à rattraper la mariée ! ♥',W/2,H/2+14);
-    if(bestScore>0){cx.font='10.5px "Cinzel",serif';cx.fillStyle='rgba(200,162,72,.55)';cx.fillText('Meilleur ('+(DIFF==='easy'?'Facile':'Normal')+') : '+bestScore+'s',W/2,H/2+40);}
+    if(bestScore>0){cx.font='10.5px "Cinzel",serif';cx.fillStyle='rgba(200,162,72,.55)';cx.fillText('Meilleur ('+(DIFF==='easy'?'Facile':DIFF==='hard'?'Difficile':'Normal')+') : '+bestScore+'s',W/2,H/2+40);}
   }
   if(gState==='caught'){
     // Wait for celebration to settle before showing overlay
