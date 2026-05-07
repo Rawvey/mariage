@@ -111,6 +111,29 @@ textarea.fc-full{resize:vertical;min-height:125px}
 .mp-item{background:rgba(41,61,49,.5);border:1px solid var(--bord);border-radius:4px;padding:11px 14px;margin-bottom:6px}
 .mp-name{color:var(--cream);font-size:14.5px}
 .mp-sub{font-size:12px;color:var(--cream2);font-style:italic}
+/* ── Full menu (carte) display, shown before the selection form ── */
+.menu-full{background:rgba(46,68,54,.42);border:1px solid var(--bord);border-radius:8px;padding:46px 40px 40px;margin-bottom:34px;text-align:center;position:relative}
+.menu-full::before{content:'';position:absolute;inset:9px;border:1px solid rgba(200,162,72,.18);border-radius:5px;pointer-events:none}
+.mf-header{margin-bottom:8px;position:relative;z-index:1}
+.mf-eye{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.mf-title{font-family:'Great Vibes',cursive;font-size:clamp(2.2rem,4.5vw,2.8rem);color:var(--gold2);line-height:1}
+.mf-course{margin:22px 0;position:relative;z-index:1}
+.mf-course-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3.5px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.mf-choice-note{font-size:12.5px;color:var(--cream2);font-style:italic;margin-bottom:11px;opacity:.78}
+.mf-dish{color:var(--cream);font-size:17px;line-height:1.35}
+.mf-dish-sub{color:var(--cream2);font-size:14px;font-style:italic;margin-top:2px}
+.mf-options{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:4px}
+.mf-option{flex:1;min-width:210px;max-width:280px;padding:13px 16px;background:rgba(41,61,49,.45);border:1px solid var(--bord);border-radius:5px}
+.mf-or{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;opacity:.7;flex-shrink:0}
+.mf-divider{display:flex;align-items:center;justify-content:center;gap:14px;margin:8px 0;position:relative;z-index:1}
+.mf-divider::before,.mf-divider::after{content:'';height:1px;width:70px;background:linear-gradient(90deg,transparent,var(--bord),transparent)}
+.mf-divider span{color:var(--gold);font-size:8px;opacity:.55}
+.mf-final{margin-top:24px}
+.mf-final .mf-dish{font-size:14px;letter-spacing:1.5px;font-family:'Cinzel',serif;text-transform:uppercase;color:var(--gold2);font-weight:300}
+.mf-arrow{display:flex;flex-direction:column;align-items:center;gap:6px;margin:6px 0 28px;color:var(--gold);opacity:.75}
+.mf-arrow-text{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2.5px;text-transform:uppercase}
+.mf-arrow-icon{font-size:14px;animation:mfBob 2.2s ease-in-out infinite}
+@keyframes mfBob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
 .plist-head{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 /* New stacked person entry with clickable choice cards */
 .pentry{background:rgba(30,46,37,.55);padding:16px 16px 14px;border-radius:6px;border:1px solid rgba(200,162,72,.15);margin-bottom:14px;transition:border-color .25s;position:relative}
@@ -189,6 +212,9 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
   .hero-frame{padding:24px 22px}.hero-names{white-space:normal;font-size:clamp(2.7rem,10vw,4.8rem)}
   .card-grid,.rates-grid{grid-template-columns:1fr}
   .menu-box{padding:22px 15px}.menu-preview{grid-template-columns:1fr}
+  .menu-full{padding:32px 18px 28px}.menu-full::before{inset:6px}
+  .mf-options{flex-direction:column;gap:10px}.mf-option{min-width:0;width:100%;max-width:none}
+  .mf-or{padding:2px 0}
   .leaf-l,.leaf-r{display:none}
 }
 </style>
@@ -342,7 +368,72 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
 <div id="menu">
   <div class="sec-wrap">
     <div class="sec-head reveal"><div class="sec-eye">Repas trois services</div><div class="sec-title">Choix du menu</div><div class="sec-div"><span>◆</span></div></div>
-    <p class="reveal" style="text-align:center;font-style:italic;color:var(--cream2);margin-bottom:26px;font-size:15px">Pour chaque personne de votre groupe, choisissez le repas principal et le dessert en cliquant sur les cartes ci-dessous.</p>
+    <p class="reveal" style="text-align:center;font-style:italic;color:var(--cream2);margin-bottom:26px;font-size:15px">Voici le menu qui vous sera servi lors de la réception. Prenez un moment pour le découvrir, puis indiquez vos choix de plat principal et de dessert ci-dessous.</p>
+
+    <!-- Carte du menu complet -->
+    <div class="menu-full reveal">
+      <div class="mf-header">
+        <div class="mf-eye">Notre carte</div>
+        <div class="mf-title">Le repas</div>
+      </div>
+
+      <div class="mf-divider" style="margin-top:18px"><span>◆</span></div>
+
+      <div class="mf-course">
+        <div class="mf-course-label">Entrée</div>
+        <div class="mf-dish">Samossa de légumes au curry madras</div>
+        <div class="mf-dish-sub">sauce tzatzíki</div>
+      </div>
+
+      <div class="mf-divider"><span>◆ ◆ ◆</span></div>
+
+      <div class="mf-course">
+        <div class="mf-course-label">Plat principal</div>
+        <div class="mf-choice-note">— au choix —</div>
+        <div class="mf-options">
+          <div class="mf-option">
+            <div class="mf-dish">🍂 Ravioli à la courge</div>
+            <div class="mf-dish-sub">sauce aux poivrons rôtis</div>
+          </div>
+          <div class="mf-or">ou</div>
+          <div class="mf-option">
+            <div class="mf-dish">🐟 Filet de saumon</div>
+            <div class="mf-dish-sub">sauce safranée</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mf-divider"><span>◆ ◆ ◆</span></div>
+
+      <div class="mf-course">
+        <div class="mf-course-label">Dessert</div>
+        <div class="mf-choice-note">— au choix —</div>
+        <div class="mf-options">
+          <div class="mf-option">
+            <div class="mf-dish">🥕 Gâteau au fromage</div>
+            <div class="mf-dish-sub">carottes et caramel</div>
+          </div>
+          <div class="mf-or">ou</div>
+          <div class="mf-option">
+            <div class="mf-dish">🍮 Gâteau crème brûlée</div>
+            <div class="mf-dish-sub">fromage</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mf-divider"><span>◆</span></div>
+
+      <div class="mf-course mf-final">
+        <div class="mf-dish">Café · Thé · Infusion</div>
+      </div>
+    </div>
+
+    <!-- Indicateur visuel vers le formulaire -->
+    <div class="mf-arrow reveal" aria-hidden="true">
+      <div class="mf-arrow-text">À vous de choisir</div>
+      <div class="mf-arrow-icon">▼</div>
+    </div>
+
     <div class="menu-box reveal">
       <form id="menuForm">
         <div class="plist-head">
