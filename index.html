@@ -111,26 +111,26 @@ textarea.fc-full{resize:vertical;min-height:125px}
 .mp-item{background:rgba(41,61,49,.5);border:1px solid var(--bord);border-radius:4px;padding:11px 14px;margin-bottom:6px}
 .mp-name{color:var(--cream);font-size:14.5px}
 .mp-sub{font-size:12px;color:var(--cream2);font-style:italic}
-/* ── Full menu (carte) display, shown before the selection form ── */
-.menu-full{background:rgba(46,68,54,.42);border:1px solid var(--bord);border-radius:8px;padding:46px 40px 40px;margin-bottom:34px;text-align:center;position:relative}
-.menu-full::before{content:'';position:absolute;inset:9px;border:1px solid rgba(200,162,72,.18);border-radius:5px;pointer-events:none}
-.mf-header{margin-bottom:8px;position:relative;z-index:1}
+/* ── Full menu (carte typographique, lecture seule) ── */
+.menu-full{background:rgba(46,68,54,.32);border:1px solid var(--bord);border-radius:8px;padding:50px 40px 44px;margin-bottom:30px;text-align:center;position:relative}
+.menu-full::before{content:'';position:absolute;inset:10px;border:1px solid rgba(200,162,72,.18);border-radius:5px;pointer-events:none}
+.mf-header{margin-bottom:14px;position:relative;z-index:1}
 .mf-eye{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
-.mf-title{font-family:'Great Vibes',cursive;font-size:clamp(2.2rem,4.5vw,2.8rem);color:var(--gold2);line-height:1}
-.mf-course{margin:22px 0;position:relative;z-index:1}
-.mf-course-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3.5px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
-.mf-choice-note{font-size:12.5px;color:var(--cream2);font-style:italic;margin-bottom:11px;opacity:.78}
-.mf-dish{color:var(--cream);font-size:17px;line-height:1.35}
-.mf-dish-sub{color:var(--cream2);font-size:14px;font-style:italic;margin-top:2px}
-.mf-options{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:4px}
-.mf-option{flex:1;min-width:210px;max-width:280px;padding:13px 16px;background:rgba(41,61,49,.45);border:1px solid var(--bord);border-radius:5px}
-.mf-or{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;opacity:.7;flex-shrink:0}
-.mf-divider{display:flex;align-items:center;justify-content:center;gap:14px;margin:8px 0;position:relative;z-index:1}
-.mf-divider::before,.mf-divider::after{content:'';height:1px;width:70px;background:linear-gradient(90deg,transparent,var(--bord),transparent)}
-.mf-divider span{color:var(--gold);font-size:8px;opacity:.55}
-.mf-final{margin-top:24px}
-.mf-final .mf-dish{font-size:14px;letter-spacing:1.5px;font-family:'Cinzel',serif;text-transform:uppercase;color:var(--gold2);font-weight:300}
-.mf-arrow{display:flex;flex-direction:column;align-items:center;gap:6px;margin:6px 0 28px;color:var(--gold);opacity:.75}
+.mf-title{font-family:'Great Vibes',cursive;font-size:clamp(2.4rem,5vw,3rem);color:var(--gold2);line-height:1}
+.mf-course{margin:26px 0;position:relative;z-index:1}
+.mf-course-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.mf-dish{color:var(--cream);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;line-height:1.35;font-weight:400}
+.mf-dish-sub{color:var(--cream2);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;line-height:1.3;margin-top:2px;opacity:.85}
+.mf-options{margin-top:2px}
+.mf-option{padding:6px 10px}
+.mf-or{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:3px;color:var(--gold);text-transform:lowercase;opacity:.65;display:flex;align-items:center;justify-content:center;gap:10px;margin:6px 0}
+.mf-or::before,.mf-or::after{content:'';height:1px;width:30px;background:rgba(200,162,72,.35)}
+.mf-divider{display:flex;align-items:center;justify-content:center;gap:14px;margin:4px 0;position:relative;z-index:1}
+.mf-divider::before,.mf-divider::after{content:'';height:1px;width:80px;background:linear-gradient(90deg,transparent,var(--bord),transparent)}
+.mf-divider span{color:var(--gold);font-size:8px;opacity:.55;letter-spacing:6px}
+.mf-final{margin-top:26px}
+.mf-final .mf-dish{font-size:13px;letter-spacing:3.5px;font-family:'Cinzel',serif;font-style:normal;text-transform:uppercase;color:var(--gold2);font-weight:300}
+.mf-arrow{display:flex;flex-direction:column;align-items:center;gap:6px;margin:0 0 30px;color:var(--gold);opacity:.75}
 .mf-arrow-text{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2.5px;text-transform:uppercase}
 .mf-arrow-icon{font-size:14px;animation:mfBob 2.2s ease-in-out infinite}
 @keyframes mfBob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
@@ -151,6 +151,35 @@ textarea.fc-full{resize:vertical;min-height:125px}
 .choice-card.selected::after{content:'✓';position:absolute;top:6px;right:8px;color:var(--gold2);font-weight:600;font-size:14px}
 .choice-card .cc-name{color:var(--cream);font-size:14px;line-height:1.3}
 .choice-card .cc-sub{color:var(--cream2);font-size:12px;font-style:italic;line-height:1.25}
+/* ── Tape les cœurs (whack-a-mole) ── */
+.wam-board{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:440px;margin:0 auto;padding:8px}
+.wam-spot{position:relative;background:radial-gradient(ellipse at 50% 65%,rgba(58,84,68,.7) 0%,rgba(30,46,37,.55) 60%,rgba(30,46,37,.2) 100%);border:1.5px solid var(--bord);border-radius:50%/42%;aspect-ratio:1.15/1;cursor:pointer;transition:transform .1s,border-color .2s;-webkit-tap-highlight-color:transparent}
+.wam-spot:active{transform:scale(.95)}
+.wam-spot.active{border-color:rgba(200,162,72,.5)}
+.wam-item{position:absolute;left:50%;top:50%;transform:translate(-50%,90%) scale(.5);font-size:36px;line-height:1;opacity:0;transition:transform .25s cubic-bezier(.34,1.56,.64,1),opacity .15s;pointer-events:none;user-select:none;-webkit-user-select:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4))}
+.wam-spot.active .wam-item{transform:translate(-50%,-50%) scale(1);opacity:1}
+.wam-spot.fading .wam-item{opacity:.45;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4)) saturate(.6)}
+.wam-spot.tapped .wam-item{transform:translate(-50%,-50%) scale(1.4);opacity:0;transition:transform .2s,opacity .2s}
+.wam-popup{position:absolute;left:50%;top:30%;transform:translate(-50%,-50%);font-family:'Cinzel',serif;font-size:13px;letter-spacing:1px;color:var(--gold2);pointer-events:none;animation:wamPop .8s ease-out forwards;font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,.7);z-index:2}
+.wam-popup.bad{color:#e8916a}
+@keyframes wamPop{0%{opacity:1;transform:translate(-50%,-50%) scale(.85)}100%{opacity:0;transform:translate(-50%,-180%) scale(1.15)}}
+.game-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(30,46,37,.94);backdrop-filter:blur(3px);border:1.5px solid var(--gold);border-radius:6px;text-align:center;padding:24px;z-index:5}
+.game-overlay-title{font-family:'Great Vibes',cursive;font-size:34px;color:var(--gold2);line-height:1;margin-bottom:6px}
+.game-overlay-sub{font-family:'Cinzel',serif;font-size:12px;letter-spacing:2px;color:var(--cream2);margin-bottom:16px;text-transform:uppercase}
+
+/* ── Mémoire (paires de cartes) ── */
+.mem-board{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:420px;margin:0 auto}
+.mem-card{aspect-ratio:1/1.1;perspective:700px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.mem-card-inner{position:relative;width:100%;height:100%;transition:transform .55s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d}
+.mem-card.flipped .mem-card-inner,.mem-card.matched .mem-card-inner{transform:rotateY(180deg)}
+.mem-face{position:absolute;inset:0;border-radius:6px;display:flex;align-items:center;justify-content:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:1.5px solid var(--bord)}
+.mem-back{background:linear-gradient(135deg,#2e4436 0%,#3a5444 100%);position:relative;overflow:hidden}
+.mem-back::before{content:'';position:absolute;inset:5px;border:1px solid rgba(200,162,72,.32);border-radius:3px}
+.mem-back-mono{font-family:'Great Vibes',cursive;font-size:30px;color:var(--gold2);position:relative;z-index:1}
+.mem-front{background:linear-gradient(135deg,rgba(245,234,216,.97),rgba(240,217,154,.92));transform:rotateY(180deg);font-size:40px}
+.mem-card.matched .mem-card-inner{filter:drop-shadow(0 0 8px rgba(200,162,72,.45))}
+.mem-card.matched .mem-front{background:linear-gradient(135deg,rgba(200,162,72,.35),rgba(245,234,216,.5));border-color:var(--gold)}
+
 @media(max-width:560px){.choice-grid{grid-template-columns:1fr}}
 .factions{display:flex;justify-content:space-between;align-items:center;margin-top:18px;flex-wrap:wrap;gap:10px}
 .fhint{font-size:13px;color:var(--cream2);font-style:italic}
@@ -174,12 +203,6 @@ textarea.fc-full{resize:vertical;min-height:125px}
 .diff-btn{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;background:transparent;border:1px solid rgba(200,162,72,.25);color:var(--cream2);padding:5px 14px;border-radius:2px;cursor:pointer;transition:all .25s}
 .diff-btn.active{background:rgba(200,162,72,.18);border-color:var(--gold);color:var(--gold3)}
 .diff-btn:hover{color:var(--gold2)}
-.jump-btn{display:none;flex:1;padding:20px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:2.5px;text-transform:uppercase;background:rgba(58,84,68,.6);border:1.5px solid var(--bord);color:var(--gold2);border-radius:4px;cursor:pointer;touch-action:manipulation;transition:all .2s}
-.jump-btn:active{background:rgba(200,162,72,.28);border-color:var(--gold)}
-.boost-btn{display:none;flex:1;padding:20px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:2.5px;text-transform:uppercase;background:rgba(58,84,68,.6);border:1.5px solid var(--bord);color:var(--gold2);border-radius:4px;cursor:pointer;touch-action:manipulation;transition:all .2s}
-.boost-btn:active,.boost-btn.active-state{background:rgba(184,86,42,.3);border-color:var(--rust);color:#ffb497}
-.mobile-ctrls{display:none;gap:10px;margin:10px 0}
-@media(max-width:680px){.jump-btn{display:block}.boost-btn{display:block}.mobile-ctrls{display:flex}}
 .dpad{display:none;grid-template-columns:repeat(3,68px);grid-template-rows:repeat(3,68px);gap:6px;justify-content:center;margin:14px auto}
 .dpad-btn{background:rgba(58,84,68,.55);border:1.5px solid var(--bord);color:var(--gold);font-size:28px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;user-select:none;-webkit-user-select:none;touch-action:manipulation;transition:background .1s}
 .dpad-btn:active{background:rgba(200,162,72,.3);border-color:var(--gold)}
@@ -188,7 +211,7 @@ textarea.fc-full{resize:vertical;min-height:125px}
 @media(max-width:680px){
   .dpad{display:none}
   .game-hint{display:none}
-  #gameCanvas, #plCanvas, #petalsCanvas{width:100% !important; height:auto !important; max-width:560px; touch-action:none}
+  #gameCanvas{width:100% !important; height:auto !important; max-width:560px; touch-action:none}
   /* Arcade gets reduced horizontal padding so canvas can be wider */
   #arcade .sec-wrap{padding-left:10px;padding-right:10px}
   .arcade-desc{font-size:14px;padding:0 8px}
@@ -212,10 +235,13 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
   .hero-frame{padding:24px 22px}.hero-names{white-space:normal;font-size:clamp(2.7rem,10vw,4.8rem)}
   .card-grid,.rates-grid{grid-template-columns:1fr}
   .menu-box{padding:22px 15px}.menu-preview{grid-template-columns:1fr}
-  .menu-full{padding:32px 18px 28px}.menu-full::before{inset:6px}
-  .mf-options{flex-direction:column;gap:10px}.mf-option{min-width:0;width:100%;max-width:none}
-  .mf-or{padding:2px 0}
+  .menu-full{padding:36px 18px 32px}.menu-full::before{inset:7px}
+  .mf-dish{font-size:18px}.mf-dish-sub{font-size:15px}
+  .mf-or::before,.mf-or::after{width:24px}
   .leaf-l,.leaf-r{display:none}
+  .wam-item{font-size:30px}
+  .mem-front{font-size:32px}.mem-back-mono{font-size:24px}
+  .game-overlay-title{font-size:28px}
 }
 </style>
 </head>
@@ -368,9 +394,9 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
 <div id="menu">
   <div class="sec-wrap">
     <div class="sec-head reveal"><div class="sec-eye">Repas trois services</div><div class="sec-title">Choix du menu</div><div class="sec-div"><span>◆</span></div></div>
-    <p class="reveal" style="text-align:center;font-style:italic;color:var(--cream2);margin-bottom:26px;font-size:15px">Voici le menu qui vous sera servi lors de la réception. Prenez un moment pour le découvrir, puis indiquez vos choix de plat principal et de dessert ci-dessous.</p>
+    <p class="reveal" style="text-align:center;font-style:italic;color:var(--cream2);margin-bottom:26px;font-size:15px">Voici le menu qui vous sera servi. Pour le plat principal et le dessert, vous avez deux options au choix — indiquez vos préférences dans le formulaire plus bas.</p>
 
-    <!-- Carte du menu complet -->
+    <!-- Carte du menu (lecture) -->
     <div class="menu-full reveal">
       <div class="mf-header">
         <div class="mf-eye">Notre carte</div>
@@ -389,15 +415,14 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
 
       <div class="mf-course">
         <div class="mf-course-label">Plat principal</div>
-        <div class="mf-choice-note">— au choix —</div>
         <div class="mf-options">
           <div class="mf-option">
-            <div class="mf-dish">🍂 Ravioli à la courge</div>
+            <div class="mf-dish">Ravioli à la courge</div>
             <div class="mf-dish-sub">sauce aux poivrons rôtis</div>
           </div>
-          <div class="mf-or">ou</div>
+          <div class="mf-or"><span>ou</span></div>
           <div class="mf-option">
-            <div class="mf-dish">🐟 Filet de saumon</div>
+            <div class="mf-dish">Filet de saumon</div>
             <div class="mf-dish-sub">sauce safranée</div>
           </div>
         </div>
@@ -407,15 +432,14 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
 
       <div class="mf-course">
         <div class="mf-course-label">Dessert</div>
-        <div class="mf-choice-note">— au choix —</div>
         <div class="mf-options">
           <div class="mf-option">
-            <div class="mf-dish">🥕 Gâteau au fromage</div>
+            <div class="mf-dish">Gâteau au fromage</div>
             <div class="mf-dish-sub">carottes et caramel</div>
           </div>
-          <div class="mf-or">ou</div>
+          <div class="mf-or"><span>ou</span></div>
           <div class="mf-option">
-            <div class="mf-dish">🍮 Gâteau crème brûlée</div>
+            <div class="mf-dish">Gâteau crème brûlée</div>
             <div class="mf-dish-sub">fromage</div>
           </div>
         </div>
@@ -430,7 +454,7 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
 
     <!-- Indicateur visuel vers le formulaire -->
     <div class="mf-arrow reveal" aria-hidden="true">
-      <div class="mf-arrow-text">À vous de choisir</div>
+      <div class="mf-arrow-text">Faites vos choix ci-dessous</div>
       <div class="mf-arrow-icon">▼</div>
     </div>
 
@@ -487,8 +511,8 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
       <!-- Onglets -->
       <div class="game-tabs">
         <button class="game-tab active" data-g="chase" onclick="switchGame('chase')">🤵 La Chasse à la Mariée</button>
-        <button class="game-tab" data-g="run" onclick="switchGame('run')">🏃 La Course vers l'Hôtel</button>
-        <button class="game-tab" data-g="petals" onclick="switchGame('petals')">👰 La Pluie de Pétales</button>
+        <button class="game-tab" data-g="wam" onclick="switchGame('wam')">💖 Tape les Cœurs</button>
+        <button class="game-tab" data-g="mem" onclick="switchGame('mem')">💍 Mémoire de Mariage</button>
       </div>
 
       <!-- JEU 1 -->
@@ -521,35 +545,32 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
         <p class="touch-hint">📱 Touchez l'écran pour téléporter le marié — glissez pour le diriger</p>
       </div>
 
-      <!-- JEU 2 -->
-      <div id="gameRun" style="display:none">
-        <p class="arcade-desc">Le marié doit rejoindre la mariée à l'hôtel avant la cérémonie ! 🏃🤵🏨<br>Saute par-dessus les obstacles et ramasse les bagues 💍 — 5 bagues = +1 vie !<br>Espace pour sauter · Maintien = saut plus haut · Double saut permis<br><strong style="color:var(--gold2)">⚡ Maintenez la flèche droite (ou le bouton ACCÉLÉRER) pour foncer plus vite !</strong></p>
+      <!-- JEU 2 — TAPE LES CŒURS -->
+      <div id="gameWam" style="display:none">
+        <p class="arcade-desc">Tapez les <strong style="color:var(--gold2)">30 cœurs d'amour</strong> avant la fin du chrono ! 💖<br>💖 Cœur = 1 pt · 💐 Bouquet = 5 pts · 💍 Bague = +5 secondes<br><strong style="color:#e89aaa">⚠️ Évitez les 💧 gouttes et 🌫️ brume : 3 touches = perdu !</strong></p>
         <div class="game-stat">
-          <span>Bagues : <strong id="p2Rings">0</strong></span>
-          <span>Meilleur : <strong id="p2Best">—</strong></span>
+          <span>Score : <strong id="wamScore">0</strong> / 30</span>
+          <span>Vies : <strong id="wamLives">♥♥♥</strong></span>
+          <span>Chrono : <strong id="wamTimer">60s</strong></span>
+          <span>Meilleur : <strong id="wamBest">—</strong></span>
         </div>
-        <canvas id="plCanvas" width="440" height="352" role="img" aria-label="Jeu de plateformes : le marié court vers l'hôtel de mariage en sautant par-dessus des obstacles."></canvas>
-        <div class="mobile-ctrls">
-          <button class="jump-btn" onpointerdown="p2pressJump()" onpointerup="p2releaseJump()" onpointerleave="p2releaseJump()">SAUTER 🚀</button>
-          <button class="boost-btn" onpointerdown="p2pressBoost(this)" onpointerup="p2releaseBoost(this)" onpointerleave="p2releaseBoost(this)" oncontextmenu="return false">ACCÉLÉRER ⚡</button>
-        </div>
-        <div class="game-ctrl"><button class="btn btn-gold" onclick="p2start()">Nouvelle partie</button></div>
-        <p class="game-hint">Espace = sauter · Flèche droite = accélérer · Toucher l'écran = sauter</p>
+        <div class="wam-board" id="wamBoard"></div>
+        <div class="game-ctrl"><button class="btn btn-gold" onclick="wamStart()">Nouvelle partie</button></div>
+        <p class="game-hint">Touchez ou cliquez les cœurs avant qu'ils disparaissent ✨</p>
       </div>
 
-      <!-- JEU 3 — LA PLUIE DE PÉTALES (mariée) -->
-      <div id="gamePetals" style="display:none">
-        <p class="arcade-desc">Aidez la mariée à attraper <strong style="color:var(--gold2)">25 pétales</strong> avant la cérémonie ! 👰💐<br>🌹 Pétale = 1 pt · 💐 Bouquet = 5 pts · 💍 Bague = +5 secondes<br><strong style="color:#e89aaa">⚠️ Évitez les 💧 gouttes et 🌫️ boue : 3 touches = robe ruinée !</strong></p>
+      <!-- JEU 3 — MÉMOIRE -->
+      <div id="gameMem" style="display:none">
+        <p class="arcade-desc">Trouvez les <strong style="color:var(--gold2)">8 paires</strong> de symboles de mariage ! 💍💕<br>Cliquez deux cartes — si elles correspondent, elles restent retournées.<br><strong style="color:var(--gold2)">Le défi : moins de coups possible !</strong></p>
         <div class="game-stat">
-          <span>Score : <strong id="p3Score">0</strong> / 25</span>
-          <span>Vies : <strong id="p3Lives">♥♥♥</strong></span>
-          <span>Chrono : <strong id="p3Timer">60s</strong></span>
-          <span>Meilleur : <strong id="p3Best">—</strong></span>
+          <span>Coups : <strong id="memMoves">0</strong></span>
+          <span>Paires : <strong id="memPairs">0</strong> / 8</span>
+          <span>Chrono : <strong id="memTimer">0s</strong></span>
+          <span>Record : <strong id="memBest">—</strong></span>
         </div>
-        <canvas id="petalsCanvas" width="440" height="352" role="img" aria-label="Jeu d'attrapage : la mariée attrape des pétales et bouquets qui tombent du ciel."></canvas>
-        <div class="game-ctrl"><button class="btn btn-gold" onclick="p3start()">Nouvelle partie</button></div>
-        <p class="game-hint">Flèches gauche/droite · Appuyez pour commencer</p>
-        <p class="touch-hint">📱 Touchez l'écran pour téléporter la mariée</p>
+        <div class="mem-board" id="memBoard"></div>
+        <div class="game-ctrl"><button class="btn btn-gold" onclick="memStart()">Nouvelle partie</button></div>
+        <p class="game-hint">💡 Mémorisez les positions pour faire moins de coups</p>
       </div>
 
     </div>
@@ -564,6 +585,11 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
 </footer>
 
 <script>
+/* ── Force scroll-to-top on load (overrides browser scroll restoration & any anchor jumps) ── */
+if('scrollRestoration' in history){history.scrollRestoration='manual';}
+window.addEventListener('load',()=>{window.scrollTo(0,0);});
+window.scrollTo(0,0);
+
 /* ── Reveal ── */
 const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')})},{threshold:.1,rootMargin:'0px 0px -36px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
@@ -629,7 +655,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
 
 /* ── Menu form (cartes cliquables) ── */
 let pCount = 0;
-function addPerson(n='', r='', d=''){
+function addPerson(n='', r='', d='', focusName=true){
   pCount++;
   const id = 'p'+Date.now()+'_'+pCount;
   const div = document.createElement('div');
@@ -700,9 +726,9 @@ function addPerson(n='', r='', d=''){
       if(c.dataset.val === d){ c.click(); }
     });
   }
-  div.querySelector('.pn').focus();
+  if(focusName !== false) div.querySelector('.pn').focus();
 }
-addPerson();
+addPerson('', '', '', false);
 
 document.getElementById('menuForm').addEventListener('submit', function(e) {
   e.preventDefault();
@@ -753,7 +779,7 @@ document.getElementById('menuForm').addEventListener('submit', function(e) {
     document.getElementById('menuOk').style.display = success ? 'block' : 'none';
     document.getElementById('menuErr').style.display = success ? 'none' : 'block';
     if(success){
-      document.getElementById('plist').innerHTML=''; pCount=0; addPerson();
+      document.getElementById('plist').innerHTML=''; pCount=0; addPerson('', '', '', false);
     }
     btn.textContent='Envoyer mes choix ♥'; btn.disabled=false;
     document.body.removeChild(tmpForm);
@@ -1483,1754 +1509,318 @@ drawScene();
 g1Tick();
 
 /* ════════════════════════════════════════════════════════════
-   🏃 JEU 2 — LA COURSE VERS L'HÔTEL
-   Améliorations majeures :
-   • Espacement d'obstacles GARANTI franchissable
-     (calcul de l'arc de saut avant chaque placement)
-   • Coyote time (8 frames après quitter le sol)
-   • Jump buffer (8 frames avant atterrissage)
-   • Hauteur de saut variable (relâcher tôt = saut bas)
-   • Bagues 💍 collectibles, 5 = +1 vie
-   • Ciel dynamique, feuilles qui tombent, village au loin
+   💖 JEU 2 — TAPE LES CŒURS (whack-a-mole-style)
+   Grille 4×3. Les items apparaissent, on tape les bons,
+   on évite les mauvais. Difficulté progressive.
    ════════════════════════════════════════════════════════════ */
-const cv2=document.getElementById('plCanvas');
-const cx2=setupHD(cv2);
-const PW=parseInt(cv2.style.width,10), PH=parseInt(cv2.style.height,10);
-const PGR=PH-58, PTOTAL=4500;
-const PJUMP=-12.5, PGRAV=0.55, MAXJ=2;
-const PB_SCR=2.6;                  // base scroll speed
-const COYOTE_MAX=8, BUF_MAX=8;
-
-/* Pré-générer décor (parallaxe) */
-const p2Trees=[]; const p2Mtns=[]; const p2Houses=[]; const p2Stars=[]; const p2Leaves=[];
-(function(){
-  const cols=['#c4622d','#d4821a','#8b3c22','#c8a248','#a85028','#b8501e','#6b8c3a'];
-  for(let wx=180;wx<PTOTAL+200;wx+=55+Math.random()*70){
-    p2Trees.push({wx,h:44+Math.random()*58,w:17+Math.random()*20,c:cols[Math.floor(Math.random()*cols.length)],near:Math.random()>.5});
-  }
-  for(let wx=0;wx<PTOTAL*.3;wx+=90+Math.random()*70){
-    p2Mtns.push({wx,h:36+Math.random()*58,w:65+Math.random()*60});
-  }
-  // Distant houses near the end (signaling approaching town)
-  for(let wx=PTOTAL*.55;wx<PTOTAL-100;wx+=60+Math.random()*40){
-    p2Houses.push({wx,h:24+Math.random()*22,w:24+Math.random()*16,roof:Math.random()>.5});
-  }
-  for(let i=0;i<32;i++){
-    p2Stars.push({x:Math.random()*PW,y:Math.random()*(PGR*.55),tw:Math.random()*Math.PI*2,sz:.6+Math.random()*1.2});
-  }
-  for(let i=0;i<10;i++){
-    p2Leaves.push({x:Math.random()*PW,y:Math.random()*PGR,vx:-.6-Math.random()*.7,vy:.4+Math.random()*.5,sw:Math.random()*Math.PI*2,c:cols[Math.floor(Math.random()*cols.length)]});
-  }
-})();
-
-// Obstacle types — `dyn` flag = animated; `air` flag = floating (groom can pass under it)
-const OBS_TYPES=[
-  {t:'pot',     w:24, h:36, minGap:140},   // small static
-  {t:'crate',   w:28, h:40, minGap:150},   // medium static (NEW — clear silhouette)
-  {t:'fence',   w:46, h:42, minGap:175},   // wide static
-  {t:'cake',    w:36, h:60, minGap:215},   // tall static
-  {t:'balloon', w:30, h:32, minGap:165, dyn:'bob', air:true},   // bobs up/down — duck under or jump
-  {t:'bird',    w:28, h:18, minGap:175, dyn:'fly', air:true},   // flies horizontally — timing
-];
-
-let p2gr,p2sx,p2state,p2lives,p2fr,p2obs,p2rings,p2parts,p2coyote,p2buf,p2hold;
-let p2bestDist=lsGet('w_best2',0);
-let p2ringsCol=0, p2ringTotal=0;
-let p2RafId=null, p2flash=0;
-let p2wedFrame=0, p2wedConf=[], p2wedHearts=[];   // wedding ceremony state
-let p2boost=false;                                  // speed boost: hold → faster scroll
-let p2speedLines=[];                                // visual speed lines when boosting
-
-function p2makeLevel(){
-  // Rhythm-based level generation with patterns of varying difficulty
-  const obs=[];
-  let wx=460;
-
-  // Pattern types — each adds a chunk of obstacles + advance
-  function pickGround(){
-    // Static ground obstacles only (no air ones)
-    const gnd=OBS_TYPES.filter(o=>!o.air);
-    return gnd[Math.floor(Math.random()*gnd.length)];
-  }
-  function pickAny(){ return OBS_TYPES[Math.floor(Math.random()*OBS_TYPES.length)]; }
-
-  function patternSingle(){
-    const o=Object.assign({},pickAny());
-    o.wx=wx; o.phase=Math.random()*Math.PI*2;
-    obs.push(o);
-    wx += o.minGap + 80 + Math.random()*100;
-  }
-  function patternDouble(){
-    // Two obstacles close — needs DOUBLE jump (or precise single jump over both)
-    const a=Object.assign({},pickGround()); a.wx=wx; obs.push(a);
-    const gap=60 + Math.random()*30;
-    const b=Object.assign({},pickGround()); b.wx=wx+a.w+gap; obs.push(b);
-    wx = b.wx + b.w + 200 + Math.random()*60;
-  }
-  function patternCluster(){
-    // 3 short obstacles in a row — rhythmic single jumps
-    for(let i=0;i<3;i++){
-      const o=Object.assign({},OBS_TYPES[0]); // small pot
-      o.wx=wx; obs.push(o);
-      wx += o.w + 95;
-    }
-    wx += 120;
-  }
-  function patternAir(){
-    // Floating obstacle alone (timing challenge)
-    const air=OBS_TYPES.filter(o=>o.air);
-    const o=Object.assign({},air[Math.floor(Math.random()*air.length)]);
-    o.wx=wx; o.phase=Math.random()*Math.PI*2;
-    obs.push(o);
-    wx += o.minGap + 90 + Math.random()*70;
-  }
-  function patternMix(){
-    // Ground obstacle + air obstacle nearby (jump high and far)
-    const g=Object.assign({},pickGround()); g.wx=wx; obs.push(g);
-    const air=OBS_TYPES.filter(o=>o.air);
-    const a=Object.assign({},air[Math.floor(Math.random()*air.length)]);
-    a.wx=wx+g.w+90; a.phase=Math.random()*Math.PI*2;
-    obs.push(a);
-    wx = a.wx + a.w + 200 + Math.random()*60;
-  }
-
-  // Easy intro: just singles
-  patternSingle(); patternSingle();
-
-  // Main run: weighted mix that gets harder
-  while(wx<PTOTAL-460){
-    const prog=wx/PTOTAL;
-    const r=Math.random();
-    if(prog<.3){
-      // Mostly singles, occasional cluster
-      if(r<.7) patternSingle();
-      else if(r<.9) patternCluster();
-      else patternAir();
-    } else if(prog<.6){
-      // Mid: introduce doubles + air
-      if(r<.45) patternSingle();
-      else if(r<.65) patternDouble();
-      else if(r<.85) patternAir();
-      else patternCluster();
-    } else {
-      // End: harder mixes
-      if(r<.3) patternSingle();
-      else if(r<.55) patternDouble();
-      else if(r<.75) patternMix();
-      else patternAir();
-    }
-  }
-
-  // Rings between obstacles
-  const rings=[];
-  for(let i=-1;i<obs.length;i++){
-    const gapStart= i<0 ? 280 : (obs[i].wx+obs[i].w+30);
-    const gapEnd  = i>=obs.length-1 ? PTOTAL-220 : (obs[i+1].wx-30);
-    const gapW=gapEnd-gapStart;
-    if(gapW<70) continue;
-    if(Math.random()<.25) continue;
-    const pattern=Math.random();
-    if(pattern<.55){
-      const n=3;
-      for(let j=0;j<n;j++){
-        const t=(j+1)/(n+1);
-        const rx=gapStart+gapW*t;
-        const ry=PGR-30-Math.sin(t*Math.PI)*36;
-        rings.push({wx:rx,y:ry,col:false,sp:Math.random()*Math.PI*2});
-      }
-    } else if(pattern<.8){
-      const n=Math.min(3,Math.floor(gapW/35));
-      for(let j=0;j<n;j++){
-        rings.push({wx:gapStart+(j+.5)*(gapW/n),y:PGR-22,col:false,sp:Math.random()*Math.PI*2});
-      }
-    } else {
-      rings.push({wx:gapStart+gapW/2,y:PGR-58-Math.random()*15,col:false,sp:Math.random()*Math.PI*2});
-    }
-  }
-  return {obs,rings};
-}
-
-function p2init(){
-  p2gr={x:82,y:PGR,vy:0,onGr:true,jumps:0,inv:0,fr:0};
-  p2sx=0;p2lives=3;p2fr=0;p2parts=[];
-  p2coyote=0; p2buf=0; p2hold=false;
-  p2ringsCol=0;
-  p2wedFrame=0; p2wedConf=[]; p2wedHearts=[];
-  p2boost=false; p2speedLines=[];
-  const lvl=p2makeLevel();
-  p2obs=lvl.obs; p2rings=lvl.rings;
-  p2ringTotal=p2rings.length;
-  document.getElementById('p2Rings').textContent='0';
-}
-
-function p2pressJump(){
-  // Don't restart during wedding ceremony — let user watch it
-  if(p2state==='wedding') return;
-  p2hold=true;
-  if(p2state!=='playing'){ p2start(); return; }
-  // Try to jump. If can't, buffer it.
-  if(p2gr.onGr || p2coyote>0){
-    p2doJump(true);
-  } else if(p2gr.jumps<MAXJ){
-    p2doJump(false);
-  } else {
-    p2buf=BUF_MAX;
-  }
-}
-function p2releaseJump(){
-  p2hold=false;
-  // Variable jump: if going up, cut it short
-  if(p2gr.vy<-4) p2gr.vy*=.55;
-}
-function p2doJump(fromGround){
-  p2gr.vy = PJUMP * (fromGround ? 1 : .82);
-  p2gr.onGr=false;
-  p2gr.jumps = fromGround ? 1 : (p2gr.jumps+1);
-  p2coyote=0;
-  for(let i=0;i<7;i++) p2parts.push({x:p2gr.x+(Math.random()-.5)*14,y:PGR-4,vx:(Math.random()-.5)*2.6,vy:-Math.random()*2.8,life:1,c:'#c8a248'});
-}
-// Backwards compat (the SAUTER button used to call p2jump)
-function p2jump(){ p2pressJump(); }
-window.p2jump=p2jump;
-window.p2pressJump=p2pressJump;
-window.p2releaseJump=p2releaseJump;
-
-/* ── Boost: hold flèche droite (PC) ou bouton ACCÉLÉRER (mobile) pour foncer ── */
-function p2pressBoost(btn){
-  p2boost = true;
-  if(btn) btn.classList.add('active-state');
-}
-function p2releaseBoost(btn){
-  p2boost = false;
-  if(btn) btn.classList.remove('active-state');
-}
-window.p2pressBoost = p2pressBoost;
-window.p2releaseBoost = p2releaseBoost;
-
-function p2start(){
-  if(p2RafId){clearTimeout(p2RafId);p2RafId=null;}
-  // Stop game 1 too if running
-  if(gState==='playing'){gState='idle';if(tTick){clearInterval(tTick);tTick=null;}}
-  p2init();p2state='playing';p2draw();
-  p2tick();
-}
-window.p2start=p2start;
-
-function p2step(){
-  // Wedding ceremony — animated sequence after reaching hotel
-  if(p2state==='wedding'){
-    p2wedFrame++;
-    p2fr++;   // keep animation cycles going
-
-    // Update wedding particles
-    p2wedConf=updConf(p2wedConf);
-    p2wedHearts=p2wedHearts.filter(h=>h.life>0);
-    p2wedHearts.forEach(h=>{
-      h.x+=h.vx; h.y+=h.vy; h.vy+=.04;
-      if(h.vx) h.vx*=.99;
-      if(h.rotV) h.rot+=h.rotV;
-      h.life-=.012;
-    });
-
-    // Phase 0 (0-90): groom walks from start to under the arch (~80 frames)
-    // Phase 1 (90-150): groom and bride face each other
-    // Phase 2 (150-210): ring exchange (groom raises ring)
-    // Phase 3 (210+): kiss + confetti explosion + bells
-    if(p2wedFrame===150){
-      // Burst confetti when ring is raised
-      p2wedConf=p2wedConf.concat(mkConf(PW,80,-30));
-    }
-    if(p2wedFrame===210){
-      // KISS! Massive celebration
-      p2wedConf=p2wedConf.concat(mkConf(PW,140,-60));
-      // Heart explosion at couple position
-      const cxC=PW*.62, cyC=PGR-30;
-      for(let i=0;i<60;i++){
-        const a=Math.random()*Math.PI*2, sp=2+Math.random()*5;
-        p2wedHearts.push({
-          x:cxC, y:cyC,
-          vx:Math.cos(a)*sp, vy:Math.sin(a)*sp-1.5,
-          life:2.5+Math.random(), sz:11+Math.random()*16,
-          col: Math.random()<.5?'#ff5577':(Math.random()<.5?'#f0a8b8':'#ffd966'),
-          rot:0, rotV:(Math.random()-.5)*.18
-        });
-      }
-    }
-    // Continuous heart rain after kiss
-    if(p2wedFrame>=210 && p2wedFrame<400 && p2wedFrame%5===0){
-      p2wedHearts.push({
-        x:Math.random()*PW, y:-15,
-        vx:(Math.random()-.5)*.5, vy:1+Math.random()*1.5,
-        life:3, sz:8+Math.random()*10,
-        col: Math.random()<.4?'#ff5577':'#f0d99a',
-        rot:0, rotV:(Math.random()-.5)*.12
-      });
-    }
-    // Periodic confetti waves
-    if(p2wedFrame>=210 && p2wedFrame%50===20){
-      p2wedConf=p2wedConf.concat(mkConf(PW,25,-30));
-    }
-    return;
-  }
-
-  if(p2state!=='playing') return;
-  p2fr++;
-  // Speed: gentle ramp, eased near end, slowing as we approach the hotel
-  const prog=p2sx/PTOTAL;
-  let spd=PB_SCR + Math.min(prog,.85)*1.4;
-  // Slow down dramatically in the last 15% so we coast into the hotel
-  if(prog>.85) spd *= Math.max(.25, 1-(prog-.85)/.15*.75);
-  // ⚡ BOOST: hold right arrow / boost button to accelerate
-  if(p2boost && prog<.85) spd *= 1.75;
-  p2sx=Math.min(p2sx+spd,PTOTAL);
-
-  // Spawn / update speed lines for visual boost feedback
-  if(p2boost && prog<.85){
-    if(p2fr%2===0){
-      p2speedLines.push({
-        y: 30 + Math.random()*(PGR-50),
-        x: PW + 10,
-        len: 30 + Math.random()*40,
-        op: .25 + Math.random()*.45,
-        sp: 8 + Math.random()*5
-      });
-    }
-  }
-  for(const sl of p2speedLines){ sl.x -= sl.sp; sl.op *= .96; }
-  p2speedLines = p2speedLines.filter(sl => sl.x > -80 && sl.op > .04);
-  // Trigger wedding when the hotel reaches a nice composition position
-  // (so the bride is visible on screen, not off the left edge).
-  // We want htlSx ≈ PW*0.42, so p2sx ≈ (PTOTAL-200) + 82 - PW*0.42
-  const WEDDING_TRIGGER_SX = PTOTAL - 118 - PW*0.42;
-  if(p2sx>=WEDDING_TRIGGER_SX){
-    // Snap p2sx to the trigger so htlSx is consistent during slide
-    p2sx = WEDDING_TRIGGER_SX;
-    // Trigger wedding ceremony sequence (no more scroll, no obstacles spawn)
-    p2state='wedding';
-    p2wedFrame=0;
-    p2bestDist=PTOTAL;lsSet('w_best2',PTOTAL);document.getElementById('p2Best').textContent='100%';
-    return;
-  }
-  // Physics
-  p2gr.vy+=PGRAV;
-  p2gr.y+=p2gr.vy;
-  const wasInAir=!p2gr.onGr;
-  if(p2gr.y>=PGR){
-    p2gr.y=PGR;p2gr.vy=0;
-    if(wasInAir){
-      // landing dust
-      for(let i=0;i<5;i++) p2parts.push({x:p2gr.x+(Math.random()-.5)*16,y:PGR-2,vx:(Math.random()-.5)*1.8,vy:-Math.random()*1.4,life:.8,c:'rgba(245,234,216,.6)'});
-    }
-    p2gr.onGr=true;p2gr.jumps=0; p2coyote=COYOTE_MAX;
-  } else {
-    p2gr.onGr=false;
-    if(p2coyote>0)p2coyote--;
-  }
-  // Buffered jump
-  if(p2buf>0){
-    p2buf--;
-    if(p2gr.onGr || p2coyote>0){ p2doJump(true); p2buf=0; }
-  }
-  if(p2gr.inv>0) p2gr.inv--;
-  if(p2gr.onGr) p2gr.fr++;
-
-  // Collisions with obstacles
-  if(p2gr.inv===0){
-    for(const ob of p2obs){
-      const osx=ob.wx-p2sx+82;
-      if(osx<-ob.w-5||osx>PW+5) continue;
-      // Compute current Y of obstacle (dynamic for air)
-      let oTopY, oBotY;
-      if(ob.air){
-        // Compute floating position
-        let yC;
-        if(ob.dyn==='bob') yC = PGR-90 + Math.sin(p2fr*.05+ob.phase)*16;
-        else if(ob.dyn==='fly') yC = PGR-70 + Math.sin(p2fr*.07+ob.phase)*22;
-        else yC = PGR-90;
-        oTopY = yC - ob.h/2;
-        oBotY = yC + ob.h/2;
-      } else {
-        oTopY = PGR - ob.h + 4;
-        oBotY = PGR;
-      }
-      const gL=82-9,gR=82+9,gT=p2gr.y-44,gB=p2gr.y-6;
-      const oL=osx+2,oR=osx+ob.w-2;
-      if(gL<oR&&gR>oL&&gT<oBotY&&gB>oTopY){
-        p2lives--;p2gr.inv=85; p2flash=10;
-        for(let i=0;i<10;i++) p2parts.push({x:p2gr.x+(Math.random()-.5)*16,y:p2gr.y-22,vx:(Math.random()-.5)*3.5,vy:-1-Math.random()*2.5,life:1.1,c:'#e8916a'});
-        if(p2lives<=0){p2state='lose';}
-        break;
-      }
-    }
-  }
-  // Ring collection
-  for(const r of p2rings){
-    if(r.col) continue;
-    const rsx=r.wx-p2sx+82;
-    if(rsx<-25) { r.col=true; continue; } // missed
-    if(rsx>PW+25) break;
-    if(Math.hypot(82-rsx, p2gr.y-22-r.y)<22){
-      r.col=true; p2ringsCol++;
-      document.getElementById('p2Rings').textContent=p2ringsCol;
-      if(p2ringsCol%5===0 && p2lives<5){
-        p2lives++;
-        for(let i=0;i<14;i++) p2parts.push({x:rsx,y:r.y,vx:(Math.random()-.5)*3,vy:-1-Math.random()*2,life:1.4,c:'#f0d99a'});
-      } else {
-        for(let i=0;i<6;i++) p2parts.push({x:rsx,y:r.y,vx:(Math.random()-.5)*2,vy:-Math.random()*1.5,life:.9,c:'#c8a248'});
-      }
-    }
-  }
-  // Particles + leaves
-  p2parts=p2parts.filter(p=>p.life>0);
-  p2parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.13;p.life-=.05;});
-  // Falling leaves loop
-  for(const lf of p2Leaves){
-    lf.x+=lf.vx-spd*.4; lf.y+=lf.vy; lf.sw+=.05;
-    if(lf.x<-12){ lf.x=PW+10; lf.y=Math.random()*PGR*.6; }
-    if(lf.y>PGR){ lf.y=-5; lf.x=PW*Math.random(); }
-  }
-  if(p2flash>0)p2flash--;
-}
-
-function p2draw(){
-  cx2.clearRect(0,0,PW,PH);
-  const prog = (p2state==='wedding') ? 1 : Math.min(p2sx/PTOTAL,1);
-  // Sky gradient — shifts as you progress (dusk → golden hour)
-  const skyTop = prog<.5 ? '#12202a' : `rgb(${Math.round(lerp(18,40,(prog-.5)*2))},${Math.round(lerp(32,20,(prog-.5)*2))},${Math.round(lerp(42,30,(prog-.5)*2))})`;
-  const skyMid = prog<.5 ? '#1e2e22' : `rgb(${Math.round(lerp(30,80,(prog-.5)*2))},${Math.round(lerp(46,52,(prog-.5)*2))},${Math.round(lerp(34,38,(prog-.5)*2))})`;
-  const sk=cx2.createLinearGradient(0,0,0,PGR);
-  sk.addColorStop(0,skyTop);sk.addColorStop(.6,skyMid);sk.addColorStop(1,'#2e4232');
-  cx2.fillStyle=sk;cx2.fillRect(0,0,PW,PGR);
-  // Stars (early progress only)
-  if(prog<.6){
-    cx2.fillStyle='#f0d99a';
-    for(const s of p2Stars){
-      const tw=.4+Math.abs(Math.sin(s.tw+p2fr*.04))*.6;
-      cx2.globalAlpha=tw*(1-prog/.6);
-      cx2.beginPath();cx2.arc(s.x,s.y,s.sz,0,Math.PI*2);cx2.fill();
-    }
-    cx2.globalAlpha=1;
-  }
-  // Moon early, sun late
-  if(prog<.45){
-    cx2.fillStyle='rgba(245,234,216,.85)';
-    cx2.beginPath();cx2.arc(PW-58,38,16,0,Math.PI*2);cx2.fill();
-    cx2.fillStyle='rgba(20,32,42,.95)';
-    cx2.beginPath();cx2.arc(PW-52,33,14,0,Math.PI*2);cx2.fill();
-  } else {
-    cx2.save();
-    cx2.fillStyle='rgba(255,210,120,.7)';
-    cx2.beginPath();cx2.arc(PW-58,42,21,0,Math.PI*2);cx2.fill();
-    cx2.fillStyle='rgba(255,210,120,.25)';
-    cx2.beginPath();cx2.arc(PW-58,42,32,0,Math.PI*2);cx2.fill();
-    cx2.restore();
-  }
-  // Subtle grid
-  cx2.strokeStyle='rgba(58,84,68,.16)';cx2.lineWidth=.5;
-  for(let i=0;i*22<=PW;i++){cx2.beginPath();cx2.moveTo(i*22,0);cx2.lineTo(i*22,PH);cx2.stroke();}
-  for(let i=0;i*22<=PH;i++){cx2.beginPath();cx2.moveTo(0,i*22);cx2.lineTo(PW,i*22);cx2.stroke();}
-  // Mountains
-  cx2.fillStyle='rgba(32,50,36,.7)';
-  for(const m of p2Mtns){
-    const sx=m.wx-p2sx*.15;if(sx<-m.w||sx>PW+5)continue;
-    cx2.beginPath();cx2.moveTo(sx,PGR-6);cx2.lineTo(sx+m.w/2,PGR-6-m.h);cx2.lineTo(sx+m.w,PGR-6);cx2.closePath();cx2.fill();
-  }
-  // Distant houses (only late game)
-  if(p2sx>PTOTAL*.4){
-    for(const h of p2Houses){
-      const sx=h.wx-p2sx*.32; if(sx<-h.w-12||sx>PW+5) continue;
-      cx2.fillStyle='rgba(58,72,52,.78)';cx2.fillRect(sx,PGR-6-h.h,h.w,h.h);
-      // roof
-      cx2.fillStyle='rgba(40,52,38,.92)';
-      cx2.beginPath();cx2.moveTo(sx-2,PGR-6-h.h);cx2.lineTo(sx+h.w/2,PGR-6-h.h-h.h*.45);cx2.lineTo(sx+h.w+2,PGR-6-h.h);cx2.closePath();cx2.fill();
-      // tiny lit window
-      cx2.fillStyle='rgba(255,210,120,.4)';cx2.fillRect(sx+h.w*.3,PGR-6-h.h*.55,h.w*.18,h.h*.25);
-    }
-  }
-  // Trees
-  for(const tr of p2Trees){
-    const sx=tr.wx-p2sx*.42;if(sx<-tr.w-12||sx>PW+22)continue;
-    cx2.fillStyle='#3a2218';cx2.fillRect(sx+tr.w*.4,PGR-tr.h*.38,tr.w*.22,tr.h*.38);
-    cx2.globalAlpha=tr.near?.62:.34;cx2.fillStyle=tr.c;
-    cx2.beginPath();cx2.ellipse(sx+tr.w/2,PGR-tr.h*.52,tr.w*.68,tr.h*.52,0,0,Math.PI*2);cx2.fill();
-    cx2.globalAlpha=1;
-  }
-  // Falling leaves (foreground-ish)
-  for(const lf of p2Leaves){
-    cx2.save();cx2.translate(lf.x,lf.y);cx2.rotate(Math.sin(lf.sw)*.6);
-    cx2.fillStyle=lf.c;cx2.globalAlpha=.55;
-    cx2.beginPath();cx2.ellipse(0,0,4,2,0,0,Math.PI*2);cx2.fill();cx2.restore();
-  }
-  cx2.globalAlpha=1;
-  // Hotel position — during wedding, p2sx is frozen at the trigger point
-  // so htlSx is already at a nice composition spot (~PW*0.42)
-  const htlWx=PTOTAL-200;
-  const htlSx = htlWx - p2sx + 82;
-  if(htlSx<PW+200&&htlSx>-120) p2drawHotel(htlSx,PGR);
-  // Ground
-  cx2.fillStyle='#1a2814';cx2.fillRect(0,PGR,PW,PH-PGR);
-  cx2.fillStyle='rgba(200,162,72,.13)';cx2.fillRect(0,PGR,PW,3);
-  // Animated grass tufts
-  cx2.fillStyle='rgba(88,124,68,.42)';
-  const sxOffset=Math.floor(p2sx*.9);
-  for(let i=0;i<28;i++){
-    const gx=((i*38+sxOffset)%(PW+60))-20;
-    cx2.fillRect(gx,PGR-3,3,6);cx2.fillRect(gx+8,PGR-5,2,6);
-  }
-  // Speed lines on ground
-  cx2.strokeStyle='rgba(245,234,216,.10)';cx2.lineWidth=1;
-  const so=Math.floor(p2sx*1.5)%30;
-  for(let i=0;i<6;i++){
-    const lx=((i*60-so)%(PW+30))-30;
-    cx2.beginPath();cx2.moveTo(lx,PH-30);cx2.lineTo(lx+18,PH-30);cx2.stroke();
-  }
-  // Obstacles
-  for(const ob of p2obs){
-    const osx=ob.wx-p2sx+82;
-    if(osx<-ob.w-5||osx>PW+8)continue;
-    if(ob.air){
-      // Compute floating Y center
-      let yC;
-      if(ob.dyn==='bob') yC = PGR-90 + Math.sin(p2fr*.05+(ob.phase||0))*16;
-      else if(ob.dyn==='fly') yC = PGR-70 + Math.sin(p2fr*.07+(ob.phase||0))*22;
-      else yC = PGR-90;
-      p2drawOb(ob.t,osx,yC,ob.w,ob.h,ob);
-    } else {
-      p2drawOb(ob.t,osx,PGR,ob.w,ob.h,ob);
-    }
-  }
-  // Rings
-  for(const r of p2rings){
-    if(r.col) continue;
-    const rsx=r.wx-p2sx+82;
-    if(rsx<-15||rsx>PW+15) continue;
-    p2drawRing(rsx,r.y,r.sp+p2fr*.08);
-  }
-  // Particles
-  p2parts.forEach(p=>{cx2.globalAlpha=Math.min(p.life,1)*.85;cx2.fillStyle=p.c||'#c8a248';cx2.beginPath();cx2.arc(p.x,p.y,2.6,0,Math.PI*2);cx2.fill();});cx2.globalAlpha=1;
-  // Bride at hotel
-  if(p2state==='wedding'){
-    // p2sx is frozen at trigger, so htlSx is stable — bride is at fixed position
-    const brX = htlSx + 60;       // closer to entrance, just inside the arch
-    const brY = PGR;
-    p2drawBride2(brX,brY,-1,p2fr,true);
-
-    // Groom walks in from the left
-    const walkFrames = 75;     // duration of walk-in
-    const wp = Math.min(p2wedFrame/walkFrames, 1);
-    const we = 1 - Math.pow(1-wp, 2);  // ease-out
-    const gEndX = brX - 38;            // stops 38px to the left of bride
-    const gStartX = -30;
-    const gX = lerp(gStartX, gEndX, we);
-    const gWalking = wp < 1;
-    p2drawGroom2(gX, PGR, 1, p2gr.fr+(gWalking?p2wedFrame:0), gWalking);
-
-    // Ring exchange — draw ring lifted up between them
-    if(p2wedFrame>=130){
-      const rt = clamp((p2wedFrame-130)/30, 0, 1);
-      const rx = lerp(gX+10, (gX+brX)/2, rt);
-      const ry = lerp(PGR-30, PGR-50, rt);
-      // Glow
-      const rg=cx2.createRadialGradient(rx,ry,2,rx,ry,28);
-      rg.addColorStop(0,'rgba(255,230,120,.6)');rg.addColorStop(1,'rgba(255,230,120,0)');
-      cx2.fillStyle=rg;cx2.beginPath();cx2.arc(rx,ry,28,0,Math.PI*2);cx2.fill();
-      // Big ring
-      cx2.strokeStyle='#c8a248';cx2.lineWidth=3.5;
-      cx2.beginPath();cx2.ellipse(rx,ry,11,11,0,0,Math.PI*2);cx2.stroke();
-      cx2.strokeStyle='#fff5cc';cx2.lineWidth=1.5;
-      cx2.beginPath();cx2.ellipse(rx,ry-1,10,10,0,0,Math.PI*2);cx2.stroke();
-      // Diamond
-      cx2.fillStyle='#fff';cx2.beginPath();
-      cx2.moveTo(rx,ry-13);cx2.lineTo(rx+4,ry-9);cx2.lineTo(rx,ry-4);cx2.lineTo(rx-4,ry-9);cx2.closePath();cx2.fill();
-      cx2.fillStyle='rgba(255,255,255,.85)';cx2.fillRect(rx-1,ry-12,1.2,3);
-    }
-    // Kiss — draw a heart between them
-    if(p2wedFrame>=210){
-      const cxC = (gX+brX)/2;
-      const cyC = PGR - 38;
-      const sz = 16+Math.sin(p2wedFrame*.15)*2;
-      cx2.save();cx2.translate(cxC,cyC);
-      cx2.fillStyle='#ff5577';
-      cx2.beginPath();
-      cx2.moveTo(0,sz*.65);
-      cx2.bezierCurveTo(-sz,sz*.05, -sz*.85,-sz*.6, 0,-sz*.25);
-      cx2.bezierCurveTo(sz*.85,-sz*.6, sz,sz*.05, 0,sz*.65);
-      cx2.closePath();cx2.fill();
-      cx2.strokeStyle='#fff';cx2.lineWidth=1.5;cx2.stroke();
-      cx2.restore();
-    }
-  } else if(p2sx>PTOTAL-680){
-    const brX=htlSx+45;
-    if(brX<PW+55&&brX>-55) p2drawBride2(brX,PGR,-1,p2fr);
-  }
-  // Groom (only during gameplay; during wedding, drawn above with bride)
-  if(p2state!=='wedding'){
-    if(p2gr.inv===0||Math.floor(p2gr.inv/5)%2===0) p2drawGroom2(82,p2gr.y,1,p2gr.fr);
-  }
-  // Speed lines visual when boosting (drawn after groom so they appear in front)
-  if(p2speedLines.length){
-    cx2.save();
-    cx2.strokeStyle='#fff5cc';cx2.lineCap='round';
-    for(const sl of p2speedLines){
-      cx2.globalAlpha = sl.op;
-      cx2.lineWidth = 2;
-      cx2.beginPath();cx2.moveTo(sl.x, sl.y);cx2.lineTo(sl.x+sl.len, sl.y);cx2.stroke();
-    }
-    cx2.restore();
-  }
-  // Wedding ceremony particles (drawn on top of characters, before HUD)
-  if(p2state==='wedding'){
-    // Confetti
-    drwConf(cx2, p2wedConf);
-    // Hearts
-    cx2.textAlign='center';cx2.textBaseline='middle';
-    p2wedHearts.forEach(h=>{
-      cx2.save();cx2.globalAlpha=Math.max(0,Math.min(h.life,1)*.95);
-      if(h.rot){cx2.translate(h.x,h.y);cx2.rotate(h.rot);cx2.translate(-h.x,-h.y);}
-      cx2.font=h.sz+'px serif';cx2.fillStyle=h.col||'#ddb96a';cx2.fillText('♥',h.x,h.y);
-      cx2.restore();
-    });
-  }
-
-  // Damage flash
-  if(p2flash>0){cx2.save();cx2.globalAlpha=p2flash/10*.4;cx2.fillStyle='#e8916a';cx2.fillRect(0,0,PW,PH);cx2.restore();}
-  // HUD — lives, progress, rings (hidden during wedding ceremony)
-  if(p2state!=='wedding'){
-    cx2.font='16px serif';cx2.textAlign='left';cx2.textBaseline='top';
-    for(let i=0;i<5;i++){cx2.globalAlpha=i<p2lives?1:.18;cx2.fillStyle='#ddb96a';cx2.fillText('♥',10+i*20,8);}cx2.globalAlpha=1;
-    // Progress bar
-    cx2.fillStyle='rgba(200,162,72,.18)';cx2.fillRect(PW/2-72,12,144,5);
-    cx2.fillStyle='#c8a248';cx2.fillRect(PW/2-72,12,144*prog,5);
-    cx2.font='9px "Cinzel",serif';cx2.fillStyle='rgba(200,162,72,.7)';cx2.textAlign='center';cx2.textBaseline='top';
-    cx2.fillText('🏨 '+Math.round(prog*100)+'%',PW/2,20);
-    // Ring counter
-    cx2.font='10px "Cinzel",serif';cx2.fillStyle='rgba(245,234,216,.7)';cx2.textAlign='right';cx2.textBaseline='top';
-    cx2.fillText('💍 '+p2ringsCol+(p2ringTotal?'/'+p2ringTotal:''),PW-10,9);
-    // Combo glow when hitting 5/10/15
-    if(p2ringsCol>0 && p2ringsCol%5===0){
-      const since=(p2fr%30)/30;
-      if(since<.5){
-        cx2.save();cx2.globalAlpha=(1-since*2)*.5;
-        cx2.font='bold 13px "Cinzel",serif';cx2.fillStyle='#f0d99a';cx2.textAlign='center';cx2.fillText('+1 VIE !',PW/2,40);
-        cx2.restore();
-      }
-    }
-  }
-  // Overlays
-  if(p2state==='idle'){
-    p2ov();
-    cx2.font='15px "Cinzel",serif';cx2.fillStyle='#ddb96a';cx2.fillText("La Course vers l'Hôtel",PW/2,PH/2-32);
-    cx2.font='13px "Cormorant Garamond",serif';cx2.fillStyle='rgba(200,162,72,.72)';cx2.fillText("Rejoins la mariée à l'hôtel avant la cérémonie !",PW/2,PH/2-6);
-    cx2.font='11px "Cormorant Garamond",serif';cx2.fillStyle='rgba(200,162,72,.55)';
-    cx2.fillText('💍 5 bagues = +1 vie · Maintien = saut plus haut',PW/2,PH/2+15);
-    cx2.fillText('Espace · bouton · toucher l\'écran',PW/2,PH/2+33);
-  }
-  if(p2state==='wedding'){
-    // Staged dialog: shows different text at different stages of the ceremony
-    const ph = p2wedFrame;
-    if(ph < 90){
-      // Walking in
-      cx2.save();
-      cx2.fillStyle='rgba(20,34,26,.4)';cx2.fillRect(0,PH-50,PW,50);
-      cx2.font='14px "Cormorant Garamond",serif';cx2.fillStyle='#f0d99a';cx2.textAlign='center';cx2.textBaseline='middle';
-      cx2.fillText('La mariée attend à l\'autel… 💍',PW/2,PH-26);
-      cx2.restore();
-    } else if(ph < 150){
-      cx2.save();
-      cx2.fillStyle='rgba(20,34,26,.4)';cx2.fillRect(0,PH-50,PW,50);
-      cx2.font='14px "Cormorant Garamond",serif';cx2.fillStyle='#f0d99a';cx2.textAlign='center';cx2.textBaseline='middle';
-      cx2.fillText('Voulez-vous prendre cette femme… 💕',PW/2,PH-26);
-      cx2.restore();
-    } else if(ph < 210){
-      cx2.save();
-      cx2.fillStyle='rgba(20,34,26,.4)';cx2.fillRect(0,PH-50,PW,50);
-      cx2.font='14px "Cormorant Garamond",serif';cx2.fillStyle='#f0d99a';cx2.textAlign='center';cx2.textBaseline='middle';
-      cx2.fillText('Échange des alliances…  💍',PW/2,PH-26);
-      cx2.restore();
-    } else if(ph < 280){
-      // Big "MARIÉS !" announcement
-      const t=Math.min((ph-210)/30,1);
-      cx2.save();
-      cx2.globalAlpha=t;
-      const pulse=1+Math.sin(ph*.15)*.06;
-      cx2.translate(PW/2,80);cx2.scale(pulse,pulse);
-      cx2.font='bold 30px "Cinzel",serif';cx2.fillStyle='#fff5cc';cx2.textAlign='center';cx2.textBaseline='middle';
-      cx2.strokeStyle='#c8a248';cx2.lineWidth=2;
-      cx2.strokeText('MARIÉS !',0,0);
-      cx2.fillText('MARIÉS !',0,0);
-      cx2.restore();
-    } else {
-      // Final overlay with stats and button hint
-      const t=Math.min((ph-280)/40, 1);
-      cx2.save();
-      cx2.fillStyle='rgba(20,34,26,'+(.78*t)+')';cx2.fillRect(0,0,PW,PH);
-      cx2.globalAlpha=t;cx2.textAlign='center';cx2.textBaseline='middle';
-      cx2.font='bold 24px "Cinzel",serif';cx2.fillStyle='#fff5cc';
-      cx2.fillText('Vive les mariés ! 💕',PW/2,PH/2-44);
-      cx2.font='14px "Cormorant Garamond",serif';cx2.fillStyle='#f0d99a';
-      cx2.fillText('Andréanne & Étienne sont enfin réunis !',PW/2,PH/2-15);
-      cx2.font='12px "Cinzel",serif';cx2.fillStyle='rgba(200,162,72,.85)';
-      cx2.fillText('💍 Bagues : '+p2ringsCol+' · ♥ Vies restantes : '+p2lives,PW/2,PH/2+12);
-      cx2.font='11px "Cormorant Garamond",serif';cx2.fillStyle='rgba(200,162,72,.55)';
-      cx2.fillText('Cliquez « Nouvelle partie » pour rejouer',PW/2,PH/2+38);
-      cx2.restore();
-    }
-  }
-  if(p2state==='lose'){
-    p2ov();
-    cx2.font='bold 17px "Cinzel",serif';cx2.fillStyle='#e8906a';cx2.fillText("Trop d'obstacles… 😅",PW/2,PH/2-26);
-    cx2.font='13px "Cormorant Garamond",serif';cx2.fillStyle='rgba(200,162,72,.72)';cx2.fillText('Distance : '+Math.round(prog*100)+'% · 💍 '+p2ringsCol,PW/2,PH/2);
-    cx2.font='11px "Cormorant Garamond",serif';cx2.fillStyle='rgba(200,162,72,.45)';cx2.fillText('Cliquez « Nouvelle partie » pour réessayer',PW/2,PH/2+25);
-  }
-}
-function p2ov(){cx2.fillStyle='rgba(20,34,26,.86)';cx2.fillRect(0,0,PW,PH);cx2.textAlign='center';cx2.textBaseline='middle';}
-
-function p2drawRing(x,y,sp){
-  cx2.save();cx2.translate(x,y);
-  // Glow
-  const g=cx2.createRadialGradient(0,0,2,0,0,18);
-  g.addColorStop(0,'rgba(240,217,154,.45)');g.addColorStop(1,'rgba(240,217,154,0)');
-  cx2.fillStyle=g;cx2.beginPath();cx2.arc(0,0,18,0,Math.PI*2);cx2.fill();
-  // Ring (3D-ish wobble)
-  const rx=8+Math.cos(sp)*1.5;
-  cx2.strokeStyle='#c8a248';cx2.lineWidth=2.6;
-  cx2.beginPath();cx2.ellipse(0,0,rx,8,0,0,Math.PI*2);cx2.stroke();
-  cx2.strokeStyle='#f0d99a';cx2.lineWidth=1.2;
-  cx2.beginPath();cx2.ellipse(0,-1,rx-1,7,0,0,Math.PI*2);cx2.stroke();
-  // Diamond
-  cx2.fillStyle='#fff';cx2.beginPath();
-  cx2.moveTo(0,-9);cx2.lineTo(2.5,-7);cx2.lineTo(0,-4);cx2.lineTo(-2.5,-7);cx2.closePath();cx2.fill();
-  cx2.fillStyle='rgba(255,255,255,.7)';cx2.fillRect(-.7,-8.5,.6,1.6);
-  cx2.restore();
-}
-
-function p2drawHotel(sx,gy){
-  // Body
-  cx2.fillStyle='#253626';cx2.fillRect(sx,gy-130,90,130);
-  // Stone texture
-  cx2.strokeStyle='rgba(200,162,72,.07)';cx2.lineWidth=.8;
-  for(let r=0;r<6;r++) for(let c=0;c<4;c++){
-    const bx=sx+c*23-(c%2?0:11),by=gy-128+r*23;
-    if(by>gy-128&&by<gy)cx2.strokeRect(bx,by,22,22);
-  }
-  // Roof
-  cx2.fillStyle='#1a2a1e';cx2.beginPath();cx2.moveTo(sx-14,gy-130);cx2.lineTo(sx+45,gy-175);cx2.lineTo(sx+104,gy-130);cx2.closePath();cx2.fill();
-  cx2.strokeStyle='rgba(200,162,72,.42)';cx2.lineWidth=1.5;cx2.beginPath();cx2.moveTo(sx-14,gy-130);cx2.lineTo(sx+45,gy-175);cx2.lineTo(sx+104,gy-130);cx2.stroke();
-  // Flag on top
-  cx2.strokeStyle='#c8a248';cx2.lineWidth=1.5;cx2.beginPath();cx2.moveTo(sx+45,gy-175);cx2.lineTo(sx+45,gy-188);cx2.stroke();
-  cx2.fillStyle='#c8a248';cx2.beginPath();cx2.moveTo(sx+45,gy-188);cx2.lineTo(sx+56,gy-185);cx2.lineTo(sx+45,gy-182);cx2.closePath();cx2.fill();
-  // Entrance arch
-  cx2.fillStyle='#141e14';cx2.fillRect(sx+29,gy-58,32,58);
-  cx2.beginPath();cx2.arc(sx+45,gy-58,16,Math.PI,0);cx2.fill();
-  cx2.strokeStyle='rgba(200,162,72,.5)';cx2.lineWidth=1.5;cx2.beginPath();cx2.arc(sx+45,gy-58,16,Math.PI,0);cx2.stroke();cx2.strokeRect(sx+29,gy-58,32,58);
-  // Wedding arch with flowers
-  cx2.strokeStyle='#4a7a5a';cx2.lineWidth=2.5;
-  cx2.beginPath();cx2.arc(sx+45,gy-58,20,Math.PI,0);cx2.stroke();
-  // Flower clusters on arch
-  ['#c4622d','#d4821a','#f5ead8','#c8a248','#e8916a'].forEach((c,i)=>{
-    const t=i/4, ang=Math.PI+t*Math.PI;
-    const fx=sx+45+Math.cos(ang)*20, fy=gy-58+Math.sin(ang)*20;
-    cx2.fillStyle=c;cx2.beginPath();cx2.arc(fx,fy,3,0,Math.PI*2);cx2.fill();
-  });
-  // Windows
-  [[sx+6,gy-110],[sx+6,gy-82],[sx+64,gy-110],[sx+64,gy-82]].forEach(([wx,wy])=>{
-    cx2.fillStyle='rgba(255,210,100,.32)';cx2.fillRect(wx,wy,19,15);
-    cx2.strokeStyle='rgba(200,162,72,.6)';cx2.lineWidth=1;cx2.strokeRect(wx,wy,19,15);
-    cx2.beginPath();cx2.moveTo(wx+9.5,wy);cx2.lineTo(wx+9.5,wy+15);cx2.stroke();
-    cx2.beginPath();cx2.moveTo(wx,wy+7.5);cx2.lineTo(wx+19,wy+7.5);cx2.stroke();
-  });
-  // Sign
-  cx2.fillStyle='rgba(200,162,72,.22)';cx2.fillRect(sx+12,gy-154,66,16);
-  cx2.strokeStyle='rgba(200,162,72,.52)';cx2.lineWidth=1;cx2.strokeRect(sx+12,gy-154,66,16);
-  cx2.font='bold 8px "Cinzel",serif';cx2.fillStyle='#c8a248';cx2.textAlign='center';cx2.textBaseline='middle';
-  cx2.fillText('MANOIR',sx+45,gy-146);
-  // Bordering lines
-  cx2.strokeStyle='rgba(200,162,72,.32)';cx2.lineWidth=1.5;cx2.strokeRect(sx,gy-130,90,130);
-}
-
-function p2drawOb(type,sx,gy,w,h,ob){
-  // Ground shadow (only for non-air)
-  if(!ob||!ob.air){
-    cx2.fillStyle='rgba(0,0,0,.28)';cx2.beginPath();cx2.ellipse(sx+w/2,gy,w*.55,3.8,0,0,Math.PI*2);cx2.fill();
-  }
-  // Subtle backlight glow so obstacles separate from sky
-  if(!ob||!ob.air){
-    const glow=cx2.createRadialGradient(sx+w/2,gy-h*.5,2,sx+w/2,gy-h*.5,Math.max(w,h)*.9);
-    glow.addColorStop(0,'rgba(255,220,160,.12)');glow.addColorStop(1,'rgba(255,220,160,0)');
-    cx2.fillStyle=glow;cx2.beginPath();cx2.arc(sx+w/2,gy-h*.5,Math.max(w,h)*.9,0,Math.PI*2);cx2.fill();
-  }
-  switch(type){
-    case 'pot':
-      // Brighter terracotta with thick gold rim & dark outline
-      cx2.fillStyle='#c45a28';cx2.beginPath();cx2.moveTo(sx+5,gy-h);cx2.lineTo(sx,gy);cx2.lineTo(sx+w,gy);cx2.lineTo(sx+w-5,gy-h);cx2.closePath();cx2.fill();
-      cx2.strokeStyle='#000';cx2.lineWidth=1.5;cx2.stroke();
-      cx2.fillStyle='#8b3a16';cx2.fillRect(sx+3,gy-h,w-6,6);
-      cx2.strokeRect(sx+3,gy-h,w-6,6);
-      cx2.fillStyle='#4a7a5a';cx2.fillRect(sx+w/2-1.5,gy-h-12,3,12);
-      // Bright flowers
-      cx2.fillStyle='#ff5577';cx2.beginPath();cx2.arc(sx+w/2-3,gy-h-13,5,0,Math.PI*2);cx2.fill();
-      cx2.fillStyle='#ff9933';cx2.beginPath();cx2.arc(sx+w/2+3,gy-h-15,4,0,Math.PI*2);cx2.fill();
-      cx2.fillStyle='#fff';cx2.beginPath();cx2.arc(sx+w/2,gy-h-12,3,0,Math.PI*2);cx2.fill();
-      cx2.fillStyle='#ffcc44';cx2.beginPath();cx2.arc(sx+w/2,gy-h-12,1.6,0,Math.PI*2);cx2.fill();
-      break;
-    case 'crate':
-      // Wooden crate — high contrast
-      cx2.fillStyle='#c88f4a';cx2.fillRect(sx,gy-h,w,h);
-      cx2.strokeStyle='#000';cx2.lineWidth=2;cx2.strokeRect(sx,gy-h,w,h);
-      cx2.strokeStyle='#5a3a18';cx2.lineWidth=1.5;
-      cx2.beginPath();cx2.moveTo(sx,gy-h);cx2.lineTo(sx+w,gy);cx2.stroke();
-      cx2.beginPath();cx2.moveTo(sx+w,gy-h);cx2.lineTo(sx,gy);cx2.stroke();
-      // Bright label
-      cx2.fillStyle='#fff';cx2.fillRect(sx+w*.15,gy-h*.5-3,w*.7,8);
-      cx2.fillStyle='#c8324a';cx2.font='bold 6px sans-serif';cx2.textAlign='center';cx2.textBaseline='middle';
-      cx2.fillText('FRAGILE',sx+w/2,gy-h*.5+1);
-      break;
-    case 'fence':
-      // Wood fence — bright wood + dark outline
-      cx2.fillStyle='#a0703a';cx2.fillRect(sx,gy-h*.32,w,7);cx2.fillRect(sx,gy-h*.64,w,6);
-      cx2.strokeStyle='#000';cx2.lineWidth=1.2;cx2.strokeRect(sx,gy-h*.32,w,7);cx2.strokeRect(sx,gy-h*.64,w,6);
-      cx2.fillStyle='#7a5028';
-      for(let i=0;i<3;i++){
-        const px=sx+i*(w/3)+3;
-        cx2.beginPath();cx2.moveTo(px+w/6,gy-h);cx2.lineTo(px,gy);cx2.lineTo(px+w/3-5,gy);cx2.closePath();
-        cx2.fill();cx2.strokeStyle='#000';cx2.lineWidth=1;cx2.stroke();
-      }
-      break;
-    case 'cake':
-      // Wedding cake — very bright vs dark sky
-      cx2.fillStyle='#fffaf0';cx2.fillRect(sx,gy-h*.38,w,h*.38);
-      cx2.fillStyle='#fff5e8';cx2.fillRect(sx+5,gy-h*.72,w-10,h*.34);
-      cx2.fillStyle='#ffe8d0';cx2.fillRect(sx+10,gy-h,w-20,h*.28);
-      cx2.strokeStyle='#000';cx2.lineWidth=1.5;
-      cx2.strokeRect(sx,gy-h*.38,w,h*.38);
-      cx2.strokeRect(sx+5,gy-h*.72,w-10,h*.34);
-      cx2.strokeRect(sx+10,gy-h,w-20,h*.28);
-      // Pink fondant trim
-      cx2.fillStyle='#ff8aa8';cx2.fillRect(sx,gy-h*.38,w,3);
-      cx2.fillStyle='#ff8aa8';cx2.fillRect(sx+5,gy-h*.72,w-10,3);
-      cx2.fillStyle='#ff8aa8';cx2.fillRect(sx+10,gy-h,w-20,3);
-      // Topper
-      cx2.font='12px serif';cx2.textAlign='center';cx2.textBaseline='middle';cx2.fillText('💕',sx+w/2,gy-h-7);
-      break;
-    case 'balloon': {
-      // Floating heart balloon — bobs vertically. Pos provided by ob.dyn computation
-      // gy here is the center y position passed in
-      const cyB = gy;
-      // String down to ground
-      cx2.strokeStyle='rgba(245,234,216,.6)';cx2.lineWidth=1.2;
-      cx2.beginPath();cx2.moveTo(sx+w/2,cyB+h/2);cx2.lineTo(sx+w/2+Math.sin(p2fr*.04)*4,cyB+h/2+30);cx2.stroke();
-      // Heart-shaped balloon
-      const hx=sx+w/2, hy=cyB-2;
-      cx2.fillStyle='#ff4060';
-      cx2.beginPath();
-      cx2.moveTo(hx,hy+10);
-      cx2.bezierCurveTo(hx-16,hy-2, hx-14,hy-14, hx,hy-6);
-      cx2.bezierCurveTo(hx+14,hy-14, hx+16,hy-2, hx,hy+10);
-      cx2.closePath();cx2.fill();
-      cx2.strokeStyle='#000';cx2.lineWidth=1.5;cx2.stroke();
-      // Highlight
-      cx2.fillStyle='rgba(255,255,255,.45)';
-      cx2.beginPath();cx2.ellipse(hx-4,hy-5,3,5,-.4,0,Math.PI*2);cx2.fill();
-      // Tiny knot
-      cx2.fillStyle='#c0202c';cx2.beginPath();cx2.arc(hx,hy+11,2,0,Math.PI*2);cx2.fill();
-      break;
-    }
-    case 'bird': {
-      // Bird flying — animated wings
-      const cyB=gy;
-      const wingFlap=Math.sin(p2fr*.4)*8;
-      // Body
-      cx2.fillStyle='#3a3a3a';
-      cx2.beginPath();cx2.ellipse(sx+w/2,cyB,w*.4,h*.45,0,0,Math.PI*2);cx2.fill();
-      cx2.strokeStyle='#000';cx2.lineWidth=1.2;cx2.stroke();
-      // Wings (animated)
-      cx2.fillStyle='#5a5a5a';
-      cx2.beginPath();
-      cx2.moveTo(sx+w*.5,cyB);
-      cx2.quadraticCurveTo(sx+w*.5-8,cyB-wingFlap-4,sx+w*.5-13,cyB-wingFlap);
-      cx2.quadraticCurveTo(sx+w*.5-6,cyB,sx+w*.5,cyB);
-      cx2.fill();cx2.stroke();
-      cx2.beginPath();
-      cx2.moveTo(sx+w*.5,cyB);
-      cx2.quadraticCurveTo(sx+w*.5+8,cyB-wingFlap-4,sx+w*.5+13,cyB-wingFlap);
-      cx2.quadraticCurveTo(sx+w*.5+6,cyB,sx+w*.5,cyB);
-      cx2.fill();cx2.stroke();
-      // Beak
-      cx2.fillStyle='#ffaa22';
-      cx2.beginPath();cx2.moveTo(sx,cyB);cx2.lineTo(sx+5,cyB-2);cx2.lineTo(sx+5,cyB+2);cx2.closePath();cx2.fill();
-      cx2.strokeStyle='#000';cx2.lineWidth=1;cx2.stroke();
-      // Eye
-      cx2.fillStyle='#fff';cx2.beginPath();cx2.arc(sx+w*.32,cyB-2,1.8,0,Math.PI*2);cx2.fill();
-      cx2.fillStyle='#000';cx2.beginPath();cx2.arc(sx+w*.32,cyB-2,1,0,Math.PI*2);cx2.fill();
-      break;
-    }
-  }
-}
-
-function p2drawGroom2(x,y,f,fr,forceWalk){
-  cx2.save();cx2.translate(x,y);cx2.scale(f,1);
-  const onGr = forceWalk ? true : p2gr.onGr;
-  const l=onGr?Math.sin(fr*.28)*6:0, a=onGr?Math.sin(fr*.28)*5:0;
-  cx2.fillStyle='rgba(0,0,0,.24)';
-  // Shadow shrinks/distorts when in air
-  const shAlpha=onGr?.24:.12, shScale=onGr?1:.7;
-  cx2.fillStyle='rgba(0,0,0,'+shAlpha+')';
-  cx2.beginPath();cx2.ellipse(0,3,12*shScale,3.5*shScale,0,0,Math.PI*2);cx2.fill();
-  cx2.fillStyle='#1a2030';cx2.fillRect(-9,14,7,15+l);cx2.fillRect(2,14,7,15-l);
-  cx2.fillStyle='#0e1220';cx2.fillRect(-11,28+l,10,5);cx2.fillRect(1,28-l,10,5);
-  cx2.fillStyle='#1a2030';cx2.beginPath();cx2.roundRect(-11,-10,22,26,3);cx2.fill();
-  cx2.fillStyle='#f5ead8';cx2.fillRect(-5,-9,10,13);
-  cx2.fillStyle='#c8a248';cx2.beginPath();cx2.moveTo(-5,-5);cx2.lineTo(0,-2);cx2.lineTo(5,-5);cx2.lineTo(5,-8);cx2.lineTo(0,-5);cx2.lineTo(-5,-8);cx2.closePath();cx2.fill();
-  cx2.fillStyle='#1a2030';cx2.beginPath();cx2.moveTo(-11,-10);cx2.lineTo(-5,-9);cx2.lineTo(-8,5);cx2.closePath();cx2.fill();
-  cx2.beginPath();cx2.moveTo(11,-10);cx2.lineTo(5,-9);cx2.lineTo(8,5);cx2.closePath();cx2.fill();
-  const armRot=onGr?0:-0.45, armY=onGr?0:5;
-  cx2.fillStyle='#1a2030';
-  cx2.save();cx2.translate(-14,-1+a+armY);cx2.rotate(-0.18+armRot);cx2.fillRect(-4,-3,10,6);cx2.restore();
-  cx2.save();cx2.translate(12,-1-a+armY);cx2.rotate(0.18-armRot);cx2.fillRect(-4,-3,10,6);cx2.restore();
-  cx2.fillStyle='#f5c8a0';cx2.beginPath();cx2.arc(-18,-1+a+armY,4,0,Math.PI*2);cx2.fill();
-  cx2.beginPath();cx2.arc(20,-1-a+armY,4,0,Math.PI*2);cx2.fill();
-  cx2.fillStyle='#f5c8a0';cx2.beginPath();cx2.arc(0,-22,10,0,Math.PI*2);cx2.fill();
-  // Hair: only top portion of head (above eye level)
-  cx2.fillStyle='#2c1e10';
-  cx2.save();
-  cx2.beginPath();cx2.rect(-11,-33,22,7);cx2.clip();
-  cx2.beginPath();cx2.arc(0,-22,10,0,Math.PI*2);cx2.fill();
-  cx2.restore();
-  // Front sweep
-  cx2.beginPath();
-  cx2.moveTo(-2,-26);cx2.quadraticCurveTo(3,-29,8,-26);
-  cx2.quadraticCurveTo(4,-24,-2,-25);cx2.closePath();cx2.fill();
-  cx2.fillStyle='#1a1a1a';cx2.beginPath();cx2.arc(-3.5,-23,1.7,0,Math.PI*2);cx2.fill();cx2.beginPath();cx2.arc(3.5,-23,1.7,0,Math.PI*2);cx2.fill();
-  cx2.fillStyle='white';cx2.beginPath();cx2.arc(-2.7,-24,.65,0,Math.PI*2);cx2.fill();cx2.beginPath();cx2.arc(4.3,-24,.65,0,Math.PI*2);cx2.fill();
-  cx2.strokeStyle='#5c3a2a';cx2.lineWidth=1.5;cx2.beginPath();cx2.arc(0,-20,4.2,.12,Math.PI-.12);cx2.stroke();
-  cx2.restore();
-}
-
-function p2drawBride2(x,y,f,fr){
-  cx2.save();cx2.translate(x,y);cx2.scale(f,1);
-  const sw=Math.sin(fr*.22)*2.5, a=Math.sin(fr*.22)*2.5;
-  cx2.fillStyle='rgba(0,0,0,.18)';cx2.beginPath();cx2.ellipse(sw*.3,2,12,3.5,0,0,Math.PI*2);cx2.fill();
-  cx2.fillStyle='#f5ead8';cx2.beginPath();cx2.moveTo(-7,7);cx2.lineTo(-18+sw,30);cx2.lineTo(18+sw,30);cx2.lineTo(7,7);cx2.closePath();cx2.fill();
-  cx2.fillStyle='#ede0cc';cx2.beginPath();cx2.roundRect(-7,-11,14,20,2);cx2.fill();
-  cx2.fillStyle='#c8a248';cx2.fillRect(-7,7,14,2.5);
-  cx2.fillStyle='#f5c8a0';
-  cx2.save();cx2.translate(-16,-4+a);cx2.rotate(-.55);cx2.fillRect(-4,-2.5,10,5);cx2.restore();
-  cx2.save();cx2.translate(14,-4-a);cx2.rotate(.55);cx2.fillRect(-4,-2.5,10,5);cx2.restore();
-  cx2.save();cx2.translate(22,-7-a);cx2.font='12px serif';cx2.textAlign='center';cx2.textBaseline='middle';cx2.fillText('💍',0,0);cx2.restore();
-  cx2.fillStyle='#f5c8a0';cx2.beginPath();cx2.arc(0,-22,9.5,0,Math.PI*2);cx2.fill();
-  // Hair: only top portion of head (above eye level)
-  cx2.fillStyle='#5a3018';
-  cx2.save();
-  cx2.beginPath();cx2.rect(-10.5,-32,21,7);cx2.clip();
-  cx2.beginPath();cx2.arc(0,-22,9.5,0,Math.PI*2);cx2.fill();
-  cx2.restore();
-  // Soft bangs
-  cx2.beginPath();
-  cx2.moveTo(-8,-26);cx2.quadraticCurveTo(0,-28,8,-26);
-  cx2.quadraticCurveTo(4,-25,0,-25.5);
-  cx2.quadraticCurveTo(-4,-25,-8,-26);cx2.closePath();cx2.fill();
-  cx2.strokeStyle='rgba(245,234,216,.55)';cx2.lineWidth=2.2;cx2.beginPath();cx2.moveTo(-1,-31);cx2.quadraticCurveTo(16,-19,17,5);cx2.stroke();
-  cx2.lineWidth=1.3;cx2.beginPath();cx2.moveTo(-1,-31);cx2.quadraticCurveTo(19,-16,20,8);cx2.stroke();
-  cx2.fillStyle='#c8a248';cx2.fillRect(-6,-33,12,2.5);
-  cx2.beginPath();cx2.moveTo(-2,-33);cx2.lineTo(0,-37);cx2.lineTo(2,-33);cx2.closePath();cx2.fill();
-  cx2.beginPath();cx2.moveTo(-6,-33);cx2.lineTo(-5,-36);cx2.lineTo(-2,-33);cx2.closePath();cx2.fill();
-  cx2.beginPath();cx2.moveTo(6,-33);cx2.lineTo(5,-36);cx2.lineTo(2,-33);cx2.closePath();cx2.fill();
-  cx2.fillStyle='#2d1a0e';cx2.beginPath();cx2.arc(-3,-23,1.5,0,Math.PI*2);cx2.fill();cx2.beginPath();cx2.arc(3,-23,1.5,0,Math.PI*2);cx2.fill();
-  cx2.fillStyle='white';cx2.beginPath();cx2.arc(-2.2,-24,.55,0,Math.PI*2);cx2.fill();cx2.beginPath();cx2.arc(3.8,-24,.55,0,Math.PI*2);cx2.fill();
-  cx2.strokeStyle='#8b4a2a';cx2.lineWidth=1.3;cx2.beginPath();cx2.arc(0,-20,3.5,.2,Math.PI-.2);cx2.stroke();
-  cx2.restore();
-}
-
-/* ── Game 2 loop ── */
-function p2tick(){
-  if(canRun()) p2step();
-  p2draw();
-  p2RafId=setTimeout(()=>requestAnimationFrame(p2tick),40);
-}
-
-/* Keyboard for game 2 */
-document.addEventListener('keydown',function(e){
-  if(document.getElementById('gameRun').style.display==='none') return;
-  if(e.code==='Space'||e.key===' '){
-    e.preventDefault();p2pressJump();
-  } else if(e.key==='ArrowRight' || e.key==='d' || e.key==='D'){
-    e.preventDefault();
-    p2pressBoost();
-  }
-});
-document.addEventListener('keyup',function(e){
-  if(document.getElementById('gameRun').style.display==='none') return;
-  if(e.code==='Space'||e.key===' '){
-    e.preventDefault();p2releaseJump();
-  } else if(e.key==='ArrowRight' || e.key==='d' || e.key==='D'){
-    e.preventDefault();
-    p2releaseBoost();
-  }
-});
-/* Tap canvas for game 2 */
-cv2.addEventListener('pointerdown',function(){
-  if(document.getElementById('gameRun').style.display!=='none') p2pressJump();
-});
-cv2.addEventListener('pointerup',function(){ p2releaseJump(); });
-cv2.addEventListener('pointerleave',function(){ p2releaseJump(); });
-
-// Init game 2
-p2init();
-p2state='idle';
-if(p2bestDist>=PTOTAL) document.getElementById('p2Best').textContent='100%';
-else if(p2bestDist>0) document.getElementById('p2Best').textContent=Math.round(p2bestDist/PTOTAL*100)+'%';
-p2draw();
-p2tick();
-
-/* ════════════════════════════════════════════════════════════
-   👰💐 JEU 3 — LA PLUIE DE PÉTALES
-   La mariée se déplace en bas de l'écran et attrape les pétales,
-   bouquets et bagues qui tombent — tout en évitant la pluie et la boue.
-   ════════════════════════════════════════════════════════════ */
-const cv3=document.getElementById('petalsCanvas');
-const cx3=setupHD(cv3);
-const P3W=parseInt(cv3.style.width,10), P3H=parseInt(cv3.style.height,10);
-const P3GR=P3H-50;                  // ground line where bride walks
-const P3_DUR=60;                    // seconds total
-const BR_SPD=4.2;                   // movement speed
-const P3_TARGET=25;                 // score to win — "Couronne d'or"
-const P3_HONOR=15;                  // partial success threshold
-
-// Object types: petal=1pt, bouquet=5pt, ring=time bonus, drop=damage, mud=damage
-// "good" types are the only ones the bride wants to catch
-const P3_TYPES = {
-  petal:   {good:true,  pts:1, sz:14, vmin:1.6, vmax:2.6, weight:60},
-  bouquet: {good:true,  pts:5, sz:22, vmin:1.4, vmax:2.0, weight:14},
-  ring:    {good:true,  pts:0, sz:18, vmin:1.8, vmax:2.4, weight:5,  bonus:'time'},
-  drop:    {good:false, pts:0, sz:14, vmin:2.4, vmax:3.6, weight:14},
-  mud:     {good:false, pts:0, sz:18, vmin:2.0, vmax:3.0, weight:7}
+const WAM_COLS=4, WAM_ROWS=3, WAM_TOTAL=WAM_COLS*WAM_ROWS;
+const WAM_DUR=60, WAM_TARGET=30;
+const WAM_TYPES={
+  heart:   {emoji:'💖', pts:1,  weight:60, good:true},
+  bouquet: {emoji:'💐', pts:5,  weight:13, good:true},
+  ring:    {emoji:'💍', pts:0,  weight:5,  good:true, bonus:'time'},
+  drop:    {emoji:'💧', pts:0,  weight:15, good:false},
+  mud:     {emoji:'🌫️',pts:0,  weight:7,  good:false}
 };
+let wamScore=0, wamLives=3, wamTime=WAM_DUR, wamState='idle';
+let wamSpots=[];
+let wamTickId=null, wamSecId=null;
+let wamLastSpawn=0;
+let wamBest = lsGet('w_bestwam', 0);
+if(wamBest>0) document.getElementById('wamBest').textContent=wamBest;
 
-let p3br = {x:P3W/2, vx:0, f:1, fr:0, hitFr:0};
-let p3objs = [];
-let p3parts = [];
-let p3score = 0;
-let p3lives = 3;
-let p3combo = 0;
-let p3comboFlash = 0;
-let p3time = P3_DUR;
-let p3state = 'idle';
-let p3frame = 0;
-let p3RafId = null;
-let p3TimerId = null;
-let p3Best = lsGet('w_best3', 0);
-let p3touchActive = false;
-let p3touchX = P3W/2;
-let p3keys = {};
-let p3spawnTimer = 30;
-let p3sky = [];
-let p3clouds = [];
-let p3fireworks = [];
-
-// Pre-generate background bits
-(function(){
-  for(let i=0;i<28;i++) p3sky.push({x:Math.random()*P3W, y:Math.random()*(P3GR*.6), tw:Math.random()*Math.PI*2, sz:.5+Math.random()*1.1});
-  for(let i=0;i<6;i++) p3clouds.push({x:Math.random()*P3W, y:30+Math.random()*60, sp:.15+Math.random()*.25, w:50+Math.random()*40});
-})();
-
-if(p3Best>0) document.getElementById('p3Best').textContent=p3Best;
-
-function p3pickType(){
-  let total=0;
-  for(const k in P3_TYPES) total+=P3_TYPES[k].weight;
+function wamBuild(){
+  const b=document.getElementById('wamBoard');
+  b.innerHTML='';
+  wamSpots=[];
+  for(let i=0;i<WAM_TOTAL;i++){
+    const sp=document.createElement('div');
+    sp.className='wam-spot';
+    sp.innerHTML='<div class="wam-item"></div>';
+    sp.addEventListener('click', ()=>wamTap(i));
+    b.appendChild(sp);
+    wamSpots.push({el:sp, itemEl:sp.querySelector('.wam-item'), type:null, hideAt:0});
+  }
+}
+function wamPickType(){
+  let total=0; for(const k in WAM_TYPES) total+=WAM_TYPES[k].weight;
   let r=Math.random()*total;
-  for(const k in P3_TYPES){
-    r-=P3_TYPES[k].weight;
-    if(r<=0) return k;
+  for(const k in WAM_TYPES){ r-=WAM_TYPES[k].weight; if(r<=0) return k; }
+  return 'heart';
+}
+function wamSpawn(){
+  const empty=[];
+  for(let i=0;i<wamSpots.length;i++) if(!wamSpots[i].type) empty.push(i);
+  if(!empty.length) return;
+  const idx = empty[Math.floor(Math.random()*empty.length)];
+  const sp = wamSpots[idx];
+  const elapsed = WAM_DUR - wamTime;
+  const ramp = clamp(elapsed/WAM_DUR, 0, 1);
+  const life = lerp(1100, 600, ramp);
+  const type = wamPickType();
+  sp.type = type;
+  sp.itemEl.textContent = WAM_TYPES[type].emoji;
+  sp.el.classList.remove('fading','tapped');
+  // force reflow then add active for clean animation
+  void sp.el.offsetWidth;
+  sp.el.classList.add('active');
+  sp.hideAt = Date.now() + life;
+}
+function wamHideSpot(idx){
+  const sp = wamSpots[idx];
+  sp.type=null;
+  sp.el.classList.remove('active','fading','tapped');
+  sp.itemEl.textContent='';
+}
+function wamPopup(spotEl, text, bad){
+  const p=document.createElement('div');
+  p.className='wam-popup'+(bad?' bad':'');
+  p.textContent=text;
+  spotEl.appendChild(p);
+  setTimeout(()=>{ if(p.parentNode) p.remove(); }, 800);
+}
+function wamTap(idx){
+  if(wamState!=='playing'){
+    if(wamState==='done'){ wamClearOverlay(); }
+    wamStart();
+    return;
   }
-  return 'petal';
-}
-
-function p3spawn(){
-  // Difficulty ramps with elapsed time: more dangerous types late
-  const elapsed = P3_DUR - p3time;
-  const dangerBoost = clamp(elapsed/P3_DUR, 0, 1);  // 0→1 over duration
-  let type = p3pickType();
-  // Late game: 30% chance to convert good→bad to keep tension high
-  if(dangerBoost>.5 && P3_TYPES[type].good && Math.random()<dangerBoost*.3){
-    type = Math.random()<.6 ? 'drop' : 'mud';
+  const sp = wamSpots[idx];
+  if(!sp.type) return;
+  const T = WAM_TYPES[sp.type];
+  if(T.good){
+    if(T.bonus==='time'){
+      wamTime = Math.min(wamTime+5, WAM_DUR+5);
+      document.getElementById('wamTimer').textContent=wamTime+'s';
+      wamPopup(sp.el, '+5s');
+    } else {
+      wamScore += T.pts;
+      document.getElementById('wamScore').textContent=wamScore;
+      if(T.pts>0) wamPopup(sp.el, '+'+T.pts);
+    }
+  } else {
+    wamLives--;
+    wamUpdateLives();
+    wamPopup(sp.el, '−1 vie', true);
+    if(wamLives<=0){ sp.el.classList.add('tapped'); setTimeout(()=>wamFinish(false),300); return; }
   }
-  const T = P3_TYPES[type];
-  const speedMult = 1 + dangerBoost*.4;     // ~40% faster by end
-  p3objs.push({
-    type, x: 18+Math.random()*(P3W-36), y: -20,
-    vy: lerp(T.vmin, T.vmax, Math.random())*speedMult,
-    vx: (Math.random()-.5)*.4,
-    rot: Math.random()*Math.PI*2,
-    rotV: (Math.random()-.5)*.08,
-    sw: Math.random()*Math.PI*2,
-    sz: T.sz
-  });
+  sp.el.classList.add('tapped');
+  setTimeout(()=>wamHideSpot(idx), 200);
+  if(wamScore >= WAM_TARGET){ setTimeout(()=>wamFinish(true), 250); }
 }
-
-function p3init(){
-  p3br = {x:P3W/2, vx:0, f:1, fr:0, hitFr:0};
-  p3objs = []; p3parts = []; p3fireworks = [];
-  p3score = 0; p3lives = 3; p3combo = 0; p3comboFlash = 0;
-  p3time = P3_DUR; p3frame = 0; p3spawnTimer = 30;
-  document.getElementById('p3Score').textContent='0';
-  document.getElementById('p3Timer').textContent=P3_DUR+'s';
-  p3updateLivesDisplay();
+function wamUpdateLives(){
+  const el=document.getElementById('wamLives');
+  el.textContent='♥'.repeat(Math.max(0,wamLives))+'♡'.repeat(Math.max(0,3-wamLives));
+  el.style.color = wamLives>=2?'var(--gold2)':(wamLives===1?'#e8916a':'#b8562a');
 }
-function p3updateLivesDisplay(){
-  const el = document.getElementById('p3Lives');
-  if(!el) return;
-  el.textContent = '♥'.repeat(p3lives) + '♡'.repeat(Math.max(0, 3-p3lives));
-  el.style.color = p3lives>=2 ? 'var(--gold2)' : (p3lives===1 ? '#e8916a' : '#b8562a');
+function wamClearOverlay(){
+  const ov = document.querySelector('#wamBoard .game-overlay');
+  if(ov) ov.remove();
 }
-
-function p3start(){
-  if(p3RafId){clearTimeout(p3RafId);p3RafId=null;}
-  if(p3TimerId){clearInterval(p3TimerId);p3TimerId=null;}
-  // Pause other games
+function wamStart(){
+  wamClearOverlay();
+  if(wamTickId){clearInterval(wamTickId);wamTickId=null;}
+  if(wamSecId){clearInterval(wamSecId);wamSecId=null;}
+  // Pause others
   if(gState==='playing'){gState='idle';if(tTick){clearInterval(tTick);tTick=null;}}
-  if(p2state==='playing'){p2state='idle';}
-  p3init();
-  p3state='playing';
-  p3draw();
-  p3tick();
-  p3TimerId = setInterval(()=>{
+  if(typeof memState!=='undefined' && memState==='playing') memPause();
+
+  wamScore=0; wamLives=3; wamTime=WAM_DUR;
+  document.getElementById('wamScore').textContent=0;
+  document.getElementById('wamTimer').textContent=WAM_DUR+'s';
+  wamUpdateLives();
+  for(let i=0;i<wamSpots.length;i++) wamHideSpot(i);
+  wamState='playing';
+  wamLastSpawn = Date.now() - 400;  // first spawn quickly
+
+  wamTickId = setInterval(()=>{
+    if(wamState!=='playing') return;
     if(!canRun()) return;
-    if(p3state!=='playing') return;
-    p3time--;
-    document.getElementById('p3Timer').textContent=p3time+'s';
-    if(p3time<=0){ p3finish(); }
+    if(document.getElementById('gameWam').style.display==='none'){ wamPause(); return; }
+    const now = Date.now();
+    // Hide expired / fade soon-to-expire
+    for(let i=0;i<wamSpots.length;i++){
+      const sp = wamSpots[i];
+      if(sp.type){
+        if(now>=sp.hideAt) wamHideSpot(i);
+        else if(now>=sp.hideAt-280) sp.el.classList.add('fading');
+      }
+    }
+    // Spawn
+    const elapsed = WAM_DUR-wamTime;
+    const ramp = clamp(elapsed/WAM_DUR, 0, 1);
+    const spawnEvery = lerp(750, 320, ramp);
+    if(now-wamLastSpawn >= spawnEvery){
+      const burst = (ramp>.55 && Math.random()<.4) ? 2 : 1;
+      for(let i=0;i<burst;i++) wamSpawn();
+      wamLastSpawn = now;
+    }
+  }, 60);
+
+  wamSecId = setInterval(()=>{
+    if(wamState!=='playing') return;
+    if(!canRun()) return;
+    wamTime--;
+    document.getElementById('wamTimer').textContent=wamTime+'s';
+    if(wamTime<=0) wamFinish(wamScore>=WAM_TARGET);
   }, 1000);
 }
-window.p3start=p3start;
-
-function p3finish(){
-  p3state='ended';
-  if(p3TimerId){clearInterval(p3TimerId);p3TimerId=null;}
-  const newRecord = p3score>p3Best;
-  if(newRecord){
-    p3Best=p3score;
-    lsSet('w_best3',p3Best);
-    document.getElementById('p3Best').textContent=p3Best;
-  }
-  // Celebration fireworks if reached target OR new best
-  if(p3score >= P3_TARGET || newRecord){
-    for(let i=0;i<5;i++){
-      p3fireworks.push({
-        x: 60+Math.random()*(P3W-120),
-        y: 60+Math.random()*100,
-        delay: Math.random()*60,
-        triggered:false
-      });
-    }
-  }
+function wamPause(){
+  wamState='idle';
+  if(wamTickId){clearInterval(wamTickId);wamTickId=null;}
+  if(wamSecId){clearInterval(wamSecId);wamSecId=null;}
+  // Hide remaining items so the board looks clean when re-opening
+  for(let i=0;i<wamSpots.length;i++) wamHideSpot(i);
 }
+function wamFinish(won){
+  wamState='done';
+  if(wamTickId){clearInterval(wamTickId);wamTickId=null;}
+  if(wamSecId){clearInterval(wamSecId);wamSecId=null;}
+  const isNewBest = wamScore>wamBest;
+  if(isNewBest){
+    wamBest=wamScore;
+    lsSet('w_bestwam', wamBest);
+    document.getElementById('wamBest').textContent=wamBest;
+  }
+  const b = document.getElementById('wamBoard');
+  const ov = document.createElement('div');
+  ov.className='game-overlay';
+  let title;
+  if(won) title = '✨ Bravo ! ✨';
+  else if(wamLives<=0) title = '💔 Trois gouttes...';
+  else title = '⏰ Temps écoulé';
+  const subParts = [`Score : ${wamScore} / ${WAM_TARGET}`];
+  if(isNewBest && wamScore>0) subParts.push('🏆 Nouveau record !');
+  ov.innerHTML = `<div class="game-overlay-title">${title}</div><div class="game-overlay-sub">${subParts.join(' · ')}</div><button class="btn btn-gold" style="font-size:10px;padding:8px 18px" onclick="wamStart()">Rejouer</button>`;
+  b.appendChild(ov);
+}
+window.wamStart=wamStart;
+wamBuild();
 
-function p3step(){
-  if(p3state==='ended'){
-    // Animate fireworks during end celebration
-    p3frame++;
-    p3parts = p3parts.filter(p=>p.life>0);
-    p3parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.05;p.vx*=.99;p.life-=.018;});
-    p3fireworks.forEach(fw=>{
-      if(!fw.triggered && p3frame>fw.delay){
-        fw.triggered=true;
-        const cols=['#ff5577','#f0d99a','#fff5cc','#c8a248','#ff8aa8'];
-        const c = cols[Math.floor(Math.random()*cols.length)];
-        for(let i=0;i<24;i++){
-          const a=Math.random()*Math.PI*2, sp=2+Math.random()*3;
-          p3parts.push({
-            x:fw.x, y:fw.y,
-            vx:Math.cos(a)*sp, vy:Math.sin(a)*sp,
-            life:1.4+Math.random()*.5,
-            sz:2+Math.random()*1.5,
-            col:c
-          });
-        }
-      }
-    });
+/* ════════════════════════════════════════════════════════════
+   💍 JEU 3 — MÉMOIRE DE MARIAGE
+   Grille 4×4 = 8 paires. Trouvez toutes les paires
+   en le moins de coups possible.
+   ════════════════════════════════════════════════════════════ */
+const MEM_SYMBOLS = ['💍','💐','🤵','👰','💕','🍰','🥂','🕊️'];
+let memState='idle', memMoves=0, memPairs=0, memSec=0, memSecId=null;
+let memFlipped=[], memLock=false, memBuilt=false;
+let memBest = lsGet('w_bestmem', 0);
+if(memBest>0) document.getElementById('memBest').textContent=memBest+' coups';
+
+function memShuffle(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+function memBuild(){
+  const b = document.getElementById('memBoard');
+  b.innerHTML='';
+  memFlipped=[]; memLock=false;
+  const deck = memShuffle([...MEM_SYMBOLS, ...MEM_SYMBOLS]);
+  deck.forEach((sym, i)=>{
+    const c = document.createElement('div');
+    c.className='mem-card';
+    c.dataset.sym=sym;
+    c.innerHTML = '<div class="mem-card-inner"><div class="mem-face mem-back"><span class="mem-back-mono">A&É</span></div><div class="mem-face mem-front">'+sym+'</div></div>';
+    c.addEventListener('click', ()=>memFlip(c));
+    b.appendChild(c);
+  });
+  memBuilt=true;
+}
+function memClearOverlay(){
+  const ov = document.querySelector('#memBoard .game-overlay');
+  if(ov) ov.remove();
+}
+function memFlip(card){
+  if(memState!=='playing'){
+    // Starting fresh — let the user explicitly press Nouvelle partie
+    memStart();
     return;
   }
-  if(p3state!=='playing') return;
-  p3frame++;
-
-  // Bride movement
-  let mx = 0;
-  let bridgeTouchHandled = false;
-  if(p3touchActive){
-    // Teleport-style: bride snaps quickly toward finger position
-    const targX = clamp(p3touchX, 24, P3W-24);
-    const oldX = p3br.x;
-    p3br.x = lerp(p3br.x, targX, .55);
-    if(Math.abs(p3br.x - oldX) > .5){
-      p3br.f = (p3br.x > oldX) ? 1 : -1;
-      p3br.fr++;
-    }
-    bridgeTouchHandled = true;
-  }
-  if(!bridgeTouchHandled){
-    if(p3keys['ArrowLeft']||p3keys['a']||p3keys['A']) mx=-1;
-    else if(p3keys['ArrowRight']||p3keys['d']||p3keys['D']) mx=1;
-    if(mx!==0){p3br.f = mx>0 ? 1 : -1; p3br.fr++;}
-    p3br.x = clamp(p3br.x + mx*BR_SPD, 24, P3W-24);
-  }
-
-  // Spawn objects (rate ramps with time)
-  const elapsed = P3_DUR - p3time;
-  const baseInterval = Math.max(14, 32 - elapsed*.32);
-  p3spawnTimer--;
-  if(p3spawnTimer<=0){
-    p3spawn();
-    p3spawnTimer = baseInterval + Math.random()*8;
-  }
-  // Sometimes spawn a small burst of petals (visually nice)
-  if(elapsed>10 && Math.random()<.008){
-    for(let i=0;i<4;i++){
-      p3objs.push({
-        type:'petal', x: 18+Math.random()*(P3W-36), y: -20-i*15,
-        vy: lerp(1.8,2.6,Math.random()), vx:(Math.random()-.5)*.5,
-        rot:Math.random()*Math.PI*2, rotV:(Math.random()-.5)*.08,
-        sw:Math.random()*Math.PI*2, sz:14
-      });
-    }
-  }
-
-  // Update objects
-  for(const o of p3objs){
-    o.y += o.vy;
-    o.x += o.vx;
-    o.rot += o.rotV;
-    o.sw += .07;
-    // Sway for petals
-    if(o.type==='petal') o.x += Math.sin(o.sw)*.4;
-  }
-  // Catch detection (bride hitbox: oval around her body, basket-like at lap level)
-  const catchY = P3GR - 20;     // height where catches register (chest level)
-  const catchR = 26;
-  for(const o of p3objs){
-    if(o.caught||o.missed) continue;
-    if(o.y > catchY-catchR && o.y < catchY+catchR){
-      const dx = Math.abs(o.x - p3br.x);
-      if(dx < catchR){
-        o.caught = true;
-        const T = P3_TYPES[o.type];
-        if(T.good){
-          if(o.type==='ring'){
-            // Time bonus
-            p3time = Math.min(P3_DUR, p3time+5);
-            document.getElementById('p3Timer').textContent=p3time+'s';
-            // Burst gold particles
-            for(let i=0;i<14;i++){
-              const a=Math.random()*Math.PI*2;
-              p3parts.push({x:o.x,y:o.y,vx:Math.cos(a)*2.5,vy:Math.sin(a)*2.5-1,life:1.2,sz:2,col:'#f0d99a'});
-            }
-            p3comboFlash = 35;
-          } else {
-            p3combo++;
-            const comboBonus = p3combo>=10?3:(p3combo>=5?2:1);
-            const pts = T.pts * comboBonus;
-            p3score += pts;
-            document.getElementById('p3Score').textContent=p3score;
-            // Particles
-            const col = o.type==='bouquet'?'#ff5577':'#f0a8b8';
-            for(let i=0;i<8;i++){
-              const a=Math.random()*Math.PI*2;
-              p3parts.push({x:o.x,y:o.y,vx:Math.cos(a)*1.8,vy:Math.sin(a)*1.8-1,life:1,sz:2,col});
-            }
-            if(p3combo>=5 && p3combo%5===0) p3comboFlash = 30;
-          }
-        } else {
-          // Bad catch: lose a life and break combo
-          p3lives--;
-          p3combo = 0;
-          p3br.hitFr = 25;
-          p3updateLivesDisplay();
-          // Splash
-          const col = o.type==='drop'?'#5a8caa':'#5a4030';
-          for(let i=0;i<12;i++){
-            p3parts.push({x:o.x,y:o.y+5,vx:(Math.random()-.5)*3,vy:-Math.random()*2.5,life:1,sz:2.5,col});
-          }
-          if(p3lives<=0) p3finish();
-        }
-      }
-    }
-    if(o.y > P3H+20){
-      o.missed = true;
-      // Missing a good item also breaks combo (only for petal/bouquet)
-      if(P3_TYPES[o.type].good && o.type!=='ring') p3combo = 0;
-    }
-  }
-  p3objs = p3objs.filter(o => !o.caught && !o.missed);
-  p3parts = p3parts.filter(p=>p.life>0);
-  p3parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.07;p.vx*=.99;p.life-=.025;});
-  if(p3comboFlash>0) p3comboFlash--;
-  if(p3br.hitFr>0) p3br.hitFr--;
-  // Move clouds
-  p3clouds.forEach(c=>{c.x-=c.sp;if(c.x<-c.w-20){c.x=P3W+20;c.y=30+Math.random()*60;}});
-}
-
-function p3draw(){
-  cx3.clearRect(0,0,P3W,P3H);
-  // Sky (soft pink/purple)
-  const sk=cx3.createLinearGradient(0,0,0,P3GR);
-  sk.addColorStop(0,'#3d2840'); sk.addColorStop(.55,'#6e3d52'); sk.addColorStop(1,'#a45d6e');
-  cx3.fillStyle=sk; cx3.fillRect(0,0,P3W,P3GR);
-  // Twinkling stars
-  cx3.fillStyle='#fff5cc';
-  for(const s of p3sky){
-    const tw=.4+Math.abs(Math.sin(s.tw+p3frame*.04))*.6;
-    cx3.globalAlpha=tw*.7;
-    cx3.beginPath();cx3.arc(s.x,s.y,s.sz,0,Math.PI*2);cx3.fill();
-  }
-  cx3.globalAlpha=1;
-  // Soft moon
-  cx3.save();
-  cx3.fillStyle='rgba(255,240,200,.9)';
-  cx3.beginPath();cx3.arc(P3W-58,52,17,0,Math.PI*2);cx3.fill();
-  cx3.fillStyle='rgba(80,50,60,.85)';
-  cx3.beginPath();cx3.arc(P3W-52,46,15,0,Math.PI*2);cx3.fill();
-  cx3.restore();
-  // Clouds
-  cx3.fillStyle='rgba(245,234,216,.18)';
-  for(const c of p3clouds){
-    cx3.beginPath();
-    cx3.ellipse(c.x,c.y,c.w*.6,c.w*.22,0,0,Math.PI*2);
-    cx3.ellipse(c.x-c.w*.3,c.y+c.w*.05,c.w*.4,c.w*.18,0,0,Math.PI*2);
-    cx3.ellipse(c.x+c.w*.3,c.y+c.w*.04,c.w*.4,c.w*.18,0,0,Math.PI*2);
-    cx3.fill();
-  }
-  // Distant garden silhouette (bushes)
-  cx3.fillStyle='rgba(40,32,38,.7)';
-  for(let i=0;i<8;i++){
-    const bx = i*60+10, by=P3GR-8, bw=45+Math.sin(i*1.3)*8;
-    cx3.beginPath();cx3.ellipse(bx,by,bw,12,0,0,Math.PI*2);cx3.fill();
-  }
-  // Ground (path)
-  cx3.fillStyle='#3a2238'; cx3.fillRect(0,P3GR,P3W,P3H-P3GR);
-  cx3.fillStyle='rgba(200,162,72,.16)';cx3.fillRect(0,P3GR,P3W,2);
-  // Petals strewn on ground (decoration)
-  cx3.fillStyle='rgba(255,150,170,.4)';
-  for(let i=0;i<14;i++){
-    const px = (i*32 + (p3frame*.05)%32) % P3W;
-    cx3.beginPath();cx3.ellipse(px, P3GR+(i%2===0?5:11), 3, 1.5, i*.3, 0, Math.PI*2);cx3.fill();
-  }
-  // Falling fireworks particles (during end celebration)
-  if(p3state==='ended'){
-    p3parts.forEach(p=>{
-      cx3.save();
-      cx3.globalAlpha=Math.min(p.life,1);
-      cx3.fillStyle=p.col;
-      cx3.beginPath();cx3.arc(p.x,p.y,p.sz,0,Math.PI*2);cx3.fill();
-      cx3.restore();
-    });
-    cx3.globalAlpha=1;
-  }
-  // Falling objects
-  for(const o of p3objs) p3drawObj(o);
-  // Bride
-  p3drawBride(p3br.x, P3GR, p3br.f, p3br.fr, p3br.hitFr>0);
-  // Catch zone hint (subtle glow during play, only first 4 seconds)
-  if(p3state==='playing' && p3frame<140){
-    cx3.save();
-    cx3.globalAlpha=Math.max(0,(140-p3frame)/140)*.4;
-    const g=cx3.createRadialGradient(p3br.x,P3GR-20,5,p3br.x,P3GR-20,40);
-    g.addColorStop(0,'rgba(255,210,200,.5)'); g.addColorStop(1,'rgba(255,210,200,0)');
-    cx3.fillStyle=g; cx3.beginPath();cx3.arc(p3br.x,P3GR-20,40,0,Math.PI*2);cx3.fill();
-    cx3.restore();
-  }
-  // Particles (during play)
-  if(p3state==='playing'){
-    p3parts.forEach(p=>{
-      cx3.save();
-      cx3.globalAlpha=Math.min(p.life,1);
-      cx3.fillStyle=p.col;
-      cx3.beginPath();cx3.arc(p.x,p.y,p.sz,0,Math.PI*2);cx3.fill();
-      cx3.restore();
-    });
-    cx3.globalAlpha=1;
-  }
-  // HUD: lives & combo
-  if(p3state==='playing'){
-    cx3.font='15px serif';cx3.textAlign='left';cx3.textBaseline='top';
-    for(let i=0;i<3;i++){cx3.globalAlpha=i<p3lives?1:.18;cx3.fillStyle='#ffaacc';cx3.fillText('♥',10+i*18,8);}cx3.globalAlpha=1;
-    if(p3combo>=3){
-      cx3.font='bold 11px "Cinzel",serif';
-      const flashing = p3comboFlash>0;
-      cx3.fillStyle=flashing?'#fff5cc':'#f0d99a';
-      cx3.textAlign='center';cx3.textBaseline='top';
-      const mult = p3combo>=10?'×3':(p3combo>=5?'×2':'×1');
-      cx3.fillText('COMBO '+p3combo+' '+mult, P3W/2, 9);
-    }
-    // Time bonus flash
-    if(p3comboFlash>0 && p3combo===0){
-      // Indicates ring bonus (combo unchanged)
-      cx3.save();
-      cx3.globalAlpha=p3comboFlash/35;
-      cx3.font='bold 14px "Cinzel",serif';cx3.fillStyle='#f0d99a';cx3.textAlign='center';
-      cx3.fillText('+5s ⏱', P3W/2, 28);
-      cx3.restore();
-    }
-  }
-  // Overlays
-  if(p3state==='idle'){
-    p3ov();
-    cx3.font='15px "Cinzel",serif';cx3.fillStyle='#ddb96a';cx3.fillText('La Pluie de Pétales',P3W/2,P3H/2-52);
-    cx3.font='13px "Cormorant Garamond",serif';cx3.fillStyle='rgba(245,234,216,.85)';
-    cx3.fillText('Objectif : '+P3_TARGET+' points en 60 secondes 🏆',P3W/2,P3H/2-26);
-    cx3.font='11px "Cormorant Garamond",serif';cx3.fillStyle='rgba(245,234,216,.62)';
-    cx3.fillText('🌹 1pt · 💐 5pts · 💍 +5s · Combo ×2 (5) ×3 (10)',P3W/2,P3H/2-2);
-    cx3.fillStyle='#e89aaa';
-    cx3.fillText('⚠️ 3 vies — évitez 💧 gouttes et 🌫️ boue !',P3W/2,P3H/2+18);
-    if(p3Best>0){
-      cx3.font='10.5px "Cinzel",serif';cx3.fillStyle='rgba(200,162,72,.7)';
-      cx3.fillText('Meilleur : '+p3Best+' pts',P3W/2,P3H/2+42);
-    }
-  }
-  if(p3state==='ended'){
-    p3ov();
-    const reachedTarget = p3score >= P3_TARGET;
-    const survived = p3lives>0;
-    let title, titleColor, subtitle;
-    if(!survived){
-      title = 'La robe est ruinée ! 😢';
-      titleColor = '#e89aaa';
-      subtitle = 'Trop d\'éclaboussures…';
-    } else if(reachedTarget){
-      title = '🏆 Couronne d\'or ! 💕';
-      titleColor = '#fff5cc';
-      subtitle = 'La mariée est radieuse !';
-    } else if(p3score >= P3_HONOR){
-      title = 'Bien joué ! 🌹';
-      titleColor = '#f0d99a';
-      subtitle = 'Encore un peu — il vous fallait '+P3_TARGET+' pts.';
+  if(memLock) return;
+  if(card.classList.contains('flipped') || card.classList.contains('matched')) return;
+  card.classList.add('flipped');
+  memFlipped.push(card);
+  if(memFlipped.length===2){
+    memMoves++;
+    document.getElementById('memMoves').textContent=memMoves;
+    const [a,b] = memFlipped;
+    if(a.dataset.sym === b.dataset.sym){
+      a.classList.add('matched'); b.classList.add('matched');
+      memFlipped = [];
+      memPairs++;
+      document.getElementById('memPairs').textContent=memPairs;
+      if(memPairs >= MEM_SYMBOLS.length) setTimeout(memFinish, 600);
     } else {
-      title = 'Réessayez ! 🌸';
-      titleColor = '#e89aaa';
-      subtitle = 'Visez '+P3_TARGET+' points pour gagner.';
+      memLock = true;
+      setTimeout(()=>{
+        a.classList.remove('flipped');
+        b.classList.remove('flipped');
+        memFlipped=[];
+        memLock=false;
+      }, 900);
     }
-    cx3.font='bold 19px "Cinzel",serif';cx3.fillStyle=titleColor;
-    cx3.fillText(title, P3W/2, P3H/2-38);
-    cx3.font='13px "Cormorant Garamond",serif';cx3.fillStyle='rgba(245,234,216,.78)';
-    cx3.fillText(subtitle, P3W/2, P3H/2-16);
-    cx3.font='15px "Cormorant Garamond",serif';cx3.fillStyle='#f5ead8';
-    cx3.fillText('Score : '+p3score+' / '+P3_TARGET+' pts', P3W/2, P3H/2+8);
-    if(p3score===p3Best && p3score>0){
-      cx3.font='12px "Cinzel",serif';cx3.fillStyle='#fff5cc';
-      cx3.fillText('🏆 Nouveau record !', P3W/2, P3H/2+30);
-    }
-    cx3.font='11px "Cormorant Garamond",serif';cx3.fillStyle='rgba(200,162,72,.55)';
-    cx3.fillText('Cliquez « Nouvelle partie » pour rejouer', P3W/2, P3H/2+52);
   }
 }
-function p3ov(){cx3.fillStyle='rgba(40,24,40,.85)';cx3.fillRect(0,0,P3W,P3H);cx3.textAlign='center';cx3.textBaseline='middle';}
-
-/* ── Falling object renderer ── */
-function p3drawObj(o){
-  cx3.save();cx3.translate(o.x,o.y);cx3.rotate(o.rot);
-  switch(o.type){
-    case 'petal':
-      // Pink rose petal — small, with shading
-      cx3.fillStyle='#ff7a9c';
-      cx3.beginPath();cx3.ellipse(0,0,5.5,8,0,0,Math.PI*2);cx3.fill();
-      cx3.fillStyle='rgba(255,255,255,.4)';
-      cx3.beginPath();cx3.ellipse(-1,-1,2.5,4,0,0,Math.PI*2);cx3.fill();
-      cx3.strokeStyle='#c84064';cx3.lineWidth=.8;
-      cx3.beginPath();cx3.ellipse(0,0,5.5,8,0,0,Math.PI*2);cx3.stroke();
-      break;
-    case 'bouquet': {
-      // Bouquet — multiple flowers tied
-      const flowers=[
-        {x:-4,y:-3,c:'#ff5577',r:5},
-        {x:4,y:-2,c:'#ffaa44',r:4.5},
-        {x:0,y:-7,c:'#fff5cc',r:4},
-        {x:-5,y:3,c:'#ff8aa8',r:4},
-        {x:5,y:3,c:'#ffcc44',r:4}
-      ];
-      // Stems
-      cx3.strokeStyle='#5a8c5a';cx3.lineWidth=1.5;
-      cx3.beginPath();cx3.moveTo(0,3);cx3.lineTo(-2,11);cx3.stroke();
-      cx3.beginPath();cx3.moveTo(0,3);cx3.lineTo(2,11);cx3.stroke();
-      // Ribbon
-      cx3.fillStyle='#ddb96a';cx3.fillRect(-4,8,8,3);
-      cx3.strokeStyle='#000';cx3.lineWidth=.6;cx3.strokeRect(-4,8,8,3);
-      // Flowers
-      for(const f of flowers){
-        cx3.fillStyle=f.c;
-        cx3.beginPath();cx3.arc(f.x,f.y,f.r,0,Math.PI*2);cx3.fill();
-        cx3.strokeStyle='rgba(0,0,0,.4)';cx3.lineWidth=.8;cx3.stroke();
-        cx3.fillStyle='rgba(255,255,255,.4)';
-        cx3.beginPath();cx3.arc(f.x-1,f.y-1,f.r*.4,0,Math.PI*2);cx3.fill();
-      }
-      // Glow
-      cx3.globalAlpha=.5;
-      const g=cx3.createRadialGradient(0,0,2,0,0,16);
-      g.addColorStop(0,'rgba(255,200,210,.5)');g.addColorStop(1,'rgba(255,200,210,0)');
-      cx3.fillStyle=g;cx3.beginPath();cx3.arc(0,0,16,0,Math.PI*2);cx3.fill();
-      cx3.globalAlpha=1;
-      break;
-    }
-    case 'ring': {
-      // Diamond ring with strong glow
-      const g=cx3.createRadialGradient(0,0,2,0,0,18);
-      g.addColorStop(0,'rgba(255,230,120,.7)');g.addColorStop(1,'rgba(255,230,120,0)');
-      cx3.fillStyle=g;cx3.beginPath();cx3.arc(0,0,18,0,Math.PI*2);cx3.fill();
-      cx3.strokeStyle='#c8a248';cx3.lineWidth=2.5;
-      cx3.beginPath();cx3.ellipse(0,0,8,8,0,0,Math.PI*2);cx3.stroke();
-      cx3.strokeStyle='#fff5cc';cx3.lineWidth=1.2;
-      cx3.beginPath();cx3.ellipse(0,-1,7,7,0,0,Math.PI*2);cx3.stroke();
-      cx3.fillStyle='#fff';cx3.beginPath();
-      cx3.moveTo(0,-10);cx3.lineTo(3,-7);cx3.lineTo(0,-3);cx3.lineTo(-3,-7);cx3.closePath();cx3.fill();
-      cx3.strokeStyle='#000';cx3.lineWidth=.6;cx3.stroke();
-      // Sparkle
-      const tw = .3+Math.abs(Math.sin(o.sw))*.7;
-      cx3.fillStyle='rgba(255,255,255,'+tw+')';
-      cx3.fillRect(-.5,-9,1,3);cx3.fillRect(-2,-7,3,1);
-      break;
-    }
-    case 'drop':
-      // Dark blue rain drop
-      cx3.fillStyle='#3a6a90';
-      cx3.beginPath();
-      cx3.moveTo(0,-8);
-      cx3.bezierCurveTo(5,-3, 5,5, 0,7);
-      cx3.bezierCurveTo(-5,5, -5,-3, 0,-8);
-      cx3.closePath();cx3.fill();
-      cx3.strokeStyle='#000';cx3.lineWidth=1;cx3.stroke();
-      cx3.fillStyle='rgba(255,255,255,.4)';
-      cx3.beginPath();cx3.ellipse(-1.5,-1,1.2,2,-.3,0,Math.PI*2);cx3.fill();
-      break;
-    case 'mud':
-      // Mud blob — irregular brown shape
-      cx3.fillStyle='#5a3018';
-      cx3.beginPath();
-      cx3.moveTo(-7,-2);
-      cx3.bezierCurveTo(-9,-7, -3,-9, 1,-7);
-      cx3.bezierCurveTo(8,-8, 9,0, 6,4);
-      cx3.bezierCurveTo(7,9, -1,9, -4,6);
-      cx3.bezierCurveTo(-9,5, -9,1, -7,-2);
-      cx3.closePath();cx3.fill();
-      cx3.strokeStyle='#000';cx3.lineWidth=1;cx3.stroke();
-      // Splatters
-      cx3.fillStyle='#3a1808';
-      cx3.beginPath();cx3.arc(-2,0,1.5,0,Math.PI*2);cx3.fill();
-      cx3.beginPath();cx3.arc(3,2,1,0,Math.PI*2);cx3.fill();
-      break;
-  }
-  cx3.restore();
+function memStart(){
+  memClearOverlay();
+  if(memSecId){clearInterval(memSecId);memSecId=null;}
+  if(gState==='playing'){gState='idle';if(tTick){clearInterval(tTick);tTick=null;}}
+  if(typeof wamState!=='undefined' && wamState==='playing') wamPause();
+  memMoves=0; memPairs=0; memSec=0;
+  document.getElementById('memMoves').textContent=0;
+  document.getElementById('memPairs').textContent=0;
+  document.getElementById('memTimer').textContent='0s';
+  memBuild();
+  memState='playing';
+  memSecId = setInterval(()=>{
+    if(memState!=='playing') return;
+    if(!canRun()) return;
+    memSec++;
+    document.getElementById('memTimer').textContent=memSec+'s';
+  }, 1000);
 }
-
-/* ── Big detailed bride drawing for game 3 ── */
-function p3drawBride(x,y,f,fr,hit){
-  cx3.save();cx3.translate(x,y);cx3.scale(f,1);
-  // Hit flash effect
-  const flashAlpha = hit ? .4+Math.sin(fr*1.2)*.3 : 0;
-  const sw=Math.sin(fr*.18)*3, a=Math.sin(fr*.18)*2.8;
-  // Shadow
-  cx3.fillStyle='rgba(0,0,0,.32)';cx3.beginPath();cx3.ellipse(sw*.3,2,18,4.5,0,0,Math.PI*2);cx3.fill();
-  // Long flowing dress
-  cx3.fillStyle='#f5ead8';
-  cx3.beginPath();
-  cx3.moveTo(-9,9);
-  cx3.bezierCurveTo(-15+sw*.5, 18, -22+sw, 35, -24+sw, 45);
-  cx3.lineTo(24+sw, 45);
-  cx3.bezierCurveTo(22+sw, 35, 15+sw*.5, 18, 9,9);
-  cx3.closePath();cx3.fill();
-  // Dress shading (darker side)
-  cx3.fillStyle='rgba(220,200,180,.5)';
-  cx3.beginPath();
-  cx3.moveTo(2,9);
-  cx3.bezierCurveTo(8+sw*.5, 18, 14+sw, 35, 16+sw, 45);
-  cx3.lineTo(24+sw, 45);
-  cx3.bezierCurveTo(22+sw, 35, 15+sw*.5, 18, 9,9);
-  cx3.closePath();cx3.fill();
-  // Dress folds
-  cx3.strokeStyle='rgba(200,180,160,.4)';cx3.lineWidth=1;
-  cx3.beginPath();cx3.moveTo(-5,12);cx3.bezierCurveTo(-12+sw*.3, 24, -18+sw, 38, -19+sw, 45);cx3.stroke();
-  cx3.beginPath();cx3.moveTo(5,12);cx3.bezierCurveTo(12+sw*.3, 24, 18+sw, 38, 19+sw, 45);cx3.stroke();
-  cx3.beginPath();cx3.moveTo(0,12);cx3.bezierCurveTo(0, 25, 0+sw*.4, 38, 0+sw*.5, 45);cx3.stroke();
-  // Dress trim (gold border at bottom)
-  cx3.fillStyle='#c8a248';
-  cx3.beginPath();
-  cx3.moveTo(-24+sw, 45);
-  cx3.lineTo(24+sw, 45);
-  cx3.lineTo(23+sw, 43);
-  cx3.lineTo(-23+sw, 43);
-  cx3.closePath();cx3.fill();
-  // Mud splotches if hit recently
-  if(hit){
-    cx3.fillStyle='rgba(70,40,20,.7)';
-    cx3.beginPath();cx3.arc(-8+sw*.3, 28, 4, 0, Math.PI*2);cx3.fill();
-    cx3.beginPath();cx3.arc(6+sw*.3, 35, 3, 0, Math.PI*2);cx3.fill();
-  }
-  // Corset/bodice
-  cx3.fillStyle='#ede0cc';
-  cx3.beginPath();cx3.roundRect(-9,-13,18,24,3);cx3.fill();
-  cx3.strokeStyle='rgba(200,162,72,.5)';cx3.lineWidth=1;cx3.beginPath();cx3.roundRect(-9,-13,18,24,3);cx3.stroke();
-  // Lacing on corset
-  cx3.strokeStyle='#c8a248';cx3.lineWidth=.8;
-  for(let i=0;i<5;i++){
-    const ly=-10+i*5;
-    cx3.beginPath();cx3.moveTo(-3,ly);cx3.lineTo(3,ly+2);cx3.stroke();
-    cx3.beginPath();cx3.moveTo(3,ly);cx3.lineTo(-3,ly+2);cx3.stroke();
-  }
-  cx3.fillStyle='#c8a248';cx3.fillRect(-9,9,18,3);
-  // Arms — slightly raised, holding basket
-  cx3.fillStyle='#f5c8a0';
-  cx3.save();cx3.translate(-13,-3+a);cx3.rotate(-.7);cx3.fillRect(-5,-3,11,6);cx3.restore();
-  cx3.save();cx3.translate(13,-3-a);cx3.rotate(.7);cx3.fillRect(-5,-3,11,6);cx3.restore();
-  // Basket of flowers (between hands)
-  const basketY = -8 + Math.sin(fr*.18)*1;
-  cx3.fillStyle='#a05028';
-  cx3.beginPath();cx3.roundRect(-12,basketY,24,9,2);cx3.fill();
-  cx3.strokeStyle='#000';cx3.lineWidth=1;cx3.stroke();
-  // Basket weave pattern
-  cx3.strokeStyle='#5a2810';cx3.lineWidth=.5;
-  for(let i=-10;i<=10;i+=4){
-    cx3.beginPath();cx3.moveTo(i,basketY);cx3.lineTo(i,basketY+9);cx3.stroke();
-  }
-  cx3.beginPath();cx3.moveTo(-12,basketY+4);cx3.lineTo(12,basketY+4);cx3.stroke();
-  // Basket handle
-  cx3.strokeStyle='#a05028';cx3.lineWidth=2;
-  cx3.beginPath();cx3.arc(0,basketY,12,Math.PI,0);cx3.stroke();
-  // Flowers in basket
-  const baseFy = basketY-2;
-  cx3.fillStyle='#ff5577';cx3.beginPath();cx3.arc(-7,baseFy,3.5,0,Math.PI*2);cx3.fill();
-  cx3.fillStyle='#ffaa44';cx3.beginPath();cx3.arc(0,baseFy-2,3.5,0,Math.PI*2);cx3.fill();
-  cx3.fillStyle='#fff5cc';cx3.beginPath();cx3.arc(7,baseFy,3.2,0,Math.PI*2);cx3.fill();
-  cx3.fillStyle='#ff8aa8';cx3.beginPath();cx3.arc(-3,baseFy-1,3,0,Math.PI*2);cx3.fill();
-  cx3.fillStyle='#c8a248';cx3.beginPath();cx3.arc(4,baseFy,2.5,0,Math.PI*2);cx3.fill();
-  // Head
-  cx3.fillStyle='#f5c8a0';cx3.beginPath();cx3.arc(0,-26,11,0,Math.PI*2);cx3.fill();
-  // Hair top: only above eye level (flowing sides drawn after)
-  cx3.fillStyle='#5a3018';
-  cx3.save();
-  cx3.beginPath();cx3.rect(-12,-38,24,9);cx3.clip();
-  cx3.beginPath();cx3.arc(0,-26,11,0,Math.PI*2);cx3.fill();
-  cx3.restore();
-  // Soft bangs over forehead
-  cx3.beginPath();
-  cx3.moveTo(-9,-30);cx3.quadraticCurveTo(-4,-32,0,-30);
-  cx3.quadraticCurveTo(4,-32,9,-30);
-  cx3.quadraticCurveTo(5,-29,0,-29.5);
-  cx3.quadraticCurveTo(-5,-29,-9,-30);cx3.closePath();cx3.fill();
-  // Hair flowing down sides
-  cx3.beginPath();
-  cx3.moveTo(-11,-26);
-  cx3.bezierCurveTo(-14,-15, -13,-5, -10,2);
-  cx3.lineTo(-7,2);
-  cx3.bezierCurveTo(-10,-5, -11,-15, -8,-25);
-  cx3.closePath();cx3.fill();
-  cx3.beginPath();
-  cx3.moveTo(11,-26);
-  cx3.bezierCurveTo(14,-15, 13,-5, 10,2);
-  cx3.lineTo(7,2);
-  cx3.bezierCurveTo(10,-5, 11,-15, 8,-25);
-  cx3.closePath();cx3.fill();
-  // Veil flowing back
-  cx3.strokeStyle='rgba(245,234,216,.55)';cx3.lineWidth=2.5;
-  cx3.beginPath();cx3.moveTo(-1,-36);cx3.quadraticCurveTo(20,-22, 22,8);cx3.stroke();
-  cx3.lineWidth=1.5;cx3.beginPath();cx3.moveTo(-1,-36);cx3.quadraticCurveTo(24,-18, 26,12);cx3.stroke();
-  cx3.lineWidth=1;cx3.beginPath();cx3.moveTo(-2,-36);cx3.quadraticCurveTo(16,-25, 18,5);cx3.stroke();
-  // Tiara
-  cx3.fillStyle='#c8a248';cx3.fillRect(-7,-38,14,3);
-  cx3.beginPath();cx3.moveTo(-3,-38);cx3.lineTo(0,-44);cx3.lineTo(3,-38);cx3.closePath();cx3.fill();
-  cx3.beginPath();cx3.moveTo(-7,-38);cx3.lineTo(-5,-41);cx3.lineTo(-3,-38);cx3.closePath();cx3.fill();
-  cx3.beginPath();cx3.moveTo(7,-38);cx3.lineTo(5,-41);cx3.lineTo(3,-38);cx3.closePath();cx3.fill();
-  // Tiara gems
-  cx3.fillStyle='#fff5cc';
-  cx3.beginPath();cx3.arc(0,-43,1.8,0,Math.PI*2);cx3.fill();
-  cx3.beginPath();cx3.arc(-5,-40,1.2,0,Math.PI*2);cx3.fill();
-  cx3.beginPath();cx3.arc(5,-40,1.2,0,Math.PI*2);cx3.fill();
-  // Eyes
-  cx3.fillStyle='#2d1a0e';cx3.beginPath();cx3.arc(-3.5,-26,1.8,0,Math.PI*2);cx3.fill();cx3.beginPath();cx3.arc(3.5,-26,1.8,0,Math.PI*2);cx3.fill();
-  cx3.fillStyle='white';cx3.beginPath();cx3.arc(-2.6,-27,.7,0,Math.PI*2);cx3.fill();cx3.beginPath();cx3.arc(4.4,-27,.7,0,Math.PI*2);cx3.fill();
-  // Eyelashes
-  cx3.strokeStyle='#2d1a0e';cx3.lineWidth=1;
-  cx3.beginPath();cx3.moveTo(1.8,-27.5);cx3.lineTo(2.6,-29.5);cx3.stroke();
-  cx3.beginPath();cx3.moveTo(4.5,-27);cx3.lineTo(5.8,-29);cx3.stroke();
-  cx3.beginPath();cx3.moveTo(-1.8,-27.5);cx3.lineTo(-2.6,-29.5);cx3.stroke();
-  cx3.beginPath();cx3.moveTo(-4.5,-27);cx3.lineTo(-5.8,-29);cx3.stroke();
-  // Blush
-  cx3.fillStyle='rgba(220,100,90,.22)';
-  cx3.beginPath();cx3.ellipse(-7,-23,4.5,2.5,-.3,0,Math.PI*2);cx3.fill();
-  cx3.beginPath();cx3.ellipse(7,-23,4.5,2.5,.3,0,Math.PI*2);cx3.fill();
-  // Smile
-  cx3.strokeStyle='#8b4a2a';cx3.lineWidth=1.5;
-  cx3.beginPath();cx3.arc(0,-22,4.2,.2,Math.PI-.2);cx3.stroke();
-  // Lipstick highlight
-  cx3.fillStyle='rgba(220,100,120,.45)';
-  cx3.beginPath();cx3.arc(0,-21,3.8,.25,Math.PI-.25);cx3.fill();
-  // Hit flash overlay
-  if(flashAlpha>0){
-    cx3.fillStyle='rgba(220,80,80,'+flashAlpha+')';
-    cx3.beginPath();cx3.arc(0,-26,11,0,Math.PI*2);cx3.fill();
-    cx3.fillRect(-9,-13,18,24);
-  }
-  cx3.restore();
+function memPause(){
+  memState='idle';
+  if(memSecId){clearInterval(memSecId);memSecId=null;}
 }
-
-/* ── Game 3 loop ── */
-function p3tick(){
-  if(canRun()) p3step();
-  p3draw();
-  p3RafId = setTimeout(()=>requestAnimationFrame(p3tick), 40);
-}
-
-/* ── Input handlers ── */
-document.addEventListener('keydown',function(e){
-  if(document.getElementById('gamePetals').style.display==='none') return;
-  p3keys[e.key]=true;
-  if(['ArrowLeft','ArrowRight'].includes(e.key)){
-    e.preventDefault();
-    if(p3state!=='playing') p3start();
+function memFinish(){
+  memState='done';
+  if(memSecId){clearInterval(memSecId);memSecId=null;}
+  let isNewBest = false;
+  if(memBest===0 || memMoves<memBest){
+    memBest = memMoves;
+    lsSet('w_bestmem', memBest);
+    document.getElementById('memBest').textContent=memBest+' coups';
+    isNewBest = true;
   }
-});
-document.addEventListener('keyup',function(e){p3keys[e.key]=false;});
-
-function p3CanvasPos(ev){
-  const r=cv3.getBoundingClientRect();
-  const sx=P3W/r.width;
-  return (ev.clientX-r.left)*sx;
+  const b = document.getElementById('memBoard');
+  const ov = document.createElement('div');
+  ov.className='game-overlay';
+  const title = isNewBest ? '🏆 Nouveau record !' : '✨ Toutes trouvées !';
+  const sub = `${memMoves} coups · ${memSec} secondes`;
+  ov.innerHTML = `<div class="game-overlay-title">${title}</div><div class="game-overlay-sub">${sub}</div><button class="btn btn-gold" style="font-size:10px;padding:8px 18px" onclick="memStart()">Rejouer</button>`;
+  b.appendChild(ov);
 }
-function p3TouchStart(ev){
-  ev.preventDefault();
-  if(p3state!=='playing') p3start();
-  p3touchActive=true;
-  p3touchX = p3CanvasPos(ev);
-}
-function p3TouchMove(ev){
-  if(!p3touchActive) return;
-  ev.preventDefault();
-  p3touchX = p3CanvasPos(ev);
-}
-function p3TouchEnd(){p3touchActive=false;}
-cv3.addEventListener('pointerdown',p3TouchStart);
-cv3.addEventListener('pointermove',p3TouchMove);
-cv3.addEventListener('pointerup',p3TouchEnd);
-cv3.addEventListener('pointercancel',p3TouchEnd);
-cv3.addEventListener('pointerleave',p3TouchEnd);
+window.memStart=memStart;
+memBuild();
 
-// Init
-p3init();
-p3state='idle';
-p3draw();
-p3tick();
-
-/* ── Tab switching (now handles 3 games) ── */
+/* ── Tab switching (3 games) ── */
 function switchGame(g){
   document.getElementById('gameChase').style.display=g==='chase'?'':'none';
-  document.getElementById('gameRun').style.display=g==='run'?'':'none';
-  document.getElementById('gamePetals').style.display=g==='petals'?'':'none';
+  document.getElementById('gameWam').style.display=g==='wam'?'':'none';
+  document.getElementById('gameMem').style.display=g==='mem'?'':'none';
   document.querySelectorAll('.game-tab').forEach(function(t){t.classList.toggle('active',t.dataset.g===g);});
   // Pause whichever isn't shown
   if(g!=='chase' && gState==='playing'){gState='idle';if(tTick){clearInterval(tTick);tTick=null;}}
-  if(g!=='run' && p2state==='playing'){p2state='idle';}
-  if(g!=='petals' && p3state==='playing'){p3state='idle';if(p3TimerId){clearInterval(p3TimerId);p3TimerId=null;}}
-  // Release any held controls when switching tabs
-  p2boost=false;
-  document.querySelectorAll('.boost-btn').forEach(b=>b.classList.remove('active-state'));
+  if(g!=='wam' && wamState==='playing') wamPause();
+  if(g!=='mem' && memState==='playing') memPause();
 }
 window.switchGame=switchGame;
+
 
 </script>
 </body>
