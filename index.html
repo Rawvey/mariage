@@ -34,13 +34,13 @@ nav a:hover{color:var(--gold3);background:rgba(200,162,72,.1)}
 #hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 90% 80% at 50% 50%,rgba(58,84,68,.48) 0%,transparent 70%);pointer-events:none}
 .hero-inner{position:relative;z-index:1;text-align:center}
 .hero-pre{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;animation:fadeUp .7s ease both .1s}
-.hero-frame{position:relative;display:inline-block;padding:30px 58px;animation:fadeUp .7s ease both .35s}
+.hero-frame{position:relative;display:inline-block;padding:40px 62px;animation:fadeUp .7s ease both .35s}
 .hero-frame::before{content:'';position:absolute;inset:0;border:1.5px solid var(--gold);pointer-events:none}
 .hfl{position:absolute;background:var(--gold);opacity:.88}
-.hfl-tl{top:-6px;left:-6px;width:44px;height:1.5px;transform:rotate(-27deg);transform-origin:left center}
-.hfl-tr{top:-6px;right:-6px;width:44px;height:1.5px;transform:rotate(27deg);transform-origin:right center}
-.hfl-bl{bottom:-6px;left:-6px;width:44px;height:1.5px;transform:rotate(27deg);transform-origin:left center}
-.hfl-br{bottom:-6px;right:-6px;width:44px;height:1.5px;transform:rotate(-27deg);transform-origin:right center}
+.hfl-tl{top:-9px;left:-9px;width:26px;height:1.5px;transform:rotate(-27deg);transform-origin:left center}
+.hfl-tr{top:-9px;right:-9px;width:26px;height:1.5px;transform:rotate(27deg);transform-origin:right center}
+.hfl-bl{bottom:-9px;left:-9px;width:26px;height:1.5px;transform:rotate(27deg);transform-origin:left center}
+.hfl-br{bottom:-9px;right:-9px;width:26px;height:1.5px;transform:rotate(-27deg);transform-origin:right center}
 .hero-names{font-family:'Great Vibes',cursive;font-size:clamp(3rem,8vw,6rem);color:var(--cream);line-height:1.05;white-space:nowrap}
 .hero-names .amp{color:var(--gold2)}
 .hero-hdiv{display:flex;align-items:center;justify-content:center;gap:12px;margin:10px 0 0}
@@ -232,7 +232,7 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
 @media(max-width:760px){
   nav a{font-size:9px;padding:4px 8px;letter-spacing:1.5px}.nav-sep{display:none}
   .sec-wrap{padding:52px 18px}
-  .hero-frame{padding:24px 22px}.hero-names{white-space:normal;font-size:clamp(2.7rem,10vw,4.8rem)}
+  .hero-frame{padding:34px 30px}.hero-names{white-space:normal;font-size:clamp(2.7rem,10vw,4.8rem)}
   .card-grid,.rates-grid{grid-template-columns:1fr}
   .menu-box{padding:22px 15px}.menu-preview{grid-template-columns:1fr}
   .menu-full{padding:36px 18px 32px}.menu-full::before{inset:7px}
@@ -243,550 +243,699 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
   .mem-front{font-size:32px}.mem-back-mono{font-size:24px}
   .game-overlay-title{font-size:28px}
 }
+
+/* ════════════════════════════════════════════════════════
+   PARCOURS GUIDÉ — barre de progression, étapes, navigation
+   ════════════════════════════════════════════════════════ */
+.wiz-top{position:sticky;top:0;z-index:800;background:rgba(30,46,37,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--bord);padding:15px 20px 13px}
+.wiz-prog{max-width:680px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;position:relative}
+.wiz-prog::before{content:'';position:absolute;top:9px;left:18px;right:18px;height:1.5px;background:rgba(200,162,72,.2);z-index:0}
+.wiz-prog-fill{position:absolute;top:9px;left:18px;height:1.5px;background:linear-gradient(90deg,var(--gold),var(--gold2));z-index:1;transition:width .45s ease;width:0}
+.wiz-dot{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;cursor:pointer;background:none;border:none;padding:0;font-family:inherit}
+.wiz-dot-c{width:19px;height:19px;border-radius:50%;border:1.5px solid rgba(200,162,72,.35);background:var(--g0);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:9px;color:rgba(200,162,72,.6);transition:all .3s}
+.wiz-dot.done .wiz-dot-c{border-color:var(--gold);background:var(--gold);color:var(--g0)}
+.wiz-dot.current .wiz-dot-c{border-color:var(--gold2);background:var(--g0);color:var(--gold2);box-shadow:0 0 0 4px rgba(200,162,72,.14)}
+.wiz-dot-l{font-family:'Cinzel',serif;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:rgba(200,162,72,.55);transition:color .3s;text-align:center;line-height:1.2}
+.wiz-dot.current .wiz-dot-l{color:var(--gold2)}
+.wiz-dot.done .wiz-dot-l{color:rgba(200,162,72,.75)}
+.wiz-mobile-label{display:none;text-align:center;font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold2);margin-top:2px}
+@media(max-width:680px){
+  .wiz-dot-l{display:none}
+  .wiz-dot-c{width:15px;height:15px;font-size:8px}
+  .wiz-prog::before,.wiz-prog-fill{top:7px}
+  .wiz-mobile-label{display:block}
+}
+/* Étapes */
+.step{display:none;animation:stepIn .5s ease both}
+.step.active{display:block}
+@keyframes stepIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.step-wrap{max-width:900px;margin:0 auto;padding:54px 40px 40px;min-height:60vh}
+@media(max-width:760px){.step-wrap{padding:38px 18px 30px}}
+.step-intro{text-align:center;font-style:italic;color:var(--cream2);max-width:560px;margin:0 auto 32px;font-size:16px}
+/* Navigation bas d'étape */
+.step-nav{display:flex;align-items:center;justify-content:space-between;gap:14px;max-width:600px;margin:38px auto 0;padding-top:24px;border-top:1px solid rgba(200,162,72,.12)}
+.step-nav.center{justify-content:center}
+.btn-ghost{border-color:rgba(200,162,72,.3);color:var(--cream2)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold2);background:transparent}
+.btn-lg{padding:12px 30px;font-size:11px}
+.step-skip{font-size:13px;font-style:italic;color:var(--cream3);text-align:center;margin-top:14px}
+.step-skip a{color:var(--gold2);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+/* Question Oui / Non */
+.bigchoice-row{display:flex;gap:16px;justify-content:center;max-width:520px;margin:0 auto;flex-wrap:wrap}
+.bigchoice{flex:1;min-width:160px;background:rgba(58,84,68,.22);border:1.5px solid var(--bord);border-radius:8px;padding:26px 22px;cursor:pointer;text-align:center;transition:all .22s}
+.bigchoice:hover{border-color:rgba(200,162,72,.55);background:rgba(58,84,68,.4)}
+.bigchoice.selected{border-color:var(--gold);background:rgba(200,162,72,.16);box-shadow:0 0 0 1px var(--gold) inset}
+.bigchoice-ico{font-size:30px;margin-bottom:8px}
+.bigchoice-t{font-family:'Cinzel',serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold2)}
+.bigchoice-s{font-size:13px;color:var(--cream2);font-style:italic;margin-top:5px}
+/* Bloc enfants */
+#kidsBlock{display:none;margin-top:30px}
+.kid-fixed{background:rgba(200,162,72,.07);border:1px solid var(--bord);border-radius:6px;padding:14px 18px;margin-bottom:18px;font-size:14px;color:var(--cream2)}
+.kid-fixed strong{color:var(--cream)}
+.kentry{background:rgba(30,46,37,.55);padding:14px 16px;border-radius:6px;border:1px solid rgba(200,162,72,.15);margin-bottom:12px;transition:border-color .25s}
+.kentry-head{display:flex;gap:10px;align-items:center}
+.kentry-num{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:.7;white-space:nowrap}
+/* Champ allergie */
+.allergy-row{margin-top:11px}
+.allergy-row .choice-section-label{display:flex;align-items:center;gap:6px}
+.opt-tag{font-family:'Cormorant Garamond',serif;font-size:11px;font-style:italic;letter-spacing:0;text-transform:none;color:var(--cream3);opacity:.8}
+/* Récapitulatif */
+.summary{background:rgba(46,68,54,.32);border:1px solid var(--bord);border-radius:8px;padding:34px 34px 30px;position:relative}
+.summary::before{content:'';position:absolute;inset:9px;border:1px solid rgba(200,162,72,.16);border-radius:5px;pointer-events:none}
+.sum-group{position:relative;z-index:1;margin-bottom:22px}
+.sum-group:last-child{margin-bottom:0}
+.sum-glabel{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sum-glabel::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--bord),transparent)}
+.sum-row{display:grid;grid-template-columns:1fr auto;gap:6px 16px;padding:8px 0;border-bottom:1px solid rgba(200,162,72,.08);align-items:baseline}
+.sum-row:last-child{border-bottom:none}
+.sum-name{color:var(--cream);font-size:15.5px}
+.sum-detail{color:var(--cream2);font-size:13.5px;font-style:italic;text-align:right}
+.sum-allergy{grid-column:1/-1;font-size:12.5px;color:var(--rust);font-style:italic;opacity:.85}
+.sum-fixed{position:relative;z-index:1;text-align:center;font-size:13.5px;color:var(--cream2);font-style:italic;margin-top:20px;padding-top:16px;border-top:1px solid rgba(200,162,72,.12)}
+.sum-fixed strong{color:var(--gold2);font-style:normal}
+.sum-empty{position:relative;z-index:1;text-align:center;color:var(--cream3);font-style:italic;font-size:14px;padding:8px 0}
+/* Confirmation finale */
+.done-card{text-align:center;max-width:560px;margin:0 auto;padding:20px}
+.done-mono{font-family:'Great Vibes',cursive;font-size:clamp(2.6rem,6vw,4rem);color:var(--gold2);line-height:1.05;margin-bottom:10px}
 </style>
 </head>
 <body>
 
-<nav>
-  <a href="#programme">Programme</a><span class="nav-sep" aria-hidden="true">♥</span>
-  <a href="#infos">Infos pratiques</a><span class="nav-sep" aria-hidden="true">♥</span>
-  <a href="#menu">Choix du menu</a><span class="nav-sep" aria-hidden="true">♥</span>
-  <a href="#contact">Contact</a><span class="nav-sep" aria-hidden="true">♥</span>
-  <a href="#arcade">Mini-jeux</a>
-</nav>
-
-<!-- ═══ HERO ════════ -->
-<div id="hero">
-  <svg class="leaf-l" width="210" height="210" viewBox="0 0 210 210" aria-hidden="true">
-    <ellipse cx="55" cy="160" rx="38" ry="17" fill="#c4622d" transform="rotate(-34 55 160)"/>
-    <ellipse cx="85" cy="184" rx="33" ry="15" fill="#d4821a" transform="rotate(17 85 184)"/>
-    <ellipse cx="34" cy="192" rx="28" ry="13" fill="#8b3c22" transform="rotate(-50 34 192)"/>
-    <ellipse cx="108" cy="168" rx="42" ry="16" fill="#c8a248" transform="rotate(11 108 168)"/>
-    <circle cx="65" cy="132" r="7.5" fill="rgba(245,234,216,.6)"/>
-    <circle cx="79" cy="126" r="5.5" fill="rgba(245,234,216,.45)"/>
-    <circle cx="51" cy="140" r="6.5" fill="rgba(245,234,216,.5)"/>
-    <circle cx="65" cy="132" r="3.5" fill="rgba(200,162,72,.55)"/>
-    <line x1="65" y1="140" x2="74" y2="174" stroke="#4a7a5a" stroke-width="1.8" opacity=".5"/>
-    <line x1="79" y1="132" x2="89" y2="170" stroke="#4a7a5a" stroke-width="1.4" opacity=".4"/>
-  </svg>
-  <svg class="leaf-r" width="210" height="210" viewBox="0 0 210 210" aria-hidden="true">
-    <ellipse cx="55" cy="160" rx="38" ry="17" fill="#c4622d" transform="rotate(-34 55 160)"/>
-    <ellipse cx="85" cy="184" rx="33" ry="15" fill="#d4821a" transform="rotate(17 85 184)"/>
-    <ellipse cx="34" cy="192" rx="28" ry="13" fill="#8b3c22" transform="rotate(-50 34 192)"/>
-    <ellipse cx="108" cy="168" rx="42" ry="16" fill="#c8a248" transform="rotate(11 108 168)"/>
-    <circle cx="65" cy="132" r="7.5" fill="rgba(245,234,216,.6)"/>
-    <circle cx="79" cy="126" r="5.5" fill="rgba(245,234,216,.45)"/>
-    <circle cx="51" cy="140" r="6.5" fill="rgba(245,234,216,.5)"/>
-    <circle cx="65" cy="132" r="3.5" fill="rgba(200,162,72,.55)"/>
-    <line x1="65" y1="140" x2="74" y2="174" stroke="#4a7a5a" stroke-width="1.8" opacity=".5"/>
-    <line x1="79" y1="132" x2="89" y2="170" stroke="#4a7a5a" stroke-width="1.4" opacity=".4"/>
-  </svg>
-  <div class="hero-inner">
-    <div class="hero-pre">Vous êtes invités à célébrer</div>
-    <div class="hero-frame">
-      <div class="hfl hfl-tl"></div><div class="hfl hfl-tr"></div>
-      <div class="hfl hfl-bl"></div><div class="hfl hfl-br"></div>
-      <div class="hero-names">Andréanne <span class="amp">&amp;</span> Étienne</div>
-      <div class="hero-hdiv"><span>♥</span></div>
-    </div>
-    <div class="hero-date">Samedi 19 septembre 2026</div>
-</div>
-
-<!-- ═══ PROGRAMME ════════ -->
-<div id="programme">
-  <div class="sec-wrap">
-    <div class="sec-head reveal"><div class="sec-eye">La journée</div><div class="sec-title">Au programme</div><div class="sec-div"><span>◆</span></div></div>
-    <div class="timeline reveal rd1">
-      <div class="tl-item">
-        <div class="tl-time">15 h</div><div class="tl-mid"><div class="tl-dot"></div><div class="tl-line"></div></div>
-        <div class="tl-content"><div class="tl-label">Accueil des invités</div><div class="tl-desc">Bienvenue &amp; premières retrouvailles</div></div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-time">16 h</div><div class="tl-mid"><div class="tl-dot"></div><div class="tl-line"></div></div>
-        <div class="tl-content"><div class="tl-label">Cérémonie</div><div class="tl-desc">Le grand moment tant attendu ♥</div></div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-time">17 h</div><div class="tl-mid"><div class="tl-dot"></div><div class="tl-line"></div></div>
-        <div class="tl-content"><div class="tl-label">Cocktail</div><div class="tl-desc">Cocktail de bienvenue avec bouchées</div></div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-time">18 h</div><div class="tl-mid"><div class="tl-dot"></div></div>
-        <div class="tl-content"><div class="tl-label">Souper Party</div><div class="tl-desc">Repas trois services &amp; célébration</div></div>
-      </div>
-    </div>
+<!-- ═══ BARRE DE PROGRESSION ═══ -->
+<div class="wiz-top">
+  <div class="wiz-prog" id="wizProg">
+    <div class="wiz-prog-fill" id="wizFill"></div>
+    <button class="wiz-dot" data-go="0"><span class="wiz-dot-c">♥</span><span class="wiz-dot-l">Accueil</span></button>
+    <button class="wiz-dot" data-go="1"><span class="wiz-dot-c">2</span><span class="wiz-dot-l">Programme</span></button>
+    <button class="wiz-dot" data-go="2"><span class="wiz-dot-c">3</span><span class="wiz-dot-l">Infos</span></button>
+    <button class="wiz-dot" data-go="3"><span class="wiz-dot-c">4</span><span class="wiz-dot-l">Brunch</span></button>
+    <button class="wiz-dot" data-go="4"><span class="wiz-dot-c">5</span><span class="wiz-dot-l">Menu</span></button>
+    <button class="wiz-dot" data-go="5"><span class="wiz-dot-c">6</span><span class="wiz-dot-l">Repas</span></button>
+    <button class="wiz-dot" data-go="6"><span class="wiz-dot-c">7</span><span class="wiz-dot-l">Enfants</span></button>
+    <button class="wiz-dot" data-go="7"><span class="wiz-dot-c">8</span><span class="wiz-dot-l">Envoi</span></button>
   </div>
-</div>
-
-<!-- ═══ INFOS ════════ -->
-<div id="infos" class="sec-alt">
-  <div class="sec-wrap">
-    <div class="sec-head reveal"><div class="sec-eye">Tout ce qu'il faut savoir</div><div class="sec-title">Informations pratiques</div><div class="sec-div"><span>◆</span></div></div>
-
-    <div class="icard reveal" style="margin-bottom:15px">
-      <h3>🥂 Cocktail &amp; Souper</h3>
-      <p>La soirée débutera par un <strong>cocktail de bienvenue avec bouchées</strong>, suivi d'un <strong>repas trois services</strong>.</p>
-      <div class="hl"><strong>Contribution demandée : 100 $ par adulte</strong><br>Inclut <strong>2 coupons de consommation</strong> par adulte (avec ou sans alcool). Les consommations supplémentaires sont payables sur place. Une carte des vins sera disponible aux tables et le bar sera ouvert toute la soirée.</div>
-      <p><strong>Enfants :</strong></p>
-      <ul>
-        <li>12 ans et plus : considérés comme adultes</li>
-        <li>3 à 11 ans : menu enfant (pâtes, doigts de poulet…) à 19 $ + taxes et pourboire — payable sur place</li>
-        <li>Moins de 3 ans : gratuit 🎉</li>
-      </ul>
-    </div>
-
-    <div class="card-grid reveal rd1">
-      <!-- Brunch + formulaire -->
-      <div class="icard">
-        <h3>☀️ Brunch du dimanche</h3>
-        <p>Dimanche <strong>20 septembre</strong></p>
-        <p>Un espace est réservé pour le brunch du lendemain matin, ouvert à tous — que vous séjourniez au Manoir ou non.</p>
-        <div style="margin-top:9px"><span class="badge">23 $ par personne</span></div>
-        <div style="margin-top:13px">
-          <button class="btn btn-gold" id="brunchToggleBtn" onclick="toggleBrunch()" style="font-size:9.5px;padding:7px 16px">Réserver ma place →</button>
-        </div>
-        <div id="brunchFormWrap">
-          <form id="brunchForm" action="https://formsubmit.co/mariage.ae.2026@gmail.com" method="POST" target="submit_iframe">
-            <input type="hidden" name="_subject" value="Réservation brunch — Mariage Andréanne &amp; Étienne">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_template" value="box">
-            <div class="fgroup"><label class="flabel">Votre nom</label><input type="text" name="Nom" class="fc" placeholder="Prénom et nom" required></div>
-            <div class="fgroup"><label class="flabel">Nombre de personnes</label><input type="number" name="Nombre de personnes" class="fc" min="1" max="30" value="1" required></div>
-            <button type="submit" class="btn btn-gold" id="brunchBtn" style="font-size:9.5px;padding:7px 16px">Confirmer ♥</button>
-          </form>
-          <div class="ok-msg" id="brunchOk">✓ Réservation reçue, merci !</div>
-          <div class="err-msg" id="brunchErr">Erreur — écrivez à <a href="mailto:mariage.ae.2026@gmail.com">mariage.ae.2026@gmail.com</a></div>
-        </div>
-      </div>
-
-      <!-- Hébergement + tarifs fusionnés -->
-      <div class="icard">
-        <h3>🏨 Hébergement</h3>
-        <p>Un <strong>bloc de chambres</strong> est réservé pour les nuits de vendredi et samedi. Lors de la réservation, mentionner :</p>
-        <div class="hl" style="font-family:'Cinzel',serif;font-size:11.5px;letter-spacing:.8px">« Mariage Moineau-Jean Fouquet »</div>
-        <p><strong>Date limite :</strong> 19 août 2026 &nbsp;·&nbsp; Annulation jusqu'à 48 h avant</p>
-        <p style="margin-top:5px"><strong>Tél. :</strong> <a href="tel:18005673514" class="ph">1-800-567-3514</a> &nbsp;·&nbsp; <a href="tel:8198474747" class="ph">819-847-4747</a></p>
-        <p class="warning">⚠ Réservez tôt — les chambres sont limitées.</p>
-        <div style="margin-top:13px;padding-top:12px;border-top:1px solid var(--bord)">
-          <p style="font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:9px">Tarifs (avant taxes)</p>
-          <div class="rates-grid">
-            <div>
-              <p style="font-size:13px"><strong>Chambre régulière</strong><br><span style="font-size:12px;font-style:italic">1 ou 2 lits queen</span></p>
-              <span class="badge">Ven. 199 $</span><span class="badge">Sam. 229 $</span>
-            </div>
-            <div>
-              <p style="font-size:13px"><strong>Suite junior</strong></p>
-              <span class="badge">Ven. 220 $</span><span class="badge">Sam. 260 $</span>
-            </div>
-          </div>
-          <ul style="margin-top:9px">
-            <li style="font-size:13px">+20 $ par adulte additionnel (max. 4/chambre)</li>
-            <li style="font-size:13px">Internet &amp; stationnement gratuits</li>
-            <li style="font-size:13px">Accès SPA, sauna &amp; récréatif inclus</li>
-            <li style="font-size:13px">Vue sur la montagne ou le lac</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ MENU ════════ -->
-<div id="menu">
-  <div class="sec-wrap">
-    <div class="sec-head reveal"><div class="sec-eye">Repas trois services</div><div class="sec-title">Choix du menu</div><div class="sec-div"><span>◆</span></div></div>
-    <p class="reveal" style="text-align:center;font-style:italic;color:var(--cream2);margin-bottom:26px;font-size:15px">Voici le menu qui vous sera servi. Pour le plat principal et le dessert, vous avez deux options au choix — indiquez vos préférences dans le formulaire plus bas.</p>
-
-    <!-- Carte du menu (lecture) -->
-    <div class="menu-full reveal">
-      <div class="mf-header">
-        <div class="mf-eye">Notre carte</div>
-        <div class="mf-title">Le repas</div>
-      </div>
-
-      <div class="mf-divider" style="margin-top:18px"><span>◆</span></div>
-
-      <div class="mf-course">
-        <div class="mf-course-label">Entrée</div>
-        <div class="mf-dish">Samossa de légumes au curry madras</div>
-        <div class="mf-dish-sub">sauce tzatzíki</div>
-      </div>
-
-      <div class="mf-divider"><span>◆ ◆ ◆</span></div>
-
-      <div class="mf-course">
-        <div class="mf-course-label">Plat principal</div>
-        <div class="mf-options">
-          <div class="mf-option">
-            <div class="mf-dish">Ravioli à la courge</div>
-            <div class="mf-dish-sub">sauce aux poivrons rôtis</div>
-          </div>
-          <div class="mf-or"><span>ou</span></div>
-          <div class="mf-option">
-            <div class="mf-dish">Filet de saumon</div>
-            <div class="mf-dish-sub">sauce safranée</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="mf-divider"><span>◆ ◆ ◆</span></div>
-
-      <div class="mf-course">
-        <div class="mf-course-label">Dessert</div>
-        <div class="mf-options">
-          <div class="mf-option">
-            <div class="mf-dish">Gâteau au fromage</div>
-            <div class="mf-dish-sub">carottes et caramel</div>
-          </div>
-          <div class="mf-or"><span>ou</span></div>
-          <div class="mf-option">
-            <div class="mf-dish">Gâteau crème brûlée</div>
-            <div class="mf-dish-sub">fromage</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="mf-divider"><span>◆</span></div>
-
-      <div class="mf-course mf-final">
-        <div class="mf-dish">Café · Thé · Infusion</div>
-      </div>
-    </div>
-
-    <!-- Indicateur visuel vers le formulaire -->
-    <div class="mf-arrow reveal" aria-hidden="true">
-      <div class="mf-arrow-text">Faites vos choix ci-dessous</div>
-      <div class="mf-arrow-icon">▼</div>
-    </div>
-
-    <div class="menu-box reveal">
-      <form id="menuForm">
-        <div class="plist-head">
-          <span>Vos choix</span>
-          <button type="button" class="btn btn-gold" onclick="addPerson()" style="font-size:9.5px;padding:7px 15px">+ Ajouter une personne</button>
-        </div>
-        <div id="plist"></div>
-        <div class="factions">
-          <span class="fhint">Remplissez tous les champs.</span>
-          <button type="submit" class="btn btn-gold" id="menuBtn" style="padding:9px 24px">Envoyer mes choix ♥</button>
-        </div>
-        <div class="ok-msg" id="menuOk">✓ Merci ! Vos choix de menu ont bien été transmis.</div>
-        <div class="err-msg" id="menuErr">Une erreur est survenue. Écrivez-nous à <a href="mailto:mariage.ae.2026@gmail.com">mariage.ae.2026@gmail.com</a></div>
-      </form>
-    </div>
-  </div>
+  <div class="wiz-mobile-label" id="wizMobLabel">Accueil</div>
 </div>
 
 <!-- iframe cible pour FormSubmit (aucune navigation de page) -->
 <iframe id="submit_iframe" name="submit_iframe" style="display:none" title="form_submit" aria-hidden="true"></iframe>
 
-<!-- ═══ CONTACT ════════ -->
-<div id="contact" class="sec-alt">
-  <div class="sec-wrap">
-    <div class="sec-head reveal"><div class="sec-eye">Une question ?</div><div class="sec-title">Nous contacter</div><div class="sec-div"><span>◆</span></div></div>
-    <p class="reveal" style="text-align:center;font-style:italic;color:var(--cream2);margin-bottom:30px;font-size:15px">N'hésitez pas à nous écrire — nous serons ravis de vous répondre.</p>
-    <div class="cform reveal">
-      <form id="contactForm" action="https://formsubmit.co/mariage.ae.2026@gmail.com" method="POST" target="submit_iframe">
-        <input type="hidden" name="_subject" value="Question — Mariage Andréanne &amp; Étienne">
+<!-- ════════ ÉTAPE 0 — ACCUEIL ════════ -->
+<section class="step active" id="step0">
+  <div id="hero">
+    <svg class="leaf-l" width="210" height="210" viewBox="0 0 210 210" aria-hidden="true">
+      <ellipse cx="55" cy="160" rx="38" ry="17" fill="#c4622d" transform="rotate(-34 55 160)"/>
+      <ellipse cx="85" cy="184" rx="33" ry="15" fill="#d4821a" transform="rotate(17 85 184)"/>
+      <ellipse cx="34" cy="192" rx="28" ry="13" fill="#8b3c22" transform="rotate(-50 34 192)"/>
+      <ellipse cx="108" cy="168" rx="42" ry="16" fill="#c8a248" transform="rotate(11 108 168)"/>
+      <circle cx="65" cy="132" r="7.5" fill="rgba(245,234,216,.6)"/>
+      <circle cx="79" cy="126" r="5.5" fill="rgba(245,234,216,.45)"/>
+      <circle cx="51" cy="140" r="6.5" fill="rgba(245,234,216,.5)"/>
+      <circle cx="65" cy="132" r="3.5" fill="rgba(200,162,72,.55)"/>
+      <line x1="65" y1="140" x2="74" y2="174" stroke="#4a7a5a" stroke-width="1.8" opacity=".5"/>
+      <line x1="79" y1="132" x2="89" y2="170" stroke="#4a7a5a" stroke-width="1.4" opacity=".4"/>
+    </svg>
+    <svg class="leaf-r" width="210" height="210" viewBox="0 0 210 210" aria-hidden="true">
+      <ellipse cx="55" cy="160" rx="38" ry="17" fill="#c4622d" transform="rotate(-34 55 160)"/>
+      <ellipse cx="85" cy="184" rx="33" ry="15" fill="#d4821a" transform="rotate(17 85 184)"/>
+      <ellipse cx="34" cy="192" rx="28" ry="13" fill="#8b3c22" transform="rotate(-50 34 192)"/>
+      <ellipse cx="108" cy="168" rx="42" ry="16" fill="#c8a248" transform="rotate(11 108 168)"/>
+      <circle cx="65" cy="132" r="7.5" fill="rgba(245,234,216,.6)"/>
+      <circle cx="79" cy="126" r="5.5" fill="rgba(245,234,216,.45)"/>
+      <circle cx="51" cy="140" r="6.5" fill="rgba(245,234,216,.5)"/>
+      <circle cx="65" cy="132" r="3.5" fill="rgba(200,162,72,.55)"/>
+      <line x1="65" y1="140" x2="74" y2="174" stroke="#4a7a5a" stroke-width="1.8" opacity=".5"/>
+      <line x1="79" y1="132" x2="89" y2="170" stroke="#4a7a5a" stroke-width="1.4" opacity=".4"/>
+    </svg>
+    <div class="hero-inner">
+      <div class="hero-pre">Venez célébrer le mariage de</div>
+      <div class="hero-frame">
+        <div class="hfl hfl-tl"></div><div class="hfl hfl-tr"></div>
+        <div class="hfl hfl-bl"></div><div class="hfl hfl-br"></div>
+        <div class="hero-names">Andréanne <span class="amp">&amp;</span> Étienne</div>
+        <div class="hero-hdiv"><span>♥</span></div>
+      </div>
+      <div class="hero-date">Samedi 19 septembre 2026</div>
+      <div class="hero-sub">Suivez le guide pour confirmer votre présence et vos choix de repas</div>
+      <div style="margin-top:30px"><button class="btn btn-gold btn-lg" onclick="wizNext()">Commencer →</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ ÉTAPE 1 — LE GRAND JOUR ════════ -->
+<section class="step" id="step1">
+  <div class="step-wrap">
+    <div class="sec-head"><div class="sec-eye">La journée</div><div class="sec-title">Au programme</div><div class="sec-div"><span>◆</span></div></div>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-time">15 h</div><div class="tl-mid"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-label">Accueil des invités</div><div class="tl-desc">Bienvenue &amp; premières retrouvailles</div></div></div>
+      <div class="tl-item"><div class="tl-time">16 h</div><div class="tl-mid"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-label">Cérémonie</div><div class="tl-desc">Le grand moment tant attendu ♥</div></div></div>
+      <div class="tl-item"><div class="tl-time">17 h</div><div class="tl-mid"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-label">Cocktail</div><div class="tl-desc">Cocktail de bienvenue avec bouchées</div></div></div>
+      <div class="tl-item"><div class="tl-time">18 h</div><div class="tl-mid"><div class="tl-dot"></div></div><div class="tl-content"><div class="tl-label">Souper Party</div><div class="tl-desc">Repas trois services &amp; célébration</div></div></div>
+    </div>
+    <div class="icard" style="margin-top:36px">
+      <h3>🥂 Cocktail &amp; Souper</h3>
+      <p>La soirée débutera par un <strong>cocktail de bienvenue avec bouchées</strong>, suivi d'un <strong>repas trois services</strong>.</p>
+      <div class="hl"><strong>Contribution demandée : 100 $ par adulte</strong><br>Inclut <strong>2 coupons de consommation</strong> par adulte (avec ou sans alcool). Les consommations supplémentaires sont payables sur place. Une carte des vins sera disponible aux tables et le bar sera ouvert toute la soirée.<br><br>💸 Merci de faire parvenir votre contribution par <strong>virement Interac</strong> à l'adresse du mariage : <a href="mailto:mariage.ae.2026@gmail.com" class="ph">mariage.ae.2026@gmail.com</a>. La date prévue était le 31 mai, mais pas d'inquiétude si ce n'est pas encore fait : idéalement avant le 30 juin.</div>
+      <p><strong>Enfants :</strong></p>
+      <ul>
+        <li>13 ans et plus : considérés comme adultes</li>
+        <li>3 à 12 ans : menu enfant à 19 $ + taxes et pourboire, payable sur place</li>
+        <li>Moins de 3 ans : gratuit 🎉</li>
+      </ul>
+    </div>
+    <div class="step-nav">
+      <button class="btn btn-ghost" onclick="wizPrev()">← Retour</button>
+      <button class="btn btn-gold" onclick="wizNext()">Suivant →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ ÉTAPE 2 — HÉBERGEMENT ════════ -->
+<section class="step" id="step2">
+  <div class="step-wrap">
+    <div class="sec-head"><div class="sec-eye">Tout ce qu'il faut savoir</div><div class="sec-title">Hébergement</div><div class="sec-div"><span>◆</span></div></div>
+    <p class="step-intro">Si vous souhaitez réserver une chambre, voici toutes les informations. Sinon, passez simplement à la prochaine étape.</p>
+    <p class="step-skip">Pas besoin de chambre ? <a onclick="wizNext()">Passez à la prochaine étape →</a></p>
+    <div class="icard" style="max-width:560px;margin:0 auto">
+      <h3>🏨 Bloc de chambres réservé</h3>
+      <p>Un <strong>bloc de chambres</strong> est réservé pour les nuits de vendredi et samedi. Lors de la réservation, mentionner :</p>
+      <div class="hl" style="font-family:'Cinzel',serif;font-size:11.5px;letter-spacing:.8px">« Mariage Moineau-Jean Fouquet »</div>
+      <p><strong>Date limite :</strong> 19 août 2026 &nbsp;·&nbsp; Annulation jusqu'à 48 h avant</p>
+      <p style="margin-top:5px"><strong>Tél. :</strong> <a href="tel:18005673514" class="ph">1-800-567-3514</a> &nbsp;·&nbsp; <a href="tel:8198474747" class="ph">819-847-4747</a></p>
+      <p class="warning">⚠ Réservez tôt, les chambres sont limitées.</p>
+      <div style="margin-top:13px;padding-top:12px;border-top:1px solid var(--bord)">
+        <p style="font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:9px">Tarifs (avant taxes)</p>
+        <div class="rates-grid">
+          <div><p style="font-size:13px"><strong>Chambre régulière</strong><br><span style="font-size:12px;font-style:italic">1 ou 2 lits queen</span></p><span class="badge">Ven. 199 $</span><span class="badge">Sam. 229 $</span></div>
+          <div><p style="font-size:13px"><strong>Suite junior</strong></p><span class="badge">Ven. 220 $</span><span class="badge">Sam. 260 $</span></div>
+        </div>
+        <ul style="margin-top:9px">
+          <li style="font-size:13px">+20 $ par adulte additionnel (max. 4/chambre)</li>
+          <li style="font-size:13px">Internet &amp; stationnement gratuits</li>
+          <li style="font-size:13px">Accès SPA, sauna &amp; récréatif inclus</li>
+          <li style="font-size:13px">Vue sur la montagne ou le lac</li>
+        </ul>
+      </div>
+    </div>
+    <div class="step-nav">
+      <button class="btn btn-ghost" onclick="wizPrev()">← Retour</button>
+      <button class="btn btn-gold" onclick="wizNext()">Suivant →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ ÉTAPE 3 — BRUNCH ════════ -->
+<section class="step" id="step3">
+  <div class="step-wrap">
+    <div class="sec-head"><div class="sec-eye">Le lendemain</div><div class="sec-title">Brunch du dimanche</div><div class="sec-div"><span>◆</span></div></div>
+    <p class="step-intro">Dimanche <strong>20 septembre</strong> : un espace est réservé pour le brunch du lendemain matin, ouvert à tous, que vous séjourniez au Manoir ou non.</p>
+    <p class="step-skip">Pas de brunch pour vous ? <a onclick="wizNext()">Passez à la prochaine étape →</a></p>
+    <div class="icard" style="max-width:480px;margin:0 auto">
+      <h3>☀️ Réserver ma place</h3>
+      <div style="margin-bottom:12px"><span class="badge">23 $ par personne</span></div>
+      <form id="brunchForm" action="https://formsubmit.co/mariage.ae.2026@gmail.com" method="POST" target="submit_iframe">
+        <input type="hidden" name="_subject" value="Réservation brunch : Mariage Andréanne &amp; Étienne">
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_template" value="box">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-          <div class="fgroup"><label class="flabel">Votre nom</label><input type="text" name="Nom" class="fc-full" placeholder="Prénom et nom" required></div>
-          <div class="fgroup"><label class="flabel">Votre courriel</label><input type="email" name="Courriel" class="fc-full" placeholder="votre@courriel.com" required></div>
-        </div>
-        <div class="fgroup"><label class="flabel">Votre message</label><textarea name="Message" class="fc-full" placeholder="Votre question…" required></textarea></div>
-        <div style="text-align:center"><button type="submit" class="btn btn-gold" id="contactBtn" style="padding:11px 34px">Envoyer le message</button></div>
-        <div class="ok-msg" id="contactOk">✓ Merci pour votre message ! Nous vous répondrons bientôt.</div>
-        <div class="err-msg" id="contactErr">Une erreur est survenue. Écrivez directement à <a href="mailto:mariage.ae.2026@gmail.com">mariage.ae.2026@gmail.com</a></div>
+        <div class="fgroup"><label class="flabel">Votre nom</label><input type="text" name="Nom" class="fc" placeholder="Prénom et nom"></div>
+        <div class="fgroup" style="margin-top:12px"><label class="flabel">Nombre de personnes</label><input type="number" name="Nombre de personnes" class="fc" min="1" max="30" value="1"></div>
+        <div style="margin-top:14px"><button type="submit" class="btn btn-gold" id="brunchBtn" style="font-size:9.5px;padding:7px 16px">Réserver ma place ♥</button></div>
       </form>
+      <div class="ok-msg" id="brunchOk">✓ Réservation reçue, merci !</div>
+      <div class="err-msg" id="brunchErr">Erreur, écrivez à <a href="mailto:mariage.ae.2026@gmail.com">mariage.ae.2026@gmail.com</a></div>
+    </div>
+    <div class="step-nav">
+      <button class="btn btn-ghost" onclick="wizPrev()">← Retour</button>
+      <button class="btn btn-gold" onclick="wizNext()">Suivant →</button>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ═══ ARCADE ════════ -->
-<div id="arcade">
-  <div class="sec-wrap">
-    <div class="sec-head reveal"><div class="sec-eye">Pour patienter jusqu'au grand jour</div><div class="sec-title">Mini-jeux</div><div class="sec-div"><span>◆</span></div></div>
-    <div class="arcade-wrap reveal">
-
-      <!-- Onglets -->
-      <div class="game-tabs">
-        <button class="game-tab active" data-g="chase" onclick="switchGame('chase')">🤵 La Chasse à la Mariée</button>
-        <button class="game-tab" data-g="wam" onclick="switchGame('wam')">💖 Tape les Cœurs</button>
-        <button class="game-tab" data-g="mem" onclick="switchGame('mem')">💍 Mémoire de Mariage</button>
+<!-- ════════ ÉTAPE 4 — LE MENU ════════ -->
+<section class="step" id="step4">
+  <div class="step-wrap">
+    <div class="sec-head"><div class="sec-eye">Repas trois services</div><div class="sec-title">Le menu</div><div class="sec-div"><span>◆</span></div></div>
+    <p class="step-intro">Voici le repas qui vous sera servi. Pour l'<strong>entrée</strong> et le <strong>plat principal</strong>, deux options vous seront proposées. Vous ferez votre choix à l'étape suivante.</p>
+    <div class="menu-full">
+      <div class="mf-header"><div class="mf-eye">Notre carte</div><div class="mf-title">Le repas</div></div>
+      <div class="mf-divider" style="margin-top:18px"><span>◆</span></div>
+      <div class="mf-course">
+        <div class="mf-course-label">Entrée (au choix)</div>
+        <div class="mf-options">
+          <div class="mf-option"><div class="mf-dish">Samossa de légumes au curry madras</div><div class="mf-dish-sub">sauce tzatzíki</div></div>
+          <div class="mf-or"><span>ou</span></div>
+          <div class="mf-option"><div class="mf-dish">Chèvre chaud</div><div class="mf-dish-sub">coulis de canneberge</div></div>
+        </div>
       </div>
-
-      <!-- JEU 1 -->
-      <div id="gameChase">
-        <p class="arcade-desc">Le marié doit rattraper la mariée avant la fin du chrono ! 🤵💨👰<br>Attention au caniche noir qui tente de lui bloquer le passage… 🐩<br>Ramassez le bouquet 💐 pour figer le caniche !</p>
-        <div class="diff-row">
-          <span>Difficulté :</span>
-          <button class="diff-btn active" data-diff="easy" onclick="setDiff('easy')">Facile</button>
-          <button class="diff-btn" data-diff="normal" onclick="setDiff('normal')">Normal</button>
-          <button class="diff-btn" data-diff="hard" onclick="setDiff('hard')">Difficile</button>
+      <div class="mf-divider"><span>◆ ◆ ◆</span></div>
+      <div class="mf-course">
+        <div class="mf-course-label">Plat principal (au choix)</div>
+        <div class="mf-options">
+          <div class="mf-option"><div class="mf-dish">Ravioli à la courge</div><div class="mf-dish-sub">sauce aux poivrons rôtis</div></div>
+          <div class="mf-or"><span>ou</span></div>
+          <div class="mf-option"><div class="mf-dish">Filet de saumon</div><div class="mf-dish-sub">sauce safranée</div></div>
         </div>
-        <div class="game-stat">
-          <span>Chrono : <strong id="gTimer">45s</strong></span>
-          <span>Meilleur : <strong id="gBest">—</strong></span>
-        </div>
-        <canvas id="gameCanvas" width="440" height="352" role="img" aria-label="Mini-jeu : le marié court après la mariée sur un terrain en grille. Un caniche noir tente de lui bloquer le passage."></canvas>
-        <div class="dpad" role="group" aria-label="Commandes directionnelles">
-          <div></div>
-          <button class="dpad-btn dp-u" aria-label="Déplacer vers le haut" onpointerdown="dpOn(0,-1)" onpointerup="dpOff()" onpointerleave="dpOff()">↑</button>
-          <div></div>
-          <button class="dpad-btn dp-l" aria-label="Déplacer vers la gauche" onpointerdown="dpOn(-1,0)" onpointerup="dpOff()" onpointerleave="dpOff()">←</button>
-          <div></div>
-          <button class="dpad-btn dp-r" aria-label="Déplacer vers la droite" onpointerdown="dpOn(1,0)"  onpointerup="dpOff()" onpointerleave="dpOff()">→</button>
-          <div></div>
-          <button class="dpad-btn dp-d" aria-label="Déplacer vers le bas" onpointerdown="dpOn(0,1)"  onpointerup="dpOff()" onpointerleave="dpOff()">↓</button>
-          <div></div>
-        </div>
-        <div class="game-ctrl"><button class="btn btn-gold" onclick="startGame()">Nouvelle partie</button></div>
-        <p class="game-hint">Flèches ou WASD · Appuyez pour commencer</p>
-        <p class="touch-hint">📱 Touchez l'écran pour téléporter le marié — glissez pour le diriger</p>
       </div>
-
-      <!-- JEU 2 — TAPE LES CŒURS -->
-      <div id="gameWam" style="display:none">
-        <p class="arcade-desc">Tapez les <strong style="color:var(--gold2)">30 cœurs d'amour</strong> avant la fin du chrono ! 💖<br>💖 Cœur = 1 pt · 💐 Bouquet = 5 pts · 💍 Bague = +5 secondes<br><strong style="color:#e89aaa">⚠️ Évitez les 💧 gouttes et 🌫️ brume : 3 touches = perdu !</strong></p>
-        <div class="game-stat">
-          <span>Score : <strong id="wamScore">0</strong> / 30</span>
-          <span>Vies : <strong id="wamLives">♥♥♥</strong></span>
-          <span>Chrono : <strong id="wamTimer">60s</strong></span>
-          <span>Meilleur : <strong id="wamBest">—</strong></span>
-        </div>
-        <div class="wam-board" id="wamBoard"></div>
-        <div class="game-ctrl"><button class="btn btn-gold" onclick="wamStart()">Nouvelle partie</button></div>
-        <p class="game-hint">Touchez ou cliquez les cœurs avant qu'ils disparaissent ✨</p>
+      <div class="mf-divider"><span>◆ ◆ ◆</span></div>
+      <div class="mf-course">
+        <div class="mf-course-label">Dessert</div>
+        <div class="mf-option"><div class="mf-dish">Gâteau crème brûlée fromage</div><div class="mf-dish-sub">offert à tous</div></div>
       </div>
-
-      <!-- JEU 3 — MÉMOIRE -->
-      <div id="gameMem" style="display:none">
-        <p class="arcade-desc">Trouvez les <strong style="color:var(--gold2)">8 paires</strong> de symboles de mariage ! 💍💕<br>Cliquez deux cartes — si elles correspondent, elles restent retournées.<br><strong style="color:var(--gold2)">Le défi : moins de coups possible !</strong></p>
-        <div class="game-stat">
-          <span>Coups : <strong id="memMoves">0</strong></span>
-          <span>Paires : <strong id="memPairs">0</strong> / 8</span>
-          <span>Chrono : <strong id="memTimer">0s</strong></span>
-          <span>Record : <strong id="memBest">—</strong></span>
-        </div>
-        <div class="mem-board" id="memBoard"></div>
-        <div class="game-ctrl"><button class="btn btn-gold" onclick="memStart()">Nouvelle partie</button></div>
-        <p class="game-hint">💡 Mémorisez les positions pour faire moins de coups</p>
-      </div>
-
+      <div class="mf-divider"><span>◆</span></div>
+      <div class="mf-course mf-final"><div class="mf-dish">Café · Thé · Infusion</div></div>
+    </div>
+    <div class="step-nav">
+      <button class="btn btn-ghost" onclick="wizPrev()">← Retour</button>
+      <button class="btn btn-gold" onclick="wizNext()">Faire mes choix →</button>
     </div>
   </div>
-</div>
+</section>
+
+<!-- ════════ ÉTAPE 5 — VOS CHOIX (ADULTES & ADOS) ════════ -->
+<section class="step" id="step5">
+  <div class="step-wrap">
+    <div class="sec-head"><div class="sec-eye">Une personne à la fois</div><div class="sec-title">Vos choix de repas</div><div class="sec-div"><span>◆</span></div></div>
+    <p class="step-intro">Inscrivez chaque <strong>adulte et adolescent (13 ans et +)</strong> de votre groupe, puis sélectionnez son entrée et son plat. <em>(Les enfants de 12 ans et moins, c'est à l'étape suivante.)</em></p>
+    <div class="menu-box">
+      <div class="plist-head">
+        <span>Adultes &amp; ados</span>
+        <button type="button" class="btn btn-gold" onclick="addPerson()" style="font-size:9.5px;padding:7px 15px">+ Ajouter une personne</button>
+      </div>
+      <div id="plist"></div>
+    </div>
+    <div class="step-nav">
+      <button class="btn btn-ghost" onclick="wizPrev()">← Retour</button>
+      <button class="btn btn-gold" onclick="wizNext()">Suivant →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ ÉTAPE 6 — ENFANTS ════════ -->
+<section class="step" id="step6">
+  <div class="step-wrap">
+    <div class="sec-head"><div class="sec-eye">Presque terminé</div><div class="sec-title">Des enfants ?</div><div class="sec-div"><span>◆</span></div></div>
+    <p class="step-intro">Avez-vous des <strong>enfants de 12 ans et moins</strong> dans votre groupe ?</p>
+    <div class="bigchoice-row">
+      <div class="bigchoice" id="kidsNo" onclick="setKids(false)"><div class="bigchoice-ico">🙂</div><div class="bigchoice-t">Non</div><div class="bigchoice-s">Passons à l'envoi</div></div>
+      <div class="bigchoice" id="kidsYes" onclick="setKids(true)"><div class="bigchoice-ico">🧒</div><div class="bigchoice-t">Oui</div><div class="bigchoice-s">J'en ai</div></div>
+    </div>
+    <div id="kidsBlock">
+      <div class="kid-fixed">🍽 L'hôtel propose un seul choix de repas pour les enfants : un <strong>fish and chips</strong>. Si cela ne convient pas à votre enfant, indiquez-le simplement dans la case ci-dessous et nous verrons avec le chef pour trouver une solution.</div>
+      <div class="menu-box" style="max-width:480px;margin:0 auto">
+        <div class="fgroup"><label class="flabel">Nombre d'enfants (12 ans et moins)</label><input type="number" id="kidsCount" class="fc" min="1" max="20" value="1"></div>
+        <div class="fgroup" style="margin-top:14px"><label class="flabel">Allergies, intolérances ou préférences <span class="opt-tag">(optionnel)</span></label><input type="text" id="kidsAllergies" class="fc" placeholder="Ex. : sans gluten, ou un enfant qui n'aime pas le poisson…" autocomplete="off"></div>
+      </div>
+    </div>
+    <div class="step-nav">
+      <button class="btn btn-ghost" onclick="wizPrev()">← Retour</button>
+      <button class="btn btn-gold" id="kidsNextBtn" onclick="wizNext()" style="opacity:.5;pointer-events:none">Suivant →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ ÉTAPE 7 — RÉCAPITULATIF & ENVOI ════════ -->
+<section class="step" id="step7">
+  <div class="step-wrap">
+    <div class="sec-head"><div class="sec-eye">Un dernier coup d'œil</div><div class="sec-title">Récapitulatif</div><div class="sec-div"><span>◆</span></div></div>
+    <p class="step-intro">Vérifiez vos choix avant de les envoyer. Vous pourrez toujours revenir en arrière pour les modifier.</p>
+    <div class="summary" id="summaryBox"></div>
+    <div class="ok-msg" id="menuOk">✓ Merci ! Vos choix ont bien été transmis.</div>
+    <div class="err-msg" id="menuErr">Une erreur est survenue. Écrivez-nous à <a href="mailto:mariage.ae.2026@gmail.com">mariage.ae.2026@gmail.com</a></div>
+    <div class="step-nav">
+      <button class="btn btn-ghost" onclick="wizPrev()">← Modifier</button>
+      <button class="btn btn-gold btn-lg" id="menuBtn" onclick="submitChoices()">Envoyer nos choix ♥</button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ ÉTAPE 8 — BONUS : MINI-JEUX & CONTACT ════════ -->
+<section class="step" id="step8">
+  <div class="step-wrap">
+    <div class="done-card">
+      <div class="done-mono">Merci ♥</div>
+      <p class="step-intro" style="margin-bottom:10px">Vos choix sont envoyés. En attendant le grand jour, amusez-vous un peu, ou écrivez-nous si vous avez une question.</p>
+    </div>
+
+    <div id="arcade">
+      <div class="sec-head" style="margin-top:30px"><div class="sec-eye">Pour patienter jusqu'au grand jour</div><div class="sec-title">Mini-jeux</div><div class="sec-div"><span>◆</span></div></div>
+      <div class="arcade-wrap">
+        <div class="game-tabs">
+          <button class="game-tab active" data-g="chase" onclick="switchGame('chase')">🤵 La Chasse à la Mariée</button>
+          <button class="game-tab" data-g="wam" onclick="switchGame('wam')">💖 Tape les Cœurs</button>
+          <button class="game-tab" data-g="mem" onclick="switchGame('mem')">💍 Mémoire de Mariage</button>
+        </div>
+        <div id="gameChase">
+          <p class="arcade-desc">Le marié doit rattraper la mariée avant la fin du chrono ! 🤵💨👰<br>Attention au caniche noir qui tente de lui bloquer le passage… 🐩<br>Ramassez le bouquet 💐 pour figer le caniche !</p>
+          <div class="diff-row"><span>Difficulté :</span><button class="diff-btn active" data-diff="easy" onclick="setDiff('easy')">Facile</button><button class="diff-btn" data-diff="normal" onclick="setDiff('normal')">Normal</button><button class="diff-btn" data-diff="hard" onclick="setDiff('hard')">Difficile</button></div>
+          <div class="game-stat"><span>Chrono : <strong id="gTimer">45s</strong></span><span>Meilleur : <strong id="gBest">—</strong></span></div>
+          <canvas id="gameCanvas" width="440" height="352" role="img" aria-label="Mini-jeu : le marié court après la mariée."></canvas>
+          <div class="dpad" role="group" aria-label="Commandes directionnelles">
+            <div></div><button class="dpad-btn dp-u" aria-label="Haut" onpointerdown="dpOn(0,-1)" onpointerup="dpOff()" onpointerleave="dpOff()">↑</button><div></div>
+            <button class="dpad-btn dp-l" aria-label="Gauche" onpointerdown="dpOn(-1,0)" onpointerup="dpOff()" onpointerleave="dpOff()">←</button><div></div>
+            <button class="dpad-btn dp-r" aria-label="Droite" onpointerdown="dpOn(1,0)" onpointerup="dpOff()" onpointerleave="dpOff()">→</button><div></div>
+            <button class="dpad-btn dp-d" aria-label="Bas" onpointerdown="dpOn(0,1)" onpointerup="dpOff()" onpointerleave="dpOff()">↓</button><div></div>
+          </div>
+          <div class="game-ctrl"><button class="btn btn-gold" onclick="startGame()">Nouvelle partie</button></div>
+          <p class="game-hint">Flèches ou WASD · Appuyez pour commencer</p>
+          <p class="touch-hint">📱 Touchez l'écran pour téléporter le marié, glissez pour le diriger</p>
+        </div>
+        <div id="gameWam" style="display:none">
+          <p class="arcade-desc">Tapez les <strong style="color:var(--gold2)">30 cœurs d'amour</strong> avant la fin du chrono ! 💖<br>💖 Cœur = 1 pt · 💐 Bouquet = 5 pts · 💍 Bague = +5 secondes<br><strong style="color:#e89aaa">⚠️ Évitez les 💧 gouttes et 🌫️ brume : 3 touches = perdu !</strong></p>
+          <div class="game-stat"><span>Score : <strong id="wamScore">0</strong> / 30</span><span>Vies : <strong id="wamLives">♥♥♥</strong></span><span>Chrono : <strong id="wamTimer">60s</strong></span><span>Meilleur : <strong id="wamBest">—</strong></span></div>
+          <div class="wam-board" id="wamBoard"></div>
+          <div class="game-ctrl"><button class="btn btn-gold" onclick="wamStart()">Nouvelle partie</button></div>
+          <p class="game-hint">Touchez ou cliquez les cœurs avant qu'ils disparaissent ✨</p>
+        </div>
+        <div id="gameMem" style="display:none">
+          <p class="arcade-desc">Trouvez les <strong style="color:var(--gold2)">8 paires</strong> de symboles de mariage ! 💍💕<br>Cliquez deux cartes : si elles correspondent, elles restent retournées.<br><strong style="color:var(--gold2)">Le défi : moins de coups possible !</strong></p>
+          <div class="game-stat"><span>Coups : <strong id="memMoves">0</strong></span><span>Paires : <strong id="memPairs">0</strong> / 8</span><span>Chrono : <strong id="memTimer">0s</strong></span><span>Record : <strong id="memBest">—</strong></span></div>
+          <div class="mem-board" id="memBoard"></div>
+          <div class="game-ctrl"><button class="btn btn-gold" onclick="memStart()">Nouvelle partie</button></div>
+          <p class="game-hint">💡 Mémorisez les positions pour faire moins de coups</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="contact" style="margin-top:50px">
+      <div class="sec-head"><div class="sec-eye">Une question ?</div><div class="sec-title">Nous écrire</div><div class="sec-div"><span>◆</span></div></div>
+      <div class="cform">
+        <form id="contactForm" action="https://formsubmit.co/mariage.ae.2026@gmail.com" method="POST" target="submit_iframe">
+          <input type="hidden" name="_subject" value="Question : Mariage Andréanne &amp; Étienne">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="box">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="fgroup"><label class="flabel">Votre nom</label><input type="text" name="Nom" class="fc-full" placeholder="Prénom et nom"></div>
+            <div class="fgroup"><label class="flabel">Votre courriel</label><input type="email" name="Courriel" class="fc-full" placeholder="votre@courriel.com"></div>
+          </div>
+          <div class="fgroup"><label class="flabel">Votre message</label><textarea name="Message" class="fc-full" placeholder="Votre question…"></textarea></div>
+          <div style="text-align:center"><button type="submit" class="btn btn-gold" id="contactBtn" style="padding:11px 34px">Envoyer le message</button></div>
+          <div class="ok-msg" id="contactOk">✓ Merci pour votre message ! Nous vous répondrons bientôt.</div>
+          <div class="err-msg" id="contactErr">Une erreur est survenue. Écrivez directement à <a href="mailto:mariage.ae.2026@gmail.com">mariage.ae.2026@gmail.com</a></div>
+        </form>
+      </div>
+    </div>
+
+    <div class="step-nav center">
+      <button class="btn btn-ghost" onclick="wizGo(0)">↑ Retour à l'accueil</button>
+    </div>
+  </div>
+</section>
 
 <footer>
-  <div class="f-names">Andréanne &amp; Étienne</div>
   <div class="f-date">19 septembre 2026</div>
   <div class="f-email">♥ <a href="mailto:mariage.ae.2026@gmail.com">mariage.ae.2026@gmail.com</a></div>
   <div class="f-love">Avec tout notre amour</div>
 </footer>
 
 <script>
-/* ── Force scroll-to-top on load (overrides browser scroll restoration & any anchor jumps) ── */
+/* ── Restauration du scroll & top au chargement ── */
 if('scrollRestoration' in history){history.scrollRestoration='manual';}
 window.addEventListener('load',()=>{window.scrollTo(0,0);});
 window.scrollTo(0,0);
 
-/* ── Reveal ── */
-const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')})},{threshold:.1,rootMargin:'0px 0px -36px 0px'});
-document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+/* ══════════════════════════════════════════════════════════
+   PARCOURS GUIDÉ — navigation entre les étapes
+   Étapes : 0 Accueil · 1 Programme · 2 Hébergement · 3 Brunch
+            4 Menu · 5 Repas · 6 Enfants · 7 Envoi · 8 Bonus
+   ══════════════════════════════════════════════════════════ */
+const DOT_LABELS=['Accueil','Programme','Infos','Brunch','Menu','Repas','Enfants','Envoi'];
+const LAST_DOT=7;            // dernière étape « principale » (index)
+const BONUS_STEP=8;          // étape mini-jeux / contact
+const STEP_REPAS=5, STEP_ENFANTS=6, STEP_ENVOI=7;
+let wizCur=0;
 
-/* ── Brunch toggle ── */
-function toggleBrunch(){
-  const w=document.getElementById('brunchFormWrap');
-  const b=document.getElementById('brunchToggleBtn');
-  const open=w.style.display==='block';
-  w.style.display=open?'none':'block';
-  b.textContent=open?'Réserver ma place →':'✕ Fermer';
-}
-
-/* ── FormSubmit via iframe (POST standard, aucune AJAX requise) ──
-   ▸ Les formulaires ciblent l'iframe caché → aucune navigation de page
-   ▸ L'événement "load" de l'iframe détecte la réponse de FormSubmit
-   ▸ À la toute PREMIÈRE soumission, FormSubmit envoie un courriel de
-     confirmation à mariage.ae.2026@gmail.com → cliquer le lien = activé
-   ────────────────────────────────────────────────────────────────── */
-const subIframe = document.getElementById('submit_iframe');
-let iframeUsed = false; // ignore le premier load (iframe vide initial)
-subIframe.addEventListener('load', () => { iframeUsed = true; });
-
-function onIframeLoad(callback) {
-  const handler = () => {
-    subIframe.removeEventListener('load', handler);
-    clearTimeout(timer);
-    callback(true);  // vrai succès : l'iframe a reçu la réponse
-  };
-  // Fallback : après 6 s sans réponse on considère que ça a échoué
-  const timer = setTimeout(() => {
-    subIframe.removeEventListener('load', handler);
-    callback(false);  // timeout : probablement échoué
-  }, 6000);
-  subIframe.addEventListener('load', handler);
-}
-
-/* ── Brunch form ── */
-document.getElementById('brunchForm').addEventListener('submit', function(e) {
-  const btn = document.getElementById('brunchBtn');
-  btn.textContent = 'Envoi en cours…'; btn.disabled = true;
-  onIframeLoad((success) => {
-    document.getElementById('brunchOk').style.display = success ? 'block' : 'none';
-    document.getElementById('brunchErr').style.display = success ? 'none' : 'block';
-    btn.textContent = 'Confirmer ♥'; btn.disabled = false;
-    if(success) document.getElementById('brunchForm').reset();
+function renderProg(){
+  const dots=document.querySelectorAll('.wiz-dot');
+  const shown=Math.min(wizCur,LAST_DOT);
+  dots.forEach((d,i)=>{
+    d.classList.toggle('done', i<shown || wizCur===BONUS_STEP);
+    d.classList.toggle('current', i===wizCur && wizCur<=LAST_DOT);
   });
-  // Laisser le formulaire se soumettre normalement (target="submit_iframe")
+  const fill=document.getElementById('wizFill');
+  const pct = wizCur===BONUS_STEP ? 100 : (shown/LAST_DOT)*100;
+  fill.style.width=pct+'%';
+  const lbl=document.getElementById('wizMobLabel');
+  lbl.textContent = wizCur===BONUS_STEP ? 'Merci ♥' : DOT_LABELS[wizCur];
+}
+function wizGo(n){
+  if(n===STEP_ENVOI) buildSummary();   // récap toujours à jour à l'arrivée
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step'+n).classList.add('active');
+  wizCur=n;
+  renderProg();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function wizPrev(){ if(wizCur>0) wizGo(wizCur-1); }
+function wizNext(){
+  if(wizCur===STEP_REPAS && !validateAdults()){ alert('Pour chaque personne ajoutée : indiquez le nom, l’entrée et le plat.'); return; }
+  if(wizCur===STEP_ENFANTS){
+    if(kidsChoice===null){ alert('Répondez Oui ou Non à propos des enfants.'); return; }
+    if(kidsChoice===true && !validateKids()){ alert('Indiquez le nombre d’enfants (au moins 1).'); return; }
+  }
+  if(wizCur<BONUS_STEP) wizGo(wizCur+1);
+}
+// Clic sur les pastilles de progression — navigation directe vers l'étape choisie
+document.querySelectorAll('.wiz-dot').forEach(d=>{
+  d.addEventListener('click',()=>{ wizGo(+d.dataset.go); });
 });
 
-/* ── Contact form ── */
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-  const btn = document.getElementById('contactBtn');
-  btn.textContent = 'Envoi en cours…'; btn.disabled = true;
-  onIframeLoad((success) => {
-    document.getElementById('contactOk').style.display = success ? 'block' : 'none';
-    document.getElementById('contactErr').style.display = success ? 'none' : 'block';
-    btn.textContent = 'Envoyer le message'; btn.disabled = false;
-    if(success) document.getElementById('contactForm').reset();
+/* ══════════════════════════════════════════════════════════
+   ENVOI VERS FORMSUBMIT
+   1) tentative AJAX (JSON) — retour de succès/erreur fiable
+   2) repli : POST classique vers l'iframe caché (aucun CORS requis)
+   ══════════════════════════════════════════════════════════ */
+const FS_EMAIL='mariage.ae.2026@gmail.com';
+const subIframe=document.getElementById('submit_iframe');
+
+async function ajaxSend(payload){
+  const res=await fetch('https://formsubmit.co/ajax/'+FS_EMAIL,{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify(payload)
   });
-  // Laisser le formulaire se soumettre normalement
+  let d={}; try{ d=await res.json(); }catch(_){}
+  if(!res.ok || String(d.success)!=='true') throw new Error(d.message||('HTTP '+res.status));
+  return d;
+}
+function iframeSend(payload, onDone){
+  const tmp=document.createElement('form');
+  tmp.method='POST'; tmp.action='https://formsubmit.co/'+FS_EMAIL;
+  tmp.target='submit_iframe'; tmp.style.display='none';
+  const fields=Object.assign({'_captcha':'false'}, payload);
+  Object.entries(fields).forEach(([k,v])=>{ const i=document.createElement('input'); i.type='hidden'; i.name=k; i.value=v; tmp.appendChild(i); });
+  document.body.appendChild(tmp);
+  let done=false;
+  const finish=()=>{ if(done) return; done=true; subIframe.removeEventListener('load',handler); clearTimeout(t); try{document.body.removeChild(tmp);}catch(_){} onDone(true); };
+  const handler=()=>finish();
+  const t=setTimeout(finish, 3500); // le POST part de toute façon — on confirme après un court délai
+  subIframe.addEventListener('load',handler);
+  tmp.submit();
+}
+function sendForm(payload, onOk, onErr){
+  ajaxSend(payload).then(()=>onOk()).catch(()=> iframeSend(payload, ()=>onOk()));
+}
+
+/* ── Formulaire brunch ── */
+document.getElementById('brunchForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const f=e.target, btn=document.getElementById('brunchBtn');
+  document.getElementById('brunchOk').style.display='none';
+  document.getElementById('brunchErr').style.display='none';
+  btn.textContent='Envoi en cours…'; btn.disabled=true;
+  const reset=()=>{ btn.textContent='Réserver ma place ♥'; btn.disabled=false; };
+  sendForm(
+    {_subject:'Réservation brunch : Mariage Andréanne & Étienne', _template:'box', 'Nom':f.Nom.value.trim(), 'Nombre de personnes':f['Nombre de personnes'].value},
+    ()=>{ document.getElementById('brunchOk').style.display='block'; f.reset(); reset(); },
+    ()=>{ document.getElementById('brunchErr').style.display='block'; reset(); }
+  );
 });
 
-/* ── Menu form (cartes cliquables) ── */
-let pCount = 0;
-function addPerson(n='', r='', d='', focusName=true){
-  pCount++;
-  const id = 'p'+Date.now()+'_'+pCount;
-  const div = document.createElement('div');
-  div.className = 'pentry';
-  div.dataset.repas = r;
-  div.dataset.dessert = d;
-  div.innerHTML = `
-    <div class="pentry-head">
-      <span class="pentry-num">Personne ${pCount}</span>
-      <input type="text" class="fc pn" placeholder="Prénom et nom" value="${n}" autocomplete="off">
-      <button type="button" class="btn btn-del" onclick="this.closest('.pentry').remove()" title="Supprimer">✕</button>
-    </div>
-    <div class="choice-section">
-      <div class="choice-section-label">🍽 Repas principal</div>
-      <div class="choice-grid" data-group="repas">
-        <label class="choice-card" data-val="Ravioli à la courge, sauce aux poivrons rôtis">
-          <input type="radio" name="repas_${id}">
-          <div class="cc-name">🍂 Ravioli à la courge</div>
-          <div class="cc-sub">sauce aux poivrons rôtis</div>
-        </label>
-        <label class="choice-card" data-val="Filet de saumon, sauce safranée">
-          <input type="radio" name="repas_${id}">
-          <div class="cc-name">🐟 Filet de saumon</div>
-          <div class="cc-sub">sauce safranée</div>
-        </label>
-      </div>
-    </div>
-    <div class="choice-section">
-      <div class="choice-section-label">🍰 Dessert</div>
-      <div class="choice-grid" data-group="dessert">
-        <label class="choice-card" data-val="Gâteau au fromage, carottes et caramel">
-          <input type="radio" name="dessert_${id}">
-          <div class="cc-name">🥕 Gâteau au fromage</div>
-          <div class="cc-sub">carottes et caramel</div>
-        </label>
-        <label class="choice-card" data-val="Gâteau crème brûlée fromage">
-          <input type="radio" name="dessert_${id}">
-          <div class="cc-name">🍮 Crème brûlée</div>
-          <div class="cc-sub">fromage</div>
-        </label>
-      </div>
-    </div>
-  `;
-  document.getElementById('plist').appendChild(div);
-  // Wire up card clicks
-  div.querySelectorAll('.choice-grid').forEach(grid => {
-    const cards = grid.querySelectorAll('.choice-card');
-    cards.forEach(card => {
-      card.addEventListener('click', (e) => {
+/* ── Formulaire contact ── */
+document.getElementById('contactForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const f=e.target, btn=document.getElementById('contactBtn');
+  document.getElementById('contactOk').style.display='none';
+  document.getElementById('contactErr').style.display='none';
+  btn.textContent='Envoi en cours…'; btn.disabled=true;
+  const reset=()=>{ btn.textContent='Envoyer le message'; btn.disabled=false; };
+  sendForm(
+    {_subject:'Question : Mariage Andréanne & Étienne', _template:'box', 'Nom':f.Nom.value.trim(), 'Courriel':f.Courriel.value.trim(), 'Message':f.Message.value.trim()},
+    ()=>{ document.getElementById('contactOk').style.display='block'; f.reset(); reset(); },
+    ()=>{ document.getElementById('contactErr').style.display='block'; reset(); }
+  );
+});
+
+/* ══════════════════════════════════════════════════════════
+   CHOIX DE REPAS — adultes & ados
+   ══════════════════════════════════════════════════════════ */
+const ENTREES=[
+  {val:'Samossa de légumes au curry madras, sauce tzatziki', ico:'🥟', name:'Samossa de légumes', sub:'curry madras, sauce tzatziki'},
+  {val:'Chèvre chaud, coulis de canneberge',                 ico:'🧀', name:'Chèvre chaud',        sub:'coulis de canneberge'}
+];
+const PLATS=[
+  {val:'Ravioli à la courge, sauce aux poivrons rôtis', ico:'🍂', name:'Ravioli à la courge', sub:'sauce aux poivrons rôtis'},
+  {val:'Filet de saumon, sauce safranée',               ico:'🐟', name:'Filet de saumon',     sub:'sauce safranée'}
+];
+let pCount=0;
+
+function gridHTML(group,opts){
+  return `<div class="choice-grid" data-group="${group}">`+
+    opts.map(o=>`<label class="choice-card" data-val="${o.val.replace(/"/g,'&quot;')}">
+        <input type="radio">
+        <div class="cc-name">${o.ico} ${o.name}</div>
+        <div class="cc-sub">${o.sub}</div>
+      </label>`).join('')+`</div>`;
+}
+function wireCards(scope){
+  scope.querySelectorAll('.choice-grid').forEach(grid=>{
+    const cards=grid.querySelectorAll('.choice-card');
+    cards.forEach(card=>{
+      card.addEventListener('click',e=>{
         e.preventDefault();
-        cards.forEach(c => c.classList.remove('selected'));
+        cards.forEach(c=>c.classList.remove('selected'));
         card.classList.add('selected');
-        const input = card.querySelector('input');
-        if(input) input.checked = true;
-        // Clear error highlight
-        div.style.borderColor = '';
+        const inp=card.querySelector('input'); if(inp) inp.checked=true;
+        scope.style.borderColor='';
       });
     });
   });
-  // Restore previous selections (when re-adding from saved state)
-  if(r){
-    div.querySelectorAll('[data-group="repas"] .choice-card').forEach(c => {
-      if(c.dataset.val === r){ c.click(); }
-    });
-  }
-  if(d){
-    div.querySelectorAll('[data-group="dessert"] .choice-card').forEach(c => {
-      if(c.dataset.val === d){ c.click(); }
-    });
-  }
-  if(focusName !== false) div.querySelector('.pn').focus();
 }
-addPerson('', '', '', false);
-
-document.getElementById('menuForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const rows = document.querySelectorAll('.pentry');
-  const lines = []; let bad = false;
-  rows.forEach(row => {
-    const n = row.querySelector('.pn').value.trim();
-    const repasCard = row.querySelector('[data-group="repas"] .choice-card.selected');
-    const dessertCard = row.querySelector('[data-group="dessert"] .choice-card.selected');
-    const r = repasCard ? repasCard.dataset.val : '';
-    const d = dessertCard ? dessertCard.dataset.val : '';
-    if(!n || !r || !d){
-      bad = true;
-      row.style.borderColor = 'var(--rust)';
-      setTimeout(() => row.style.borderColor = '', 2600);
-    } else {
-      row.style.borderColor = '';
-      lines.push(`• ${n}\n  Repas : ${r}\n  Dessert : ${d}`);
-    }
+function addPerson(){
+  pCount++;
+  const div=document.createElement('div');
+  div.className='pentry';
+  div.innerHTML=`
+    <div class="pentry-head">
+      <span class="pentry-num">Personne ${pCount}</span>
+      <input type="text" class="fc pn" placeholder="Prénom et nom" autocomplete="off">
+      <button type="button" class="btn btn-del" onclick="this.closest('.pentry').remove()" title="Retirer">✕</button>
+    </div>
+    <div class="choice-section">
+      <div class="choice-section-label">🥢 Entrée</div>
+      ${gridHTML('entree',ENTREES)}
+    </div>
+    <div class="choice-section">
+      <div class="choice-section-label">🍽 Plat principal</div>
+      ${gridHTML('plat',PLATS)}
+    </div>
+    <div class="choice-section allergy-row">
+      <div class="choice-section-label">⚠ Allergie ou intolérance <span class="opt-tag">(optionnel)</span></div>
+      <input type="text" class="fc allergy" placeholder="Ex. : sans gluten, arachides… (laisser vide si aucune)" autocomplete="off">
+    </div>`;
+  document.getElementById('plist').appendChild(div);
+  wireCards(div);
+  div.querySelector('.pn').focus();
+}
+function validateAdults(){
+  let ok=true;
+  document.querySelectorAll('#plist .pentry').forEach(row=>{
+    const n=row.querySelector('.pn').value.trim();
+    const e=row.querySelector('[data-group="entree"] .choice-card.selected');
+    const p=row.querySelector('[data-group="plat"] .choice-card.selected');
+    if(!n||!e||!p){ ok=false; row.style.borderColor='var(--rust)'; setTimeout(()=>row.style.borderColor='',2600); }
   });
-  if(bad){alert('Veuillez remplir tous les champs et faire vos choix pour chaque personne.');return;}
-  if(!lines.length){alert('Ajoutez au moins une personne.');return;}
+  return ok;
+}
 
-  const msg = `Choix de menu pour ${lines.length} personne(s) :\n\n${lines.join('\n\n')}`;
-  const btn = document.getElementById('menuBtn');
+/* ══════════════════════════════════════════════════════════
+   ENFANTS (12 ans et moins) — menu enfant fixe : fish and chips
+   On demande le nombre d'enfants + les allergies éventuelles
+   ══════════════════════════════════════════════════════════ */
+let kidsChoice=null;
+function enableKidsNext(){ const b=document.getElementById('kidsNextBtn'); b.style.opacity=''; b.style.pointerEvents=''; }
+function setKids(yes){
+  kidsChoice=yes;
+  document.getElementById('kidsYes').classList.toggle('selected',yes);
+  document.getElementById('kidsNo').classList.toggle('selected',!yes);
+  document.getElementById('kidsBlock').style.display=yes?'block':'none';
+  enableKidsNext();
+}
+function validateKids(){
+  const c=parseInt(document.getElementById('kidsCount').value,10);
+  return c>=1;
+}
+
+/* ══════════════════════════════════════════════════════════
+   RÉCAPITULATIF
+   ══════════════════════════════════════════════════════════ */
+function collect(){
+  const adults=[];
+  document.querySelectorAll('#plist .pentry').forEach(row=>{
+    const n=row.querySelector('.pn').value.trim();
+    const e=row.querySelector('[data-group="entree"] .choice-card.selected');
+    const p=row.querySelector('[data-group="plat"] .choice-card.selected');
+    const a=row.querySelector('.allergy').value.trim();
+    if(n&&e&&p) adults.push({n, e:e.dataset.val, p:p.dataset.val, a});
+  });
+  let kids={count:0, allergies:''};
+  if(kidsChoice===true){
+    const c=parseInt(document.getElementById('kidsCount').value,10)||0;
+    kids={count:c, allergies:document.getElementById('kidsAllergies').value.trim()};
+  }
+  return {adults, kids};
+}
+function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function buildSummary(){
+  const {adults,kids}=collect();
+  const box=document.getElementById('summaryBox');
+  if(!adults.length && kids.count===0){
+    box.innerHTML='<div class="sum-empty">Aucun choix pour l’instant. Revenez en arrière pour ajouter au moins une personne.</div>';
+    return;
+  }
+  let html='';
+  if(adults.length){
+    html+='<div class="sum-group"><div class="sum-glabel">Adultes &amp; ados</div>';
+    adults.forEach(a=>{
+      html+=`<div class="sum-row"><span class="sum-name">${esc(a.n)}</span><span class="sum-detail">${esc(a.e)}<br>${esc(a.p)}</span>`;
+      if(a.a) html+=`<span class="sum-allergy">⚠ ${esc(a.a)}</span>`;
+      html+='</div>';
+    });
+    html+='</div>';
+  }
+  if(kids.count>0){
+    html+='<div class="sum-group"><div class="sum-glabel">Enfants (menu enfant)</div>';
+    html+=`<div class="sum-row"><span class="sum-name">${kids.count} enfant${kids.count>1?'s':''}</span><span class="sum-detail">Fish and chips</span>`;
+    if(kids.allergies) html+=`<span class="sum-allergy">⚠ ${esc(kids.allergies)}</span>`;
+    html+='</div></div>';
+  }
+  html+='<div class="sum-fixed">Dessert pour tous : <strong>Gâteau crème brûlée fromage</strong><br>Cocktail &amp; bouchées : au choix du chef</div>';
+  box.innerHTML=html;
+}
+
+/* ══════════════════════════════════════════════════════════
+   ENVOI DES CHOIX
+   ══════════════════════════════════════════════════════════ */
+function submitChoices(){
+  const {adults,kids}=collect();
+  if(!adults.length && kids.count===0){ alert('Ajoutez au moins une personne avant d’envoyer.'); wizGo(STEP_REPAS); return; }
+
+  let msg=`RÉPONSE : ${adults.length} adulte(s)/ado(s) · ${kids.count} enfant(s)\n`;
+  if(adults.length){
+    msg+='\nADULTES & ADOS :\n';
+    adults.forEach(a=>{ msg+=`• ${a.n}\n   Entrée : ${a.e}\n   Plat : ${a.p}\n`+(a.a?`   ⚠ Allergie : ${a.a}\n`:''); });
+  }
+  if(kids.count>0){
+    msg+=`\nENFANTS (menu enfant, fish and chips) : ${kids.count} enfant(s)\n`;
+    if(kids.allergies) msg+=`   ⚠ Allergies : ${kids.allergies}\n`;
+  }
+  msg+='\nDessert pour tous : Gâteau crème brûlée fromage';
+
+  const btn=document.getElementById('menuBtn');
   btn.textContent='Envoi en cours…'; btn.disabled=true;
+  document.getElementById('menuOk').style.display='none';
+  document.getElementById('menuErr').style.display='none';
+  const reset=()=>{ btn.textContent='Envoyer nos choix ♥'; btn.disabled=false; };
 
-  // Créer un formulaire invisible et le soumettre dans l'iframe
-  const tmpForm = document.createElement('form');
-  tmpForm.method = 'POST';
-  tmpForm.action = 'https://formsubmit.co/mariage.ae.2026@gmail.com';
-  tmpForm.target = 'submit_iframe';
-  tmpForm.style.display = 'none';
-  const fields = {
-    '_subject': 'Choix de menu — Mariage Andréanne & Étienne',
-    '_captcha': 'false',
-    '_template': 'box',
-    'Choix compilés': msg
-  };
-  Object.entries(fields).forEach(([k,v]) => {
-    const inp = document.createElement('input');
-    inp.type='hidden'; inp.name=k; inp.value=v;
-    tmpForm.appendChild(inp);
-  });
-  document.body.appendChild(tmpForm);
+  sendForm(
+    { '_subject':'Choix de menu : Mariage Andréanne & Étienne', '_template':'box', 'Réponse':msg },
+    ()=>{ reset(); wizGo(BONUS_STEP); },
+    ()=>{ reset(); document.getElementById('menuErr').style.display='block'; }
+  );
+}
 
-  onIframeLoad((success) => {
-    document.getElementById('menuOk').style.display = success ? 'block' : 'none';
-    document.getElementById('menuErr').style.display = success ? 'none' : 'block';
-    if(success){
-      document.getElementById('plist').innerHTML=''; pCount=0; addPerson('', '', '', false);
-    }
-    btn.textContent='Envoyer mes choix ♥'; btn.disabled=false;
-    document.body.removeChild(tmpForm);
-  });
-
-  tmpForm.submit();
-});
+/* ── Initialisation ── */
+addPerson();
+renderProg();
 
 /* ══════════════════════════════════════════════════════════
    🎮 SHARED UTILS — localStorage, math, polyfills, confetti
@@ -1820,7 +1969,6 @@ function switchGame(g){
   if(g!=='mem' && memState==='playing') memPause();
 }
 window.switchGame=switchGame;
-
 
 </script>
 </body>
