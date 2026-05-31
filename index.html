@@ -93,16 +93,18 @@ nav a:hover{color:var(--gold3);background:rgba(200,162,72,.1)}
 .btn{font-family:'Cinzel',serif;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;border-radius:2px;cursor:pointer;border:1px solid;padding:9px 20px;display:inline-flex;align-items:center;gap:6px;transition:all .25s;background:transparent}
 .btn-gold{border-color:var(--gold);color:var(--gold2)}
 .btn-gold:hover{background:var(--gold);color:var(--g0)}
+.btn-fill{background:var(--gold);border-color:var(--gold);color:var(--g0);box-shadow:0 2px 10px rgba(200,162,72,.28)}
+.btn-fill:hover{background:var(--gold2);border-color:var(--gold2);color:var(--g0)}
 .btn-del{border-color:rgba(184,86,42,.38);color:rgba(184,86,42,.65);padding:6px 10px;font-size:13px;flex-shrink:0}
 .btn-del:hover{border-color:var(--rust);color:var(--rust);background:rgba(184,86,42,.08)}
-.fc{background:rgba(30,46,37,.78);border:1px solid rgba(200,162,72,.3);border-radius:3px;color:var(--cream);padding:7px 10px;font-family:'Cormorant Garamond',serif;font-size:15px;width:100%;transition:border-color .25s;appearance:none;-webkit-appearance:none}
-.fc:focus{outline:none;border-color:var(--gold)}
-.fc::placeholder{color:var(--cream3)}
+.fc{background:rgba(245,234,216,.10);border:1.5px solid rgba(200,162,72,.55);border-radius:4px;color:var(--cream);padding:9px 12px;font-family:'Cormorant Garamond',serif;font-size:15px;width:100%;transition:border-color .25s,box-shadow .25s,background .25s;appearance:none;-webkit-appearance:none;box-shadow:inset 0 1px 3px rgba(0,0,0,.22)}
+.fc:focus{outline:none;border-color:var(--gold);background:rgba(245,234,216,.16);box-shadow:0 0 0 3px rgba(200,162,72,.20)}
+.fc::placeholder{color:rgba(245,234,216,.6)}
 select.fc{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23c8a248' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;padding-right:27px;cursor:pointer}
 select.fc option{background:#2e4436;color:var(--cream)}
-.fc-full{width:100%;background:rgba(30,46,37,.65);border:1px solid rgba(200,162,72,.3);border-radius:3px;color:var(--cream);padding:10px 14px;font-family:'Cormorant Garamond',serif;font-size:17px;transition:border-color .25s}
-.fc-full:focus{outline:none;border-color:var(--gold)}
-.fc-full::placeholder{color:var(--cream3)}
+.fc-full{width:100%;background:rgba(245,234,216,.10);border:1.5px solid rgba(200,162,72,.55);border-radius:4px;color:var(--cream);padding:11px 14px;font-family:'Cormorant Garamond',serif;font-size:17px;transition:border-color .25s,box-shadow .25s,background .25s;box-shadow:inset 0 1px 3px rgba(0,0,0,.22)}
+.fc-full:focus{outline:none;border-color:var(--gold);background:rgba(245,234,216,.16);box-shadow:0 0 0 3px rgba(200,162,72,.20)}
+.fc-full::placeholder{color:rgba(245,234,216,.6)}
 textarea.fc-full{resize:vertical;min-height:125px}
 .flabel{display:block;font-family:'Cinzel',serif;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
 .menu-box{background:rgba(46,68,54,.42);border:1px solid var(--bord);border-radius:8px;padding:36px 40px}
@@ -192,7 +194,7 @@ textarea.fc-full{resize:vertical;min-height:125px}
 .arcade-desc{font-size:15px;color:var(--cream2);font-style:italic;max-width:500px;margin:0 auto 22px}
 .game-stat{display:flex;align-items:center;justify-content:center;gap:18px 24px;margin:12px 0;font-family:'Cinzel',serif;font-size:12px;color:var(--gold);letter-spacing:2px;flex-wrap:wrap}
 .game-stat strong{color:var(--gold2)}
-#gameCanvas{border:1.5px solid var(--gold);border-radius:4px;display:block;margin:0 auto;max-width:100%}
+#gameCanvas{border:1.5px solid var(--gold);border-radius:4px;display:block;margin:0 auto;max-width:100%;touch-action:none;-webkit-user-select:none;user-select:none}
 .game-ctrl{display:flex;gap:12px;justify-content:center;margin:14px 0}
 .game-hint{font-size:12px;color:rgba(200,162,72,.4);font-style:italic;margin-top:3px}
 .game-tabs{display:flex;gap:8px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
@@ -278,8 +280,9 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
 .btn-ghost{border-color:rgba(200,162,72,.3);color:var(--cream2)}
 .btn-ghost:hover{border-color:var(--gold);color:var(--gold2);background:transparent}
 .btn-lg{padding:12px 30px;font-size:11px}
-.step-skip{font-size:13px;font-style:italic;color:var(--cream3);text-align:center;margin-top:14px}
-.step-skip a{color:var(--gold2);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.step-skip{font-size:15px;text-align:center;margin:0 auto 26px;max-width:520px}
+.step-skip a{display:inline-block;margin-top:8px;padding:11px 24px;border:1.5px solid rgba(200,162,72,.45);border-radius:30px;color:var(--gold2);cursor:pointer;text-decoration:none;font-family:'Cinzel',serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;transition:all .2s}
+.step-skip a:hover{border-color:var(--gold);background:rgba(200,162,72,.12)}
 /* Question Oui / Non */
 .bigchoice-row{display:flex;gap:16px;justify-content:center;max-width:520px;margin:0 auto;flex-wrap:wrap}
 .bigchoice{flex:1;min-width:160px;background:rgba(58,84,68,.22);border:1.5px solid var(--bord);border-radius:8px;padding:26px 22px;cursor:pointer;text-align:center;transition:all .22s}
@@ -317,6 +320,20 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
 /* Confirmation finale */
 .done-card{text-align:center;max-width:560px;margin:0 auto;padding:20px}
 .done-mono{font-family:'Great Vibes',cursive;font-size:clamp(2.6rem,6vw,4rem);color:var(--gold2);line-height:1.05;margin-bottom:10px}
+/* ── Flux guidé de choix de repas (une personne à la fois) ── */
+.confirmed-wrap{max-width:600px;margin:0 auto 24px}
+.confirmed-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;text-align:center}
+.confirmed-row{display:flex;align-items:center;justify-content:space-between;gap:10px;background:rgba(200,162,72,.08);border:1px solid var(--bord);border-radius:7px;padding:11px 14px;margin-bottom:9px}
+.confirmed-info{display:flex;flex-direction:column;gap:2px;min-width:0}
+.confirmed-name{color:var(--cream);font-size:15.5px}
+.confirmed-detail{color:var(--cream2);font-size:12.5px;font-style:italic}
+.confirmed-actions{display:flex;gap:6px;flex-shrink:0}
+.editor-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold2);margin-bottom:16px;text-align:center}
+.addmore{max-width:560px;margin:0 auto;text-align:center}
+.addmore-msg{font-size:16px;color:var(--cream);margin-bottom:18px;line-height:1.5}
+.addmore-msg .nm{color:var(--gold2);font-style:italic}
+.addmore-actions{display:flex;flex-direction:column;gap:12px;align-items:center}
+.addmore-or{font-size:13px;font-style:italic;color:var(--cream3)}
 </style>
 </head>
 <body>
@@ -515,14 +532,44 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
 <section class="step" id="step5">
   <div class="step-wrap">
     <div class="sec-head"><div class="sec-eye">Une personne à la fois</div><div class="sec-title">Vos choix de repas</div><div class="sec-div"><span>◆</span></div></div>
-    <p class="step-intro">Inscrivez chaque <strong>adulte et adolescent (13 ans et +)</strong> de votre groupe, puis sélectionnez son entrée et son plat. <em>(Les enfants de 12 ans et moins, c'est à l'étape suivante.)</em></p>
-    <div class="menu-box">
-      <div class="plist-head">
-        <span>Adultes &amp; ados</span>
-        <button type="button" class="btn btn-gold" onclick="addPerson()" style="font-size:9.5px;padding:7px 15px">+ Ajouter une personne</button>
-      </div>
-      <div id="plist"></div>
+    <p class="step-intro">Remplissez les choix d'une <strong>première personne</strong> (adulte ou adolescent de 13 ans et plus), puis vous pourrez en ajouter d'autres. <em>Les enfants de 12 ans et moins, c'est à l'étape suivante.</em></p>
+
+    <!-- Personnes déjà inscrites -->
+    <div class="confirmed-wrap" id="confirmedWrap" style="display:none">
+      <div class="confirmed-label">Personnes inscrites</div>
+      <div id="confirmedList"></div>
     </div>
+
+    <!-- Éditeur : une personne -->
+    <div class="menu-box" id="personEditor" style="max-width:600px;margin:0 auto">
+      <div class="editor-title" id="editorTitle">Personne 1</div>
+      <div class="fgroup"><label class="flabel">Prénom et nom</label><input type="text" id="edName" class="fc" placeholder="Prénom et nom" autocomplete="off"></div>
+      <div class="choice-section" style="margin-top:16px">
+        <div class="choice-section-label">🥢 Entrée</div>
+        <div class="choice-grid" id="edEntree" data-group="entree"></div>
+      </div>
+      <div class="choice-section" style="margin-top:16px">
+        <div class="choice-section-label">🍽 Plat principal</div>
+        <div class="choice-grid" id="edPlat" data-group="plat"></div>
+      </div>
+      <div class="choice-section allergy-row" style="margin-top:16px">
+        <div class="choice-section-label">⚠ Allergie ou intolérance <span class="opt-tag">(optionnel)</span></div>
+        <input type="text" id="edAllergy" class="fc" placeholder="Ex. : sans gluten, arachides… (laisser vide si aucune)" autocomplete="off">
+      </div>
+      <div style="text-align:center;margin-top:22px">
+        <button type="button" class="btn btn-fill btn-lg" onclick="savePerson()">Enregistrer cette personne ✓</button>
+      </div>
+    </div>
+
+    <!-- Invitation à ajouter une autre personne -->
+    <div class="addmore" id="addMorePrompt" style="display:none">
+      <div class="addmore-msg" id="addMoreMsg"></div>
+      <div class="addmore-actions">
+        <button type="button" class="btn btn-fill btn-lg" onclick="addAnotherPerson()">+ Ajouter une autre personne</button>
+        <div class="addmore-or">ou cliquez « Suivant » ci-dessous pour continuer</div>
+      </div>
+    </div>
+
     <div class="step-nav">
       <button class="btn btn-ghost" onclick="wizPrev()">← Retour</button>
       <button class="btn btn-gold" onclick="wizNext()">Suivant →</button>
@@ -757,13 +804,14 @@ const PLATS=[
 ];
 let pCount=0;
 
-function gridHTML(group,opts){
-  return `<div class="choice-grid" data-group="${group}">`+
-    opts.map(o=>`<label class="choice-card" data-val="${o.val.replace(/"/g,'&quot;')}">
-        <input type="radio">
-        <div class="cc-name">${o.ico} ${o.name}</div>
-        <div class="cc-sub">${o.sub}</div>
-      </label>`).join('')+`</div>`;
+const confirmedPeople=[];
+
+function cardHTML(o){
+  return `<label class="choice-card" data-val="${o.val.replace(/"/g,'&quot;')}">
+      <input type="radio">
+      <div class="cc-name">${o.ico} ${o.name}</div>
+      <div class="cc-sub">${o.sub}</div>
+    </label>`;
 }
 function wireCards(scope){
   scope.querySelectorAll('.choice-grid').forEach(grid=>{
@@ -774,46 +822,100 @@ function wireCards(scope){
         cards.forEach(c=>c.classList.remove('selected'));
         card.classList.add('selected');
         const inp=card.querySelector('input'); if(inp) inp.checked=true;
-        scope.style.borderColor='';
       });
     });
   });
 }
-function addPerson(){
-  pCount++;
-  const div=document.createElement('div');
-  div.className='pentry';
-  div.innerHTML=`
-    <div class="pentry-head">
-      <span class="pentry-num">Personne ${pCount}</span>
-      <input type="text" class="fc pn" placeholder="Prénom et nom" autocomplete="off">
-      <button type="button" class="btn btn-del" onclick="this.closest('.pentry').remove()" title="Retirer">✕</button>
-    </div>
-    <div class="choice-section">
-      <div class="choice-section-label">🥢 Entrée</div>
-      ${gridHTML('entree',ENTREES)}
-    </div>
-    <div class="choice-section">
-      <div class="choice-section-label">🍽 Plat principal</div>
-      ${gridHTML('plat',PLATS)}
-    </div>
-    <div class="choice-section allergy-row">
-      <div class="choice-section-label">⚠ Allergie ou intolérance <span class="opt-tag">(optionnel)</span></div>
-      <input type="text" class="fc allergy" placeholder="Ex. : sans gluten, arachides… (laisser vide si aucune)" autocomplete="off">
-    </div>`;
-  document.getElementById('plist').appendChild(div);
-  wireCards(div);
-  div.querySelector('.pn').focus();
+
+/* — Éditeur d'une personne — */
+function buildEditorGrids(){
+  document.getElementById('edEntree').innerHTML = ENTREES.map(cardHTML).join('');
+  document.getElementById('edPlat').innerHTML   = PLATS.map(cardHTML).join('');
+  wireCards(document.getElementById('personEditor'));
 }
-function validateAdults(){
-  let ok=true;
-  document.querySelectorAll('#plist .pentry').forEach(row=>{
-    const n=row.querySelector('.pn').value.trim();
-    const e=row.querySelector('[data-group="entree"] .choice-card.selected');
-    const p=row.querySelector('[data-group="plat"] .choice-card.selected');
-    if(!n||!e||!p){ ok=false; row.style.borderColor='var(--rust)'; setTimeout(()=>row.style.borderColor='',2600); }
+function preselect(gridId,val){
+  document.querySelectorAll('#'+gridId+' .choice-card').forEach(c=>{
+    if(c.dataset.val===val){ c.classList.add('selected'); const i=c.querySelector('input'); if(i) i.checked=true; }
   });
-  return ok;
+}
+function showEditor(person){
+  document.getElementById('addMorePrompt').style.display='none';
+  const ed=document.getElementById('personEditor'); ed.style.display='block';
+  document.getElementById('editorTitle').textContent='Personne '+(confirmedPeople.length+1);
+  buildEditorGrids();
+  document.getElementById('edName').value    = person ? person.n : '';
+  document.getElementById('edAllergy').value = person ? person.a : '';
+  if(person){ preselect('edEntree', person.e); preselect('edPlat', person.p); }
+  try{ document.getElementById('edName').focus(); }catch(_){}
+}
+function readEditor(){
+  return {
+    n: document.getElementById('edName').value.trim(),
+    e: document.querySelector('#edEntree .choice-card.selected'),
+    p: document.querySelector('#edPlat .choice-card.selected'),
+    a: document.getElementById('edAllergy').value.trim()
+  };
+}
+function editorVisible(){ return document.getElementById('personEditor').style.display!=='none'; }
+function editorStatus(){
+  if(!editorVisible()) return 'hidden';
+  const r=readEditor();
+  const any = r.n || r.e || r.p || r.a;
+  const all = r.n && r.e && r.p;
+  if(!any) return 'empty';
+  return all ? 'filled' : 'partial';
+}
+function commitEditor(){
+  const r=readEditor();
+  confirmedPeople.push({n:r.n, e:r.e.dataset.val, p:r.p.dataset.val, a:r.a});
+  renderConfirmed();
+  return r.n;
+}
+function savePerson(){
+  if(editorStatus()!=='filled'){ alert('Indiquez le nom, l’entrée et le plat avant d’enregistrer.'); return; }
+  const name=commitEditor();
+  showAddMorePrompt(name);
+}
+function showAddMorePrompt(name){
+  document.getElementById('personEditor').style.display='none';
+  document.getElementById('addMorePrompt').style.display='block';
+  document.getElementById('addMoreMsg').innerHTML='✓ <span class="nm">'+esc(name)+'</span> a bien été inscrit·e.<br>Souhaitez-vous ajouter une autre personne ?';
+}
+function addAnotherPerson(){ showEditor(null); }
+
+function shortDish(v){ return (v||'').split(',')[0]; }
+function renderConfirmed(){
+  const wrap=document.getElementById('confirmedWrap');
+  const list=document.getElementById('confirmedList');
+  if(confirmedPeople.length===0){ wrap.style.display='none'; list.innerHTML=''; return; }
+  wrap.style.display='block';
+  list.innerHTML=confirmedPeople.map((p,i)=>`
+    <div class="confirmed-row">
+      <div class="confirmed-info">
+        <span class="confirmed-name">${esc(p.n)}</span>
+        <span class="confirmed-detail">${esc(shortDish(p.e))} · ${esc(shortDish(p.p))}${p.a?' · ⚠ '+esc(p.a):''}</span>
+      </div>
+      <div class="confirmed-actions">
+        <button type="button" class="btn btn-del" onclick="editPerson(${i})" title="Modifier">✎</button>
+        <button type="button" class="btn btn-del" onclick="removePerson(${i})" title="Retirer">✕</button>
+      </div>
+    </div>`).join('');
+}
+function editPerson(i){ const p=confirmedPeople.splice(i,1)[0]; renderConfirmed(); showEditor(p); }
+function removePerson(i){
+  confirmedPeople.splice(i,1); renderConfirmed();
+  if(confirmedPeople.length===0 && !editorVisible()) showEditor(null);
+}
+window.savePerson=savePerson; window.addAnotherPerson=addAnotherPerson;
+window.editPerson=editPerson; window.removePerson=removePerson;
+
+/* Validation de l'étape repas (appelée par wizNext) */
+function validateAdults(){
+  const st=editorStatus();
+  if(st==='partial'){ alert('Terminez la personne en cours (nom, entrée et plat), ou videz les champs avant de continuer.'); return false; }
+  if(st==='filled'){ const name=commitEditor(); showAddMorePrompt(name); }
+  if(confirmedPeople.length===0){ alert('Inscrivez au moins une personne avant de continuer.'); return false; }
+  return true;
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -838,14 +940,8 @@ function validateKids(){
    RÉCAPITULATIF
    ══════════════════════════════════════════════════════════ */
 function collect(){
-  const adults=[];
-  document.querySelectorAll('#plist .pentry').forEach(row=>{
-    const n=row.querySelector('.pn').value.trim();
-    const e=row.querySelector('[data-group="entree"] .choice-card.selected');
-    const p=row.querySelector('[data-group="plat"] .choice-card.selected');
-    const a=row.querySelector('.allergy').value.trim();
-    if(n&&e&&p) adults.push({n, e:e.dataset.val, p:p.dataset.val, a});
-  });
+  const adults=confirmedPeople.slice();
+  if(editorStatus()==='filled'){ const r=readEditor(); adults.push({n:r.n, e:r.e.dataset.val, p:r.p.dataset.val, a:r.a}); }
   let kids={count:0, allergies:''};
   if(kidsChoice===true){
     const c=parseInt(document.getElementById('kidsCount').value,10)||0;
@@ -922,7 +1018,7 @@ function submitChoices(){
 }
 
 /* ── Initialisation ── */
-addPerson();
+showEditor(null);
 renderProg();
 
 /* ══════════════════════════════════════════════════════════
@@ -1579,6 +1675,7 @@ function g1Tick(){
   gRafId=setTimeout(()=>requestAnimationFrame(g1Tick),40);
 }
 function startGame(){
+  arcadeInView=true; pageVisible=!document.hidden;   // garantir l'exécution même si l'observateur de visibilité est figé (navigateurs intégrés)
   if(gRafId){clearTimeout(gRafId);gRafId=null;}
   if(tTick){clearInterval(tTick);tTick=null;}
   initGame();
@@ -1605,38 +1702,39 @@ document.addEventListener('keyup',e=>{keys[e.key]=false;});
 /* ── Touch-drag controls for game 1 canvas (mobile) ── */
 let g1TouchActive=false;
 let g1TouchTX=0, g1TouchTY=0;        // target position groom moves toward
+let g1UsingTouch=false;              // true once touch events fire (in-app browsers like Messenger)
 
-function g1CanvasPos(ev){
+function g1CanvasPos(cx0,cy0){
   const r=cv.getBoundingClientRect();
-  const sx=W/r.width, sy=H/r.height;
-  return {
-    x:(ev.clientX-r.left)*sx,
-    y:(ev.clientY-r.top)*sy
-  };
+  if(!r.width||!r.height) return {x:W/2,y:H/2};
+  return { x:(cx0-r.left)*(W/r.width), y:(cy0-r.top)*(H/r.height) };
 }
-function g1TouchStart(ev){
-  ev.preventDefault();
-  // Don't restart during celebration — let user enjoy it / click button
-  if(gState==='caught' && winFrame<280) return;
+function g1Begin(cx0,cy0){
+  if(gState==='caught' && winFrame<280) return;   // laisser la célébration
   if(gState!=='playing') startGame();
   g1TouchActive=true;
-  const p=g1CanvasPos(ev); g1TouchTX=p.x; g1TouchTY=p.y;
+  const p=g1CanvasPos(cx0,cy0); g1TouchTX=p.x; g1TouchTY=p.y;
 }
-function g1TouchMove(ev){
+function g1Move(cx0,cy0){
   if(!g1TouchActive) return;
-  ev.preventDefault();
-  const p=g1CanvasPos(ev); g1TouchTX=p.x; g1TouchTY=p.y;
+  const p=g1CanvasPos(cx0,cy0); g1TouchTX=p.x; g1TouchTY=p.y;
 }
-function g1TouchEnd(){
-  g1TouchActive=false;
-  // Stop movement when finger lifts
-  dpX=0; dpY=0;
-}
-cv.addEventListener('pointerdown',g1TouchStart);
-cv.addEventListener('pointermove',g1TouchMove);
+function g1TouchEnd(){ g1TouchActive=false; dpX=0; dpY=0; }
+
+/* Pointer events (bureau + mobiles modernes) — ignorés si le tactile prend le relais */
+function g1PointerStart(ev){ if(g1UsingTouch) return; ev.preventDefault(); g1Begin(ev.clientX,ev.clientY); }
+function g1PointerMove(ev){ if(g1UsingTouch) return; if(!g1TouchActive) return; ev.preventDefault(); g1Move(ev.clientX,ev.clientY); }
+cv.addEventListener('pointerdown',g1PointerStart);
+cv.addEventListener('pointermove',g1PointerMove);
 cv.addEventListener('pointerup',g1TouchEnd);
 cv.addEventListener('pointercancel',g1TouchEnd);
 cv.addEventListener('pointerleave',g1TouchEnd);
+
+/* Touch events (repli fiable pour navigateurs intégrés : Messenger, Instagram, etc.) */
+cv.addEventListener('touchstart',function(ev){ g1UsingTouch=true; if(ev.cancelable)ev.preventDefault(); const t=ev.touches[0]; if(t) g1Begin(t.clientX,t.clientY); },{passive:false});
+cv.addEventListener('touchmove', function(ev){ if(ev.cancelable)ev.preventDefault(); const t=ev.touches[0]; if(t) g1Move(t.clientX,t.clientY); },{passive:false});
+cv.addEventListener('touchend',  function(ev){ if(ev.cancelable)ev.preventDefault(); g1TouchEnd(); },{passive:false});
+cv.addEventListener('touchcancel',g1TouchEnd);
 
 // Init
 initGame();
