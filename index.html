@@ -179,8 +179,7 @@ textarea.fc-full{resize:vertical;min-height:125px}
 .mem-back::before{content:'';position:absolute;inset:5px;border:1px solid rgba(200,162,72,.32);border-radius:3px}
 .mem-back-mono{font-family:'Great Vibes',cursive;font-size:30px;color:var(--gold2);position:relative;z-index:1}
 .mem-front{background:linear-gradient(135deg,rgba(245,234,216,.97),rgba(240,217,154,.92));transform:rotateY(180deg);font-size:40px}
-.mem-card.matched .mem-card-inner{filter:drop-shadow(0 0 8px rgba(200,162,72,.45))}
-.mem-card.matched .mem-front{background:linear-gradient(135deg,rgba(200,162,72,.35),rgba(245,234,216,.5));border-color:var(--gold)}
+.mem-card.matched .mem-front{background:linear-gradient(135deg,rgba(200,162,72,.4),rgba(245,234,216,.55));border-color:var(--gold);box-shadow:0 0 12px rgba(200,162,72,.55)}
 
 @media(max-width:560px){.choice-grid{grid-template-columns:1fr}}
 .factions{display:flex;justify-content:space-between;align-items:center;margin-top:18px;flex-wrap:wrap;gap:10px}
@@ -647,8 +646,8 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
           <p class="touch-hint">📱 Touchez l'écran pour téléporter le marié, glissez pour le diriger</p>
         </div>
         <div id="gameWam" style="display:none">
-          <p class="arcade-desc">Tapez les <strong style="color:var(--gold2)">30 cœurs d'amour</strong> avant la fin du chrono ! 💖<br>💖 Cœur = 1 pt · 💐 Bouquet = 5 pts · 💍 Bague = +5 secondes<br><strong style="color:#e89aaa">⚠️ Évitez les 💧 gouttes et 🌫️ brume : 3 touches = perdu !</strong></p>
-          <div class="game-stat"><span>Score : <strong id="wamScore">0</strong> / 30</span><span>Vies : <strong id="wamLives">♥♥♥</strong></span><span>Chrono : <strong id="wamTimer">60s</strong></span><span>Meilleur : <strong id="wamBest">—</strong></span></div>
+          <p class="arcade-desc">Tapez les <strong style="color:var(--gold2)">40 points d'amour</strong> avant la fin du chrono ! 💖<br>💖 Cœur = 1 pt · 💐 Bouquet = 5 pts · 💍 Bague = +5 secondes<br><strong style="color:#e89aaa">⚠️ Évitez les 💧 gouttes et 🌫️ brume : 3 touches = perdu !</strong></p>
+          <div class="game-stat"><span>Score : <strong id="wamScore">0</strong> / 40</span><span>Vies : <strong id="wamLives">♥♥♥</strong></span><span>Chrono : <strong id="wamTimer">50s</strong></span><span>Meilleur : <strong id="wamBest">—</strong></span></div>
           <div class="wam-board" id="wamBoard"></div>
           <div class="game-ctrl"><button class="btn btn-gold" onclick="wamStart()">Nouvelle partie</button></div>
           <p class="game-hint">Touchez ou cliquez les cœurs avant qu'ils disparaissent ✨</p>
@@ -1749,13 +1748,13 @@ g1Tick();
    on évite les mauvais. Difficulté progressive.
    ════════════════════════════════════════════════════════════ */
 const WAM_COLS=4, WAM_ROWS=3, WAM_TOTAL=WAM_COLS*WAM_ROWS;
-const WAM_DUR=60, WAM_TARGET=30;
+const WAM_DUR=50, WAM_TARGET=40;
 const WAM_TYPES={
-  heart:   {emoji:'💖', pts:1,  weight:60, good:true},
-  bouquet: {emoji:'💐', pts:5,  weight:13, good:true},
-  ring:    {emoji:'💍', pts:0,  weight:5,  good:true, bonus:'time'},
-  drop:    {emoji:'💧', pts:0,  weight:15, good:false},
-  mud:     {emoji:'🌫️',pts:0,  weight:7,  good:false}
+  heart:   {emoji:'💖', pts:1,  weight:50, good:true},
+  bouquet: {emoji:'💐', pts:5,  weight:12, good:true},
+  ring:    {emoji:'💍', pts:0,  weight:4,  good:true, bonus:'time'},
+  drop:    {emoji:'💧', pts:0,  weight:22, good:false},
+  mud:     {emoji:'🌫️',pts:0,  weight:12, good:false}
 };
 let wamScore=0, wamLives=3, wamTime=WAM_DUR, wamState='idle';
 let wamSpots=[];
@@ -1791,7 +1790,7 @@ function wamSpawn(){
   const sp = wamSpots[idx];
   const elapsed = WAM_DUR - wamTime;
   const ramp = clamp(elapsed/WAM_DUR, 0, 1);
-  const life = lerp(1100, 600, ramp);
+  const life = lerp(820, 430, ramp);
   const type = wamPickType();
   sp.type = type;
   sp.itemEl.textContent = WAM_TYPES[type].emoji;
@@ -1884,9 +1883,9 @@ function wamStart(){
     // Spawn
     const elapsed = WAM_DUR-wamTime;
     const ramp = clamp(elapsed/WAM_DUR, 0, 1);
-    const spawnEvery = lerp(750, 320, ramp);
+    const spawnEvery = lerp(620, 260, ramp);
     if(now-wamLastSpawn >= spawnEvery){
-      const burst = (ramp>.55 && Math.random()<.4) ? 2 : 1;
+      const burst = (ramp>.4 && Math.random()<.5) ? 2 : 1;
       for(let i=0;i<burst;i++) wamSpawn();
       wamLastSpawn = now;
     }
