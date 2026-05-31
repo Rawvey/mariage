@@ -453,7 +453,7 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
     <div class="icard" style="max-width:480px;margin:0 auto">
       <h3>☀️ Réserver ma place</h3>
       <div style="margin-bottom:12px"><span class="badge">23 $ par personne</span></div>
-      <form id="brunchForm" action="https://formsubmit.co/mariage.ae.2026@gmail.com" method="POST" target="submit_iframe">
+      <form id="brunchForm" action="https://api.web3forms.com/submit" method="POST" target="submit_iframe">
         <input type="hidden" name="_subject" value="Réservation brunch : Mariage Andréanne &amp; Étienne">
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_template" value="box">
@@ -619,7 +619,7 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
     <div id="contact" style="margin-top:50px">
       <div class="sec-head"><div class="sec-eye">Une question ?</div><div class="sec-title">Nous écrire</div><div class="sec-div"><span>◆</span></div></div>
       <div class="cform">
-        <form id="contactForm" action="https://formsubmit.co/mariage.ae.2026@gmail.com" method="POST" target="submit_iframe">
+        <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" target="submit_iframe">
           <input type="hidden" name="_subject" value="Question : Mariage Andréanne &amp; Étienne">
           <input type="hidden" name="_captcha" value="false">
           <input type="hidden" name="_template" value="box">
@@ -700,39 +700,31 @@ document.querySelectorAll('.wiz-dot').forEach(d=>{
 });
 
 /* ══════════════════════════════════════════════════════════
-   ENVOI VERS FORMSUBMIT
-   1) tentative AJAX (JSON) — retour de succès/erreur fiable
-   2) repli : POST classique vers l'iframe caché (aucun CORS requis)
+   ENVOI VERS WEB3FORMS  (https://web3forms.com)
+   ▸ Service gratuit pour sites statiques (GitHub Pages, etc.)
+   ▸ 250 envois/mois gratuits, aucun serveur requis.
+   ▸ COMMENT OBTENIR LA CLÉ :
+       1. Aller sur https://web3forms.com
+       2. Entrer l'adresse  mariage.ae.2026@gmail.com
+       3. La clé d'accès (« access key ») arrive par courriel
+       4. La coller ci-dessous, à la place de COLLER_VOTRE_CLE_ICI
+   La clé peut figurer dans le code sans risque : elle ne sert
+   qu'à envoyer vers l'adresse vérifiée, rien d'autre.
    ══════════════════════════════════════════════════════════ */
-const FS_EMAIL='mariage.ae.2026@gmail.com';
-const subIframe=document.getElementById('submit_iframe');
+const W3F_KEY='0c89d83d-4c8b-45f5-b773-e8450b8fcc25';
 
-async function ajaxSend(payload){
-  const res=await fetch('https://formsubmit.co/ajax/'+FS_EMAIL,{
+async function w3fSend(payload){
+  const res=await fetch('https://api.web3forms.com/submit',{
     method:'POST',
     headers:{'Content-Type':'application/json','Accept':'application/json'},
-    body:JSON.stringify(payload)
+    body:JSON.stringify(Object.assign({access_key:W3F_KEY}, payload))
   });
   let d={}; try{ d=await res.json(); }catch(_){}
-  if(!res.ok || String(d.success)!=='true') throw new Error(d.message||('HTTP '+res.status));
+  if(!res.ok || d.success!==true) throw new Error((d&&d.message)||('HTTP '+res.status));
   return d;
 }
-function iframeSend(payload, onDone){
-  const tmp=document.createElement('form');
-  tmp.method='POST'; tmp.action='https://formsubmit.co/'+FS_EMAIL;
-  tmp.target='submit_iframe'; tmp.style.display='none';
-  const fields=Object.assign({'_captcha':'false'}, payload);
-  Object.entries(fields).forEach(([k,v])=>{ const i=document.createElement('input'); i.type='hidden'; i.name=k; i.value=v; tmp.appendChild(i); });
-  document.body.appendChild(tmp);
-  let done=false;
-  const finish=()=>{ if(done) return; done=true; subIframe.removeEventListener('load',handler); clearTimeout(t); try{document.body.removeChild(tmp);}catch(_){} onDone(true); };
-  const handler=()=>finish();
-  const t=setTimeout(finish, 3500); // le POST part de toute façon — on confirme après un court délai
-  subIframe.addEventListener('load',handler);
-  tmp.submit();
-}
 function sendForm(payload, onOk, onErr){
-  ajaxSend(payload).then(()=>onOk()).catch(()=> iframeSend(payload, ()=>onOk()));
+  w3fSend(payload).then(()=>onOk()).catch(err=>{ console.error('Envoi échoué :', err); onErr(); });
 }
 
 /* ── Formulaire brunch ── */
@@ -744,7 +736,7 @@ document.getElementById('brunchForm').addEventListener('submit',function(e){
   btn.textContent='Envoi en cours…'; btn.disabled=true;
   const reset=()=>{ btn.textContent='Réserver ma place ♥'; btn.disabled=false; };
   sendForm(
-    {_subject:'Réservation brunch : Mariage Andréanne & Étienne', _template:'box', 'Nom':f.Nom.value.trim(), 'Nombre de personnes':f['Nombre de personnes'].value},
+    {subject:'Réservation brunch : Mariage Andréanne & Étienne', from_name:'Site mariage A&É', 'Nom':f.Nom.value.trim(), 'Nombre de personnes':f['Nombre de personnes'].value},
     ()=>{ document.getElementById('brunchOk').style.display='block'; f.reset(); reset(); },
     ()=>{ document.getElementById('brunchErr').style.display='block'; reset(); }
   );
@@ -759,7 +751,7 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
   btn.textContent='Envoi en cours…'; btn.disabled=true;
   const reset=()=>{ btn.textContent='Envoyer le message'; btn.disabled=false; };
   sendForm(
-    {_subject:'Question : Mariage Andréanne & Étienne', _template:'box', 'Nom':f.Nom.value.trim(), 'Courriel':f.Courriel.value.trim(), 'Message':f.Message.value.trim()},
+    {subject:'Question : Mariage Andréanne & Étienne', from_name:'Site mariage A&É', 'Nom':f.Nom.value.trim(), 'Courriel':f.Courriel.value.trim(), 'Message':f.Message.value.trim()},
     ()=>{ document.getElementById('contactOk').style.display='block'; f.reset(); reset(); },
     ()=>{ document.getElementById('contactErr').style.display='block'; reset(); }
   );
@@ -927,7 +919,7 @@ function submitChoices(){
   const reset=()=>{ btn.textContent='Envoyer nos choix ♥'; btn.disabled=false; };
 
   sendForm(
-    { '_subject':'Choix de menu : Mariage Andréanne & Étienne', '_template':'box', 'Réponse':msg },
+    { subject:'Choix de menu : Mariage Andréanne & Étienne', from_name:'Site mariage A&É', 'Réponse':msg },
     ()=>{ reset(); wizGo(BONUS_STEP); },
     ()=>{ reset(); document.getElementById('menuErr').style.display='block'; }
   );
