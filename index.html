@@ -454,9 +454,9 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
       <h3>☀️ Réserver ma place</h3>
       <div style="margin-bottom:12px"><span class="badge">23 $ par personne</span></div>
       <form id="brunchForm" action="https://api.web3forms.com/submit" method="POST" target="submit_iframe">
-        <input type="hidden" name="_subject" value="Réservation brunch : Mariage Andréanne &amp; Étienne">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_template" value="box">
+        <input type="hidden" name="access_key" value="f4444e9c-f59a-428f-8f7b-7c9c4bc315a5">
+        <input type="hidden" name="subject" value="Réservation brunch : Mariage Andréanne &amp; Étienne">
+        <input type="hidden" name="from_name" value="Site mariage A&amp;É">
         <div class="fgroup"><label class="flabel">Votre nom</label><input type="text" name="Nom" class="fc" placeholder="Prénom et nom"></div>
         <div class="fgroup" style="margin-top:12px"><label class="flabel">Nombre de personnes</label><input type="number" name="Nombre de personnes" class="fc" min="1" max="30" value="1"></div>
         <div style="margin-top:14px"><button type="submit" class="btn btn-gold" id="brunchBtn" style="font-size:9.5px;padding:7px 16px">Réserver ma place ♥</button></div>
@@ -620,9 +620,9 @@ footer{text-align:center;padding:62px 40px 46px;border-top:1px solid rgba(200,16
       <div class="sec-head"><div class="sec-eye">Une question ?</div><div class="sec-title">Nous écrire</div><div class="sec-div"><span>◆</span></div></div>
       <div class="cform">
         <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" target="submit_iframe">
-          <input type="hidden" name="_subject" value="Question : Mariage Andréanne &amp; Étienne">
-          <input type="hidden" name="_captcha" value="false">
-          <input type="hidden" name="_template" value="box">
+          <input type="hidden" name="access_key" value="f4444e9c-f59a-428f-8f7b-7c9c4bc315a5">
+          <input type="hidden" name="subject" value="Question : Mariage Andréanne &amp; Étienne">
+          <input type="hidden" name="from_name" value="Site mariage A&amp;É">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
             <div class="fgroup"><label class="flabel">Votre nom</label><input type="text" name="Nom" class="fc-full" placeholder="Prénom et nom"></div>
             <div class="fgroup"><label class="flabel">Votre courriel</label><input type="email" name="Courriel" class="fc-full" placeholder="votre@courriel.com"></div>
@@ -700,61 +700,48 @@ document.querySelectorAll('.wiz-dot').forEach(d=>{
 });
 
 /* ══════════════════════════════════════════════════════════
-   ENVOI VERS WEB3FORMS  (https://web3forms.com)
-   ▸ Service gratuit pour sites statiques (GitHub Pages, etc.)
-   ▸ 250 envois/mois gratuits, aucun serveur requis.
-   ▸ COMMENT OBTENIR LA CLÉ :
-       1. Aller sur https://web3forms.com
-       2. Entrer l'adresse  mariage.ae.2026@gmail.com
-       3. La clé d'accès (« access key ») arrive par courriel
-       4. La coller ci-dessous, à la place de COLLER_VOTRE_CLE_ICI
-   La clé peut figurer dans le code sans risque : elle ne sert
-   qu'à envoyer vers l'adresse vérifiée, rien d'autre.
+   ENVOI VERS WEB3FORMS (https://web3forms.com)
+   Méthode : POST de formulaire HTML classique dirigé vers
+   l'iframe caché — aucune dépendance à CORS/JSON, robuste sur
+   GitHub Pages. La clé d'accès est dans des champs cachés.
    ══════════════════════════════════════════════════════════ */
-const W3F_KEY='0c89d83d-4c8b-45f5-b773-e8450b8fcc25';
+const W3F_KEY='f4444e9c-f59a-428f-8f7b-7c9c4bc315a5';
+const W3F_URL='https://api.web3forms.com/submit';
+const subIframe=document.getElementById('submit_iframe');
 
-async function w3fSend(payload){
-  const res=await fetch('https://api.web3forms.com/submit',{
-    method:'POST',
-    headers:{'Content-Type':'application/json','Accept':'application/json'},
-    body:JSON.stringify(Object.assign({access_key:W3F_KEY}, payload))
-  });
-  let d={}; try{ d=await res.json(); }catch(_){}
-  if(!res.ok || d.success!==true) throw new Error((d&&d.message)||('HTTP '+res.status));
-  return d;
-}
-function sendForm(payload, onOk, onErr){
-  w3fSend(payload).then(()=>onOk()).catch(err=>{ console.error('Envoi échoué :', err); onErr(); });
+function onIframeLoad(callback){
+  const handler=()=>{ subIframe.removeEventListener('load',handler); clearTimeout(t); callback(true); };
+  const t=setTimeout(()=>{ subIframe.removeEventListener('load',handler); callback(false); }, 8000);
+  subIframe.addEventListener('load',handler);
 }
 
-/* ── Formulaire brunch ── */
+/* ── Formulaire brunch (POST natif vers l'iframe) ── */
 document.getElementById('brunchForm').addEventListener('submit',function(e){
-  e.preventDefault();
   const f=e.target, btn=document.getElementById('brunchBtn');
   document.getElementById('brunchOk').style.display='none';
   document.getElementById('brunchErr').style.display='none';
   btn.textContent='Envoi en cours…'; btn.disabled=true;
-  const reset=()=>{ btn.textContent='Réserver ma place ♥'; btn.disabled=false; };
-  sendForm(
-    {subject:'Réservation brunch : Mariage Andréanne & Étienne', from_name:'Site mariage A&É', 'Nom':f.Nom.value.trim(), 'Nombre de personnes':f['Nombre de personnes'].value},
-    ()=>{ document.getElementById('brunchOk').style.display='block'; f.reset(); reset(); },
-    ()=>{ document.getElementById('brunchErr').style.display='block'; reset(); }
-  );
+  onIframeLoad(success=>{
+    document.getElementById('brunchOk').style.display=success?'block':'none';
+    document.getElementById('brunchErr').style.display=success?'none':'block';
+    btn.textContent='Réserver ma place ♥'; btn.disabled=false;
+    if(success) f.reset();
+  });
+  // pas de preventDefault : le formulaire poste vers l'iframe caché
 });
 
-/* ── Formulaire contact ── */
+/* ── Formulaire contact (POST natif vers l'iframe) ── */
 document.getElementById('contactForm').addEventListener('submit',function(e){
-  e.preventDefault();
   const f=e.target, btn=document.getElementById('contactBtn');
   document.getElementById('contactOk').style.display='none';
   document.getElementById('contactErr').style.display='none';
   btn.textContent='Envoi en cours…'; btn.disabled=true;
-  const reset=()=>{ btn.textContent='Envoyer le message'; btn.disabled=false; };
-  sendForm(
-    {subject:'Question : Mariage Andréanne & Étienne', from_name:'Site mariage A&É', 'Nom':f.Nom.value.trim(), 'Courriel':f.Courriel.value.trim(), 'Message':f.Message.value.trim()},
-    ()=>{ document.getElementById('contactOk').style.display='block'; f.reset(); reset(); },
-    ()=>{ document.getElementById('contactErr').style.display='block'; reset(); }
-  );
+  onIframeLoad(success=>{
+    document.getElementById('contactOk').style.display=success?'block':'none';
+    document.getElementById('contactErr').style.display=success?'none':'block';
+    btn.textContent='Envoyer le message'; btn.disabled=false;
+    if(success) f.reset();
+  });
 });
 
 /* ══════════════════════════════════════════════════════════
@@ -918,11 +905,20 @@ function submitChoices(){
   document.getElementById('menuErr').style.display='none';
   const reset=()=>{ btn.textContent='Envoyer nos choix ♥'; btn.disabled=false; };
 
-  sendForm(
-    { subject:'Choix de menu : Mariage Andréanne & Étienne', from_name:'Site mariage A&É', 'Réponse':msg },
-    ()=>{ reset(); wizGo(BONUS_STEP); },
-    ()=>{ reset(); document.getElementById('menuErr').style.display='block'; }
-  );
+  // Formulaire caché posté vers l'iframe (méthode Web3Forms native)
+  const tmp=document.createElement('form');
+  tmp.method='POST'; tmp.action=W3F_URL; tmp.target='submit_iframe'; tmp.style.display='none';
+  const fields={ access_key:W3F_KEY, subject:'Choix de menu : Mariage Andréanne & Étienne', from_name:'Site mariage A&É', 'Réponse':msg };
+  Object.entries(fields).forEach(([k,v])=>{ const i=document.createElement('input'); i.type='hidden'; i.name=k; i.value=v; tmp.appendChild(i); });
+  document.body.appendChild(tmp);
+
+  onIframeLoad(success=>{
+    reset();
+    try{ document.body.removeChild(tmp); }catch(_){}
+    if(success){ wizGo(BONUS_STEP); }
+    else{ document.getElementById('menuErr').style.display='block'; }
+  });
+  tmp.submit();
 }
 
 /* ── Initialisation ── */
